@@ -14,11 +14,6 @@ export default function Contact() {
         </p>
       </div>
 
-      {/* Availability badge */}
-      <div className="inline-flex items-center gap-2 border border-border bg-canvas-2 rounded px-4 py-2 mb-12">
-        <span className="w-2 h-2 rounded-full bg-cyan animate-pulse shrink-0" aria-hidden="true" />
-        <span className="font-mono text-xs text-body">{contact.availability}</span>
-      </div>
 
       {/* Email CTA */}
       <div className="border border-border bg-canvas-2 rounded p-8 mb-8">
