@@ -39,11 +39,11 @@ export default function ProjectCard({ project }) {
 
       {/* Stats */}
       {stats?.length > 0 && (
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-2">
           {stats.map((s, i) => (
-            <div key={i} className="stat-block text-center">
-              <div className="font-display font-semibold text-cyan text-lg">{s.value}</div>
-              <div className="font-mono text-xs text-muted mt-0.5">{s.label}</div>
+            <div key={i} className="stat-block text-center px-2 py-3">
+              <div className="font-display font-semibold text-cyan text-base leading-tight">{s.value}</div>
+              <div className="font-mono text-[10px] text-muted mt-1 leading-tight">{s.label}</div>
             </div>
           ))}
         </div>

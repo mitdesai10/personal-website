@@ -99,9 +99,9 @@ export const projects = [
     timeline: '2024 · Phased rollout (V1 live, V2 in progress)',
     stack: ['Microsoft Copilot Studio', 'SharePoint', 'Microsoft Teams', 'Claude API', 'Microsoft 365'],
     stats: [
-      { value: '10',    label: 'SOP Sections Unified' },
-      { value: 'V1',    label: 'Live in Teams' },
-      { value: '2-Phase', label: 'Rollout Strategy' },
+      { value: '10',  label: 'SOP Sections' },
+      { value: 'V1',  label: 'Live in Teams' },
+      { value: '2',   label: 'Phase Rollout' },
     ],
     problem:
       'Sales reps and delivery staff were losing time and deals to a knowledge access problem. SOPs, pricing logic, and past proposal language were scattered across SharePoint, Salesforce, email threads, and individual employees\' memory — and finding the right answer during a live client call could take longer than a prospect was willing to wait.',
@@ -122,9 +122,9 @@ export const projects = [
     timeline: '2024 · V1 shipped, V2 planned',
     stack: ['Salesforce', 'SQL', 'Power BI', 'Python (V2)'],
     stats: [
-      { value: 'V1',     label: 'Shipped & Live' },
-      { value: 'RICE',   label: 'Prioritization Method' },
-      { value: 'V2',     label: 'Predictive Scoring Planned' },
+      { value: 'V1',   label: 'Shipped & Live' },
+      { value: 'RICE', label: 'Prioritization' },
+      { value: 'V2',   label: 'Next: Predictive' },
     ],
     problem:
       'Renewals were tracked manually across Salesforce reports, personal spreadsheets, and account managers\' memory. Renewal risk was invisible until it was too late — teams found out when a client said no, not before. Reporting was backward-looking, and ownership of at-risk accounts was unclear.',
