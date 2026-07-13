@@ -195,7 +195,6 @@ export const contact = {
   email: 'mit10desai@gmail.com',
   links: [
     { label: 'LinkedIn', url: 'https://linkedin.com/in/mitdesai10' },
-    { label: 'GitHub',   url: 'https://github.com/mitdesai10' },
   ],
   availability: 'Open to senior IC, advisory, and leadership roles — currently based in Somerville, NJ',
 }
