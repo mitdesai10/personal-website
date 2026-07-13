@@ -58,10 +58,6 @@ export default function Contact() {
         </ul>
       </div>
 
-      {/* Note */}
-      <p className="font-mono text-xs text-muted mt-8 text-center">
-        Update the links in <code className="text-border-2">src/data/projects.js</code> → <code className="text-border-2">contact</code>
-      </p>
     </main>
   )
 }
