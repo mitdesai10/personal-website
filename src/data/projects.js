@@ -192,7 +192,7 @@ export const about = {
 
 // ─── CONTACT ─────────────────────────────────────────────────────────────────
 export const contact = {
-  email: 'mdesai@ciberspring.com',
+  email: 'mit10desai@gmail.com',
   links: [
     { label: 'LinkedIn', url: 'https://linkedin.com/in/mitdesai10' },
     { label: 'GitHub',   url: 'https://github.com/mitdesai10' },
