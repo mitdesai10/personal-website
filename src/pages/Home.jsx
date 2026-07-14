@@ -113,19 +113,25 @@ function DisciplineDiagram() {
       })
 
       // ── Cross-connections ──────────────────────────────────
-      [[0,1],[2,3],[0,2],[1,3]].forEach(([a,b]) => {
+      const crossPairs = [[0,1],[2,3],[0,2],[1,3]]
+      for (let ci = 0; ci < crossPairs.length; ci++) {
+        const a = crossPairs[ci][0]
+        const b = crossPairs[ci][1]
+        const pa = pos[a], pb = pos[b]
+        if (!pa || !pb) continue
         ctx.beginPath()
-        ctx.moveTo(pos[a].x, pos[a].y)
-        ctx.lineTo(pos[b].x, pos[b].y)
+        ctx.moveTo(pa.x, pa.y)
+        ctx.lineTo(pb.x, pb.y)
         ctx.strokeStyle = 'rgba(128,77,238,0.05)'
         ctx.lineWidth = 0.5 * sc
         ctx.stroke()
-      })
+      }
 
       // ── Signal particles ───────────────────────────────────
       particles.forEach(p => {
         p.prog = (p.prog + p.speed) % 1
         const nd  = pos[p.nodeIdx]
+        if (!nd) return
         const px  = cx + (nd.x - cx) * p.prog
         const py  = cy + (nd.y - cy) * p.prog
         const alpha = Math.sin(p.prog * Math.PI)
@@ -210,7 +216,7 @@ function DisciplineDiagram() {
 
       animId = requestAnimationFrame(draw)
     }
-    draw()
+    animId = requestAnimationFrame(draw)
 
     return () => { cancelAnimationFrame(animId); ro.disconnect() }
   }, [])
