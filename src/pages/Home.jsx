@@ -1,3 +1,4 @@
+import { useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { about, disciplines, projects } from '../data/projects'
@@ -15,47 +16,216 @@ const stagger = {
   show: { transition: { staggerChildren: 0.1 } },
 }
 
-function DisciplineDiagram() {
-  const S = 220
-  const pad = 12
-  const gap = 8
-  const q = (S - pad * 2 - gap) / 2
-  const cx = S / 2
-  const cy = S / 2
+const ORBIT_NODES = [
+  { label: ['Product', 'Management'],    color: '#804dee', angle: -Math.PI * 3 / 4 },
+  { label: ['Data &', 'Analytics'],      color: '#804dee', angle: -Math.PI / 4 },
+  { label: ['Performance', 'Marketing'], color: '#00cea8', angle:  Math.PI * 3 / 4 },
+  { label: ['Web', 'Development'],       color: '#00cea8', angle:  Math.PI / 4 },
+]
 
-  const quads = [
-    { id: 'product',   lines: ['Product', 'Management'], col: 0, row: 0, color: '#804dee' },
-    { id: 'data',      lines: ['Data &', 'Analytics'],   col: 1, row: 0, color: '#804dee' },
-    { id: 'marketing', lines: ['Performance', 'Marketing'], col: 0, row: 1, color: '#00cea8' },
-    { id: 'web',       lines: ['Web', 'Development'],    col: 1, row: 1, color: '#00cea8' },
-  ]
+function DisciplineDiagram() {
+  const canvasRef = useRef(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext('2d')
+    let animId
+    let t = 0
+
+    const particles = ORBIT_NODES.flatMap((_, i) => [
+      { nodeIdx: i, prog: i * 0.25,            speed: 0.0055 + i * 0.0003 },
+      { nodeIdx: i, prog: (i * 0.25 + 0.5) % 1, speed: 0.0065 + i * 0.0002 },
+    ])
+
+    const dpr = window.devicePixelRatio || 1
+
+    const resize = () => {
+      const side = canvas.offsetWidth
+      canvas.width  = side * dpr
+      canvas.height = side * dpr
+      ctx.resetTransform()
+      ctx.scale(dpr, dpr)
+    }
+    resize()
+    const ro = new ResizeObserver(resize)
+    ro.observe(canvas)
+
+    const draw = () => {
+      const side = canvas.offsetWidth
+      if (!side) { animId = requestAnimationFrame(draw); return }
+      const cx = side / 2, cy = side / 2
+      const sc = side / 300
+      const R  = 88 * sc
+
+      ctx.clearRect(0, 0, side, side)
+      t += 0.008
+
+      // Current node positions (slow orbit + gentle float)
+      const pos = ORBIT_NODES.map((n, i) => {
+        const ang = n.angle + t * 0.04
+        return {
+          x:   cx + R * Math.cos(ang) + Math.sin(t * 0.6 + i * 1.3) * 2.5 * sc,
+          y:   cy + R * Math.sin(ang) + Math.cos(t * 0.8 + i * 1.0) * 2.5 * sc,
+          ang, color: n.color, label: n.label,
+        }
+      })
+
+      // ── Outer dashed ring (clockwise) ─────────────────────
+      ctx.save()
+      ctx.translate(cx, cy)
+      ctx.rotate(t * 0.18)
+      ctx.beginPath()
+      ctx.arc(0, 0, 116 * sc, 0, Math.PI * 2)
+      ctx.setLineDash([4 * sc, 9 * sc])
+      ctx.strokeStyle = 'rgba(128,77,238,0.2)'
+      ctx.lineWidth = sc
+      ctx.stroke()
+      ctx.setLineDash([])
+      ctx.restore()
+
+      // ── Inner counter-rotating ring (teal) ────────────────
+      ctx.save()
+      ctx.translate(cx, cy)
+      ctx.rotate(-t * 0.28)
+      ctx.beginPath()
+      ctx.arc(0, 0, 42 * sc, 0, Math.PI * 2)
+      ctx.setLineDash([2 * sc, 5 * sc])
+      ctx.strokeStyle = 'rgba(0,206,168,0.25)'
+      ctx.lineWidth = sc
+      ctx.stroke()
+      ctx.setLineDash([])
+      ctx.restore()
+
+      // ── Orbit path (ghost ring) ────────────────────────────
+      ctx.beginPath()
+      ctx.arc(cx, cy, R, 0, Math.PI * 2)
+      ctx.strokeStyle = 'rgba(128,77,238,0.07)'
+      ctx.lineWidth = sc
+      ctx.stroke()
+
+      // ── Connection lines (center → each node) ─────────────
+      pos.forEach(p => {
+        const g = ctx.createLinearGradient(cx, cy, p.x, p.y)
+        g.addColorStop(0,   p.color + '00')
+        g.addColorStop(0.4, p.color + '20')
+        g.addColorStop(1,   p.color + '55')
+        ctx.beginPath()
+        ctx.moveTo(cx, cy)
+        ctx.lineTo(p.x, p.y)
+        ctx.strokeStyle = g
+        ctx.lineWidth = sc
+        ctx.stroke()
+      })
+
+      // ── Cross-connections ──────────────────────────────────
+      [[0,1],[2,3],[0,2],[1,3]].forEach(([a,b]) => {
+        ctx.beginPath()
+        ctx.moveTo(pos[a].x, pos[a].y)
+        ctx.lineTo(pos[b].x, pos[b].y)
+        ctx.strokeStyle = 'rgba(128,77,238,0.05)'
+        ctx.lineWidth = 0.5 * sc
+        ctx.stroke()
+      })
+
+      // ── Signal particles ───────────────────────────────────
+      particles.forEach(p => {
+        p.prog = (p.prog + p.speed) % 1
+        const nd  = pos[p.nodeIdx]
+        const px  = cx + (nd.x - cx) * p.prog
+        const py  = cy + (nd.y - cy) * p.prog
+        const alpha = Math.sin(p.prog * Math.PI)
+        ctx.beginPath()
+        ctx.arc(px, py, 2 * sc, 0, Math.PI * 2)
+        ctx.fillStyle = nd.color + Math.round(alpha * 230).toString(16).padStart(2,'0')
+        ctx.shadowBlur  = 7 * sc
+        ctx.shadowColor = nd.color
+        ctx.fill()
+        ctx.shadowBlur  = 0
+      })
+
+      // ── Center hub ────────────────────────────────────────
+      const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, 24 * sc)
+      cg.addColorStop(0, 'rgba(128,77,238,0.4)')
+      cg.addColorStop(1, 'rgba(128,77,238,0)')
+      ctx.beginPath()
+      ctx.arc(cx, cy, 24 * sc, 0, Math.PI * 2)
+      ctx.fillStyle = cg
+      ctx.fill()
+
+      const ph = (t * 0.55) % 1
+      ctx.beginPath()
+      ctx.arc(cx, cy, (5 + ph * 40) * sc, 0, Math.PI * 2)
+      ctx.strokeStyle = `rgba(128,77,238,${(0.45 * (1 - ph)).toFixed(2)})`
+      ctx.lineWidth = sc
+      ctx.stroke()
+
+      ctx.beginPath()
+      ctx.arc(cx, cy, 5 * sc, 0, Math.PI * 2)
+      ctx.fillStyle = '#804dee'
+      ctx.shadowBlur  = 14 * sc
+      ctx.shadowColor = '#804dee'
+      ctx.fill()
+      ctx.shadowBlur  = 0
+
+      // ── Nodes ─────────────────────────────────────────────
+      pos.forEach((p, i) => {
+        // Expanding pulse ring (staggered per node)
+        const ph2 = (t * 0.45 + i * 0.25) % 1
+        if (ph2 < 0.7) {
+          ctx.beginPath()
+          ctx.arc(p.x, p.y, (7 + ph2 * 22) * sc, 0, Math.PI * 2)
+          ctx.strokeStyle = p.color + Math.round(55 * (1 - ph2 / 0.7)).toString(16).padStart(2,'0')
+          ctx.lineWidth = sc
+          ctx.stroke()
+        }
+
+        // Node glow
+        const ng = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 15 * sc)
+        ng.addColorStop(0, p.color + '55')
+        ng.addColorStop(1, p.color + '00')
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, 15 * sc, 0, Math.PI * 2)
+        ctx.fillStyle = ng
+        ctx.fill()
+
+        // Node circle
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, 7 * sc, 0, Math.PI * 2)
+        ctx.fillStyle = p.color + '35'
+        ctx.fill()
+        ctx.strokeStyle   = p.color
+        ctx.lineWidth     = 1.5 * sc
+        ctx.shadowBlur    = 10 * sc
+        ctx.shadowColor   = p.color
+        ctx.stroke()
+        ctx.shadowBlur    = 0
+
+        // Label (radially outside node, always horizontal)
+        const lx = cx + (R + 37 * sc) * Math.cos(p.ang)
+        const ly = cy + (R + 37 * sc) * Math.sin(p.ang)
+        const fs = Math.max(7, 8 * sc)
+        ctx.font          = `${fs}px 'IBM Plex Mono', monospace`
+        ctx.fillStyle     = p.color
+        ctx.textAlign     = 'center'
+        ctx.textBaseline  = 'middle'
+        ORBIT_NODES[i].label.forEach((line, li) => {
+          ctx.fillText(line, lx, ly + (li - (ORBIT_NODES[i].label.length - 1) / 2) * (fs + 3))
+        })
+      })
+
+      animId = requestAnimationFrame(draw)
+    }
+    draw()
+
+    return () => { cancelAnimationFrame(animId); ro.disconnect() }
+  }, [])
 
   return (
-    <div aria-hidden="true" className="w-full max-w-sm mx-auto select-none">
-      <svg viewBox={`0 0 ${S} ${S}`} className="w-full h-auto" role="img" aria-label="Four disciplines diagram">
-        {quads.map(({ id, lines, col, row, color }) => {
-          const x = pad + col * (q + gap)
-          const y = pad + row * (q + gap)
-          const qcx = x + q / 2
-          const qcy = y + q / 2
-          return (
-            <g key={id}>
-              <rect x={x} y={y} width={q} height={q} fill={`${color}18`} stroke={color} strokeWidth="1" rx="8" />
-              <line x1={qcx} y1={qcy} x2={cx} y2={cy} stroke={color} strokeWidth="0.5" strokeOpacity="0.3" />
-              {lines.map((line, i) => (
-                <text key={i} x={qcx} y={qcy + (i - (lines.length - 1) / 2) * 13}
-                  textAnchor="middle" dominantBaseline="middle" fill={color}
-                  fontFamily="'IBM Plex Mono', monospace" fontSize="9" fontWeight="500">
-                  {line}
-                </text>
-              ))}
-            </g>
-          )
-        })}
-        <circle cx={cx} cy={cy} r="14" fill="none" stroke="rgba(128,77,238,0.3)" strokeWidth="1" />
-        <circle cx={cx} cy={cy} r="3.5" fill="#804dee" />
-      </svg>
-    </div>
+    <canvas
+      ref={canvasRef}
+      className="w-full aspect-square select-none"
+      aria-label="Four disciplines animated orbital diagram"
+    />
   )
 }
 
