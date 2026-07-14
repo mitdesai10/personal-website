@@ -81,7 +81,7 @@ function WebsiteCard({ site, index }) {
                 pointerEvents: 'none',
               }}
               loading="lazy"
-              sandbox="allow-same-origin"
+              sandbox="allow-same-origin allow-scripts"
             />
           </div>
 

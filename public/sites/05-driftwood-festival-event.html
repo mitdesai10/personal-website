@@ -18,35 +18,34 @@
   body{background:var(--purple);color:var(--cream);font-family:'Work Sans',sans-serif;overflow-x:hidden;}
   a{color:inherit;text-decoration:none;}
   .display{font-family:'Bebas Neue',sans-serif;letter-spacing:0.02em;}
+  img{display:block;}
 
   header{display:flex;justify-content:space-between;align-items:center;padding:26px 40px;position:relative;z-index:10;}
   .logo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:0.04em;}
   nav ul{list-style:none;display:flex;gap:30px;}
-  nav a{font-size:14px;font-weight:500;}
-  .tix-btn{background:var(--coral);color:var(--purple);padding:11px 22px;border-radius:30px;font-weight:700;font-size:13px;}
+  nav a{font-size:14px;font-weight:500;transition:color .2s;}
+  nav a:hover{color:var(--gold);}
+  .tix-btn{background:var(--coral);color:var(--purple);padding:11px 22px;border-radius:30px;font-weight:700;font-size:13px;border:none;cursor:pointer;transition:background .2s;}
+  .tix-btn:hover{background:#ff5444;}
 
-  .hero{
-    position:relative;min-height:640px;
-    display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
-    padding:60px 32px;
-    background:
-      radial-gradient(circle at 20% 20%, rgba(255,200,87,0.25), transparent 45%),
-      radial-gradient(circle at 80% 70%, rgba(28,140,140,0.3), transparent 45%),
-      linear-gradient(180deg, var(--purple), #1c1033);
+  .hero{position:relative;min-height:640px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:60px 32px;
+    background:radial-gradient(circle at 20% 20%, rgba(255,200,87,0.25), transparent 45%),radial-gradient(circle at 80% 70%, rgba(28,140,140,0.3), transparent 45%),linear-gradient(180deg, var(--purple), #1c1033);
     overflow:hidden;
   }
-  .wave-line{position:absolute;bottom:0;left:0;width:100%;height:120px;opacity:0.5;}
   .hero .dates{font-size:14px;letter-spacing:0.2em;color:var(--gold);margin-bottom:18px;font-weight:600;}
   .hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,13vw,180px);line-height:0.85;letter-spacing:0.01em;
     background:linear-gradient(120deg,var(--coral),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;
   }
   .hero .sub{font-size:16px;max-width:480px;margin:22px 0 34px;opacity:0.85;}
   .hero-cta{display:flex;gap:16px;position:relative;z-index:2;}
-  .btn-fill{background:var(--coral);color:var(--purple);padding:16px 32px;border-radius:30px;font-weight:700;font-size:14px;border:none;}
-  .btn-outline{border:1px solid rgba(255,248,237,0.4);padding:16px 32px;border-radius:30px;font-weight:700;font-size:14px;}
+  .btn-fill{background:var(--coral);color:var(--purple);padding:16px 32px;border-radius:30px;font-weight:700;font-size:14px;border:none;cursor:pointer;transition:background .2s;}
+  .btn-fill:hover{background:#ff5444;}
+  .btn-outline{border:1px solid rgba(255,248,237,0.4);padding:16px 32px;border-radius:30px;font-weight:700;font-size:14px;background:transparent;cursor:pointer;transition:border-color .2s;}
+  .btn-outline:hover{border-color:var(--cream);}
+
   .countdown{display:flex;gap:22px;margin-top:44px;position:relative;z-index:2;}
-  .countdown div{text-align:center;}
-  .countdown .n{font-family:'Bebas Neue',sans-serif;font-size:34px;color:var(--teal);background:rgba(255,248,237,0.08);width:70px;height:70px;border-radius:12px;display:flex;align-items:center;justify-content:center;}
+  .countdown > div{text-align:center;}
+  .countdown .n{font-family:'Bebas Neue',sans-serif;font-size:34px;color:var(--teal);background:rgba(255,248,237,0.08);width:70px;height:70px;border-radius:12px;display:flex;align-items:center;justify-content:center;letter-spacing:0.02em;}
   .countdown .l{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;opacity:0.7;margin-top:8px;}
 
   .lineup{padding:90px 32px;max-width:1200px;margin:0 auto;}
@@ -55,16 +54,17 @@
   .section-head h2{font-family:'Bebas Neue',sans-serif;font-size:52px;letter-spacing:0.02em;}
 
   .day-tabs{display:flex;justify-content:center;gap:14px;margin-bottom:44px;}
-  .day-tabs span{padding:10px 24px;border-radius:30px;font-size:13px;font-weight:600;border:1px solid rgba(255,248,237,0.25);}
-  .day-tabs span.active{background:var(--teal);border-color:var(--teal);}
+  .day-tab{padding:10px 24px;border-radius:30px;font-size:13px;font-weight:600;border:1px solid rgba(255,248,237,0.25);background:transparent;color:var(--cream);cursor:pointer;transition:all .2s;}
+  .day-tab:hover{border-color:var(--teal);}
+  .day-tab.active{background:var(--teal);border-color:var(--teal);}
 
   .lineup-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
-  .act-card{
-    background:rgba(255,248,237,0.06);border-radius:12px;padding:22px;
-    border:1px solid rgba(255,248,237,0.1);
-  }
+  .act-card{background:rgba(255,248,237,0.06);border-radius:12px;padding:22px;border:1px solid rgba(255,248,237,0.1);transition:border-color .2s;}
+  .act-card:hover{border-color:rgba(255,248,237,0.25);}
   .act-card .headliner-tag{font-size:10px;letter-spacing:0.1em;color:var(--coral);font-weight:700;margin-bottom:10px;}
-  .act-card .art{aspect-ratio:1;border-radius:8px;margin-bottom:14px;background:linear-gradient(155deg,var(--teal),var(--purple));}
+  .act-card .art{aspect-ratio:1;border-radius:8px;margin-bottom:14px;overflow:hidden;}
+  .act-card .art img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease;}
+  .act-card:hover .art img{transform:scale(1.05);}
   .act-card h4{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.02em;}
   .act-card p{font-size:12px;opacity:0.65;margin-top:4px;}
 
@@ -72,15 +72,17 @@
   .tickets .section-head .tag{color:var(--teal);}
   .tickets .section-head h2{color:var(--purple);}
   .tix-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-  .tix-card{border:2px solid rgba(45,27,78,0.1);border-radius:14px;padding:30px;text-align:center;}
+  .tix-card{border:2px solid rgba(45,27,78,0.1);border-radius:14px;padding:30px;text-align:center;transition:box-shadow .2s;}
+  .tix-card:hover{box-shadow:0 8px 32px rgba(45,27,78,0.12);}
   .tix-card.popular{border-color:var(--coral);position:relative;}
-  .tix-card .badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--coral);color:white;font-size:11px;font-weight:700;padding:5px 16px;border-radius:20px;}
+  .tix-card .badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--coral);color:white;font-size:11px;font-weight:700;padding:5px 16px;border-radius:20px;white-space:nowrap;}
   .tix-card h4{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:0.02em;margin-bottom:8px;}
   .tix-card .price{font-family:'Bebas Neue',sans-serif;font-size:48px;margin:10px 0;}
   .tix-card .price span{font-size:14px;font-family:'Work Sans',sans-serif;}
   .tix-card ul{list-style:none;margin:20px 0;font-size:13px;color:#5a4d75;text-align:left;}
   .tix-card li{padding:8px 0;border-top:1px solid rgba(45,27,78,0.08);}
-  .tix-card button{width:100%;padding:14px;border-radius:30px;font-weight:700;font-size:14px;border:none;margin-top:14px;}
+  .tix-card button{width:100%;padding:14px;border-radius:30px;font-weight:700;font-size:14px;border:none;margin-top:14px;cursor:pointer;transition:opacity .2s;}
+  .tix-card button:hover{opacity:0.85;}
   .tix-card:not(.popular) button{background:var(--purple);color:var(--cream);}
   .tix-card.popular button{background:var(--coral);color:white;}
 
@@ -91,6 +93,23 @@
   footer{padding:50px 32px;text-align:center;border-top:1px solid rgba(255,248,237,0.1);}
   footer .logo{font-size:24px;margin-bottom:10px;}
   footer p{font-size:13px;opacity:0.6;}
+
+  /* Ticket modal */
+  .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:50;align-items:center;justify-content:center;}
+  .modal-backdrop.open{display:flex;}
+  .modal{background:#1e1138;border:1px solid rgba(255,200,87,0.2);border-radius:16px;padding:40px;max-width:420px;width:90%;position:relative;}
+  .modal h3{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:0.04em;margin-bottom:6px;color:var(--gold);}
+  .modal .plan-name{font-size:13px;color:var(--coral);font-weight:700;margin-bottom:20px;}
+  .modal form{display:flex;flex-direction:column;gap:14px;}
+  .modal input{padding:12px 14px;background:rgba(255,248,237,0.06);border:1px solid rgba(255,248,237,0.15);border-radius:8px;font-size:14px;font-family:'Work Sans',sans-serif;color:var(--cream);outline:none;transition:border-color .2s;}
+  .modal input:focus{border-color:var(--teal);}
+  .modal input::placeholder{color:rgba(255,248,237,0.4);}
+  .modal .submit-btn{background:var(--coral);color:var(--purple);padding:14px;border:none;border-radius:30px;font-weight:700;font-size:14px;cursor:pointer;transition:background .2s;}
+  .modal .submit-btn:hover{background:#ff5444;}
+  .modal .close-btn{position:absolute;top:14px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:rgba(255,248,237,0.4);}
+  .success-msg{display:none;text-align:center;padding:16px 0;}
+  .success-msg .icon{font-size:40px;margin-bottom:14px;}
+  .success-msg p{font-size:15px;line-height:1.6;opacity:0.85;}
 
   @media(max-width:900px){
     nav ul{display:none;}
@@ -111,7 +130,7 @@
     <li><a href="#">Camping</a></li>
     <li><a href="#">FAQ</a></li>
   </ul></nav>
-  <button class="tix-btn">Get Tickets</button>
+  <button class="tix-btn" onclick="openTicketModal('3-Day Pass', '$220')">Get Tickets</button>
 </header>
 
 <section class="hero">
@@ -119,13 +138,14 @@
   <h1 class="display">DRIFTWOOD</h1>
   <p class="sub">Three days of music on the sand. Forty-two acts, four stages, one shoreline.</p>
   <div class="hero-cta">
-    <button class="btn-fill">Get Tickets</button>
-    <button class="btn-outline">See Lineup</button>
+    <button class="btn-fill" onclick="openTicketModal('3-Day Pass', '$220')">Get Tickets</button>
+    <button class="btn-outline" onclick="document.getElementById('lineup').scrollIntoView({behavior:'smooth'})">See Lineup</button>
   </div>
   <div class="countdown">
-    <div><div class="n">61</div><div class="l">Days</div></div>
-    <div><div class="n">14</div><div class="l">Hours</div></div>
-    <div><div class="n">37</div><div class="l">Minutes</div></div>
+    <div><div class="n" id="cd-days">--</div><div class="l">Days</div></div>
+    <div><div class="n" id="cd-hours">--</div><div class="l">Hours</div></div>
+    <div><div class="n" id="cd-mins">--</div><div class="l">Mins</div></div>
+    <div><div class="n" id="cd-secs">--</div><div class="l">Secs</div></div>
   </div>
 </section>
 
@@ -135,20 +155,11 @@
     <h2 class="display">Who's Playing</h2>
   </div>
   <div class="day-tabs">
-    <span class="active">Fri Sep 11</span>
-    <span>Sat Sep 12</span>
-    <span>Sun Sep 13</span>
+    <button class="day-tab active" data-day="fri">Fri Sep 11</button>
+    <button class="day-tab" data-day="sat">Sat Sep 12</button>
+    <button class="day-tab" data-day="sun">Sun Sep 13</button>
   </div>
-  <div class="lineup-grid">
-    <div class="act-card"><div class="headliner-tag">HEADLINER</div><div class="art"></div><h4>Coral & Bone</h4><p>Main Stage · 9:30PM</p></div>
-    <div class="act-card"><div class="art"></div><h4>Lowtide Collective</h4><p>Dune Stage · 7:15PM</p></div>
-    <div class="act-card"><div class="art"></div><h4>Marina Vale</h4><p>Main Stage · 5:45PM</p></div>
-    <div class="act-card"><div class="art"></div><h4>Salt Radio</h4><p>Cove Stage · 4:00PM</p></div>
-    <div class="act-card"><div class="art"></div><h4>The Undertow</h4><p>Dune Stage · 2:30PM</p></div>
-    <div class="act-card"><div class="art"></div><h4>Jonah Pines</h4><p>Cove Stage · 1:00PM</p></div>
-    <div class="act-card"><div class="art"></div><h4>Echo & Ivy</h4><p>Main Stage · 11:30AM</p></div>
-    <div class="act-card"><div class="art"></div><h4>Ruth & The Riptide</h4><p>Dune Stage · 12:00PM</p></div>
-  </div>
+  <div class="lineup-grid" id="lineup-grid"></div>
 </section>
 
 <section class="tickets" id="tickets">
@@ -161,20 +172,20 @@
       <h4>Single Day</h4>
       <div class="price">$95</div>
       <ul><li>One day, any stage</li><li>General admission</li><li>Free water refill stations</li></ul>
-      <button>Select Day</button>
+      <button onclick="openTicketModal('Single Day', '$95')">Select Day</button>
     </div>
     <div class="tix-card popular">
       <div class="badge">MOST POPULAR</div>
       <h4>3-Day Pass</h4>
       <div class="price">$220</div>
       <ul><li>All 3 days, all stages</li><li>Priority entry lanes</li><li>Festival tote + pin set</li></ul>
-      <button>Get Pass</button>
+      <button onclick="openTicketModal('3-Day Pass', '$220')">Get Pass</button>
     </div>
     <div class="tix-card">
       <h4>VIP Weekend</h4>
       <div class="price">$480</div>
       <ul><li>Everything in 3-Day Pass</li><li>Elevated viewing deck</li><li>VIP lounge + private bars</li></ul>
-      <button>Get VIP</button>
+      <button onclick="openTicketModal('VIP Weekend', '$480')">Get VIP</button>
     </div>
   </div>
 </section>
@@ -190,5 +201,133 @@
   <p>Cannon Beach, Oregon · Sept 11–13, 2026</p>
 </footer>
 
+<!-- Ticket modal -->
+<div class="modal-backdrop" id="ticket-modal" onclick="if(event.target===this)closeTicketModal()">
+  <div class="modal">
+    <button class="close-btn" onclick="closeTicketModal()">×</button>
+    <div id="ticket-form-wrap">
+      <h3>Get Tickets</h3>
+      <div class="plan-name" id="modal-plan"></div>
+      <form onsubmit="submitTicket(event)">
+        <input type="text" placeholder="Full name" required>
+        <input type="email" placeholder="Email address" required>
+        <input type="tel" placeholder="Phone number">
+        <input type="number" placeholder="Quantity" min="1" max="10" value="1">
+        <button class="submit-btn" type="submit">Complete Purchase</button>
+      </form>
+    </div>
+    <div class="success-msg" id="ticket-success">
+      <div class="icon">🎟️</div>
+      <h3 style="color:var(--gold);margin-bottom:12px">You're in.</h3>
+      <p>Tickets are on their way to your inbox. See you at Cannon Beach.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── Lineup data ────────────────────────────────────────────────
+  const lineupData = {
+    fri: [
+      { headliner: true,  name: 'Coral & Bone',       stage: 'Main Stage',  time: '9:30 PM',  seed: 'dw-act-coral' },
+      { headliner: false, name: 'Lowtide Collective',  stage: 'Dune Stage',  time: '7:15 PM',  seed: 'dw-act-lowtide' },
+      { headliner: false, name: 'Marina Vale',          stage: 'Main Stage',  time: '5:45 PM',  seed: 'dw-act-marina' },
+      { headliner: false, name: 'Salt Radio',           stage: 'Cove Stage',  time: '4:00 PM',  seed: 'dw-act-salt' },
+      { headliner: false, name: 'The Undertow',         stage: 'Dune Stage',  time: '2:30 PM',  seed: 'dw-act-undertow' },
+      { headliner: false, name: 'Jonah Pines',          stage: 'Cove Stage',  time: '1:00 PM',  seed: 'dw-act-jonah' },
+      { headliner: false, name: 'Echo & Ivy',           stage: 'Main Stage',  time: '11:30 AM', seed: 'dw-act-echo' },
+      { headliner: false, name: 'Ruth & The Riptide',   stage: 'Dune Stage',  time: '12:00 PM', seed: 'dw-act-ruth' },
+    ],
+    sat: [
+      { headliner: true,  name: 'The Sandbar Kings',   stage: 'Main Stage',  time: '9:45 PM',  seed: 'dw-act-sandbar' },
+      { headliner: false, name: 'Dune Foxes',           stage: 'Cove Stage',  time: '7:30 PM',  seed: 'dw-act-foxes' },
+      { headliner: false, name: 'Pelican Bay Band',     stage: 'Main Stage',  time: '6:00 PM',  seed: 'dw-act-pelican' },
+      { headliner: false, name: 'Low Water Mark',       stage: 'Dune Stage',  time: '4:30 PM',  seed: 'dw-act-low' },
+      { headliner: false, name: 'Blue Kelp',            stage: 'Cove Stage',  time: '3:00 PM',  seed: 'dw-act-kelp' },
+      { headliner: false, name: 'Tide & Bone',          stage: 'Main Stage',  time: '1:30 PM',  seed: 'dw-act-tide' },
+      { headliner: false, name: 'Harbour Light',        stage: 'Dune Stage',  time: '12:15 PM', seed: 'dw-act-harbour' },
+      { headliner: false, name: 'Wrack Line',           stage: 'Cove Stage',  time: '11:00 AM', seed: 'dw-act-wrack' },
+    ],
+    sun: [
+      { headliner: true,  name: 'Waveform',             stage: 'Main Stage',  time: '8:30 PM',  seed: 'dw-act-wave' },
+      { headliner: false, name: 'The Shoreliners',      stage: 'Cove Stage',  time: '6:45 PM',  seed: 'dw-act-shore' },
+      { headliner: false, name: 'Inlet Sky',            stage: 'Main Stage',  time: '5:15 PM',  seed: 'dw-act-inlet' },
+      { headliner: false, name: 'Foam & Timber',        stage: 'Dune Stage',  time: '3:45 PM',  seed: 'dw-act-foam' },
+      { headliner: false, name: 'Groundswell',          stage: 'Cove Stage',  time: '2:30 PM',  seed: 'dw-act-ground' },
+      { headliner: false, name: 'Pacific Drift',        stage: 'Main Stage',  time: '1:15 PM',  seed: 'dw-act-pacific' },
+      { headliner: false, name: 'Ebb & Flow',           stage: 'Dune Stage',  time: '12:00 PM', seed: 'dw-act-ebb' },
+      { headliner: false, name: 'Coast Highway',        stage: 'Cove Stage',  time: '10:30 AM', seed: 'dw-act-coast' },
+    ],
+  };
+
+  function renderLineup(day) {
+    const grid = document.getElementById('lineup-grid');
+    grid.innerHTML = lineupData[day].map(act => `
+      <div class="act-card">
+        ${act.headliner ? '<div class="headliner-tag">★ HEADLINER</div>' : ''}
+        <div class="art">
+          <img src="https://picsum.photos/seed/${act.seed}/280/280" alt="${act.name}" loading="lazy">
+        </div>
+        <h4>${act.name}</h4>
+        <p>${act.stage} · ${act.time}</p>
+      </div>
+    `).join('');
+  }
+
+  document.querySelectorAll('.day-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      renderLineup(this.dataset.day);
+    });
+  });
+
+  renderLineup('fri');
+
+  // ── Live countdown ─────────────────────────────────────────────
+  function updateCountdown() {
+    const target = new Date('2026-09-11T12:00:00-07:00');
+    const now = new Date();
+    const diff = target - now;
+
+    if (diff <= 0) {
+      document.getElementById('cd-days').textContent = '0';
+      document.getElementById('cd-hours').textContent = '00';
+      document.getElementById('cd-mins').textContent = '00';
+      document.getElementById('cd-secs').textContent = '00';
+      return;
+    }
+
+    const days  = Math.floor(diff / 864e5);
+    const hours = Math.floor((diff % 864e5) / 36e5);
+    const mins  = Math.floor((diff % 36e5) / 6e4);
+    const secs  = Math.floor((diff % 6e4) / 1e3);
+
+    document.getElementById('cd-days').textContent  = days;
+    document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('cd-mins').textContent  = String(mins).padStart(2, '0');
+    document.getElementById('cd-secs').textContent  = String(secs).padStart(2, '0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // ── Ticket modal ───────────────────────────────────────────────
+  function openTicketModal(plan, price) {
+    document.getElementById('modal-plan').textContent = `${plan} — ${price}`;
+    document.getElementById('ticket-form-wrap').style.display = 'block';
+    document.getElementById('ticket-success').style.display = 'none';
+    document.getElementById('ticket-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeTicketModal() {
+    document.getElementById('ticket-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function submitTicket(e) {
+    e.preventDefault();
+    document.getElementById('ticket-form-wrap').style.display = 'none';
+    document.getElementById('ticket-success').style.display = 'block';
+    setTimeout(closeTicketModal, 3500);
+  }
+</script>
 </body>
 </html>
