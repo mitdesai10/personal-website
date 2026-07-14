@@ -228,34 +228,34 @@
   // ── Lineup data ────────────────────────────────────────────────
   const lineupData = {
     fri: [
-      { headliner: true,  name: 'Coral & Bone',       stage: 'Main Stage',  time: '9:30 PM',  seed: 'dw-act-coral' },
-      { headliner: false, name: 'Lowtide Collective',  stage: 'Dune Stage',  time: '7:15 PM',  seed: 'dw-act-lowtide' },
-      { headliner: false, name: 'Marina Vale',          stage: 'Main Stage',  time: '5:45 PM',  seed: 'dw-act-marina' },
-      { headliner: false, name: 'Salt Radio',           stage: 'Cove Stage',  time: '4:00 PM',  seed: 'dw-act-salt' },
-      { headliner: false, name: 'The Undertow',         stage: 'Dune Stage',  time: '2:30 PM',  seed: 'dw-act-undertow' },
-      { headliner: false, name: 'Jonah Pines',          stage: 'Cove Stage',  time: '1:00 PM',  seed: 'dw-act-jonah' },
-      { headliner: false, name: 'Echo & Ivy',           stage: 'Main Stage',  time: '11:30 AM', seed: 'dw-act-echo' },
-      { headliner: false, name: 'Ruth & The Riptide',   stage: 'Dune Stage',  time: '12:00 PM', seed: 'dw-act-ruth' },
+      { headliner: true,  name: 'Coral & Bone',       stage: 'Main Stage',  time: '9:30 PM',  lock: 1 },
+      { headliner: false, name: 'Lowtide Collective',  stage: 'Dune Stage',  time: '7:15 PM',  lock: 2 },
+      { headliner: false, name: 'Marina Vale',          stage: 'Main Stage',  time: '5:45 PM',  lock: 3 },
+      { headliner: false, name: 'Salt Radio',           stage: 'Cove Stage',  time: '4:00 PM',  lock: 4 },
+      { headliner: false, name: 'The Undertow',         stage: 'Dune Stage',  time: '2:30 PM',  lock: 5 },
+      { headliner: false, name: 'Jonah Pines',          stage: 'Cove Stage',  time: '1:00 PM',  lock: 6 },
+      { headliner: false, name: 'Echo & Ivy',           stage: 'Main Stage',  time: '11:30 AM', lock: 7 },
+      { headliner: false, name: 'Ruth & The Riptide',   stage: 'Dune Stage',  time: '12:00 PM', lock: 8 },
     ],
     sat: [
-      { headliner: true,  name: 'The Sandbar Kings',   stage: 'Main Stage',  time: '9:45 PM',  seed: 'dw-act-sandbar' },
-      { headliner: false, name: 'Dune Foxes',           stage: 'Cove Stage',  time: '7:30 PM',  seed: 'dw-act-foxes' },
-      { headliner: false, name: 'Pelican Bay Band',     stage: 'Main Stage',  time: '6:00 PM',  seed: 'dw-act-pelican' },
-      { headliner: false, name: 'Low Water Mark',       stage: 'Dune Stage',  time: '4:30 PM',  seed: 'dw-act-low' },
-      { headliner: false, name: 'Blue Kelp',            stage: 'Cove Stage',  time: '3:00 PM',  seed: 'dw-act-kelp' },
-      { headliner: false, name: 'Tide & Bone',          stage: 'Main Stage',  time: '1:30 PM',  seed: 'dw-act-tide' },
-      { headliner: false, name: 'Harbour Light',        stage: 'Dune Stage',  time: '12:15 PM', seed: 'dw-act-harbour' },
-      { headliner: false, name: 'Wrack Line',           stage: 'Cove Stage',  time: '11:00 AM', seed: 'dw-act-wrack' },
+      { headliner: true,  name: 'The Sandbar Kings',   stage: 'Main Stage',  time: '9:45 PM',  lock: 9 },
+      { headliner: false, name: 'Dune Foxes',           stage: 'Cove Stage',  time: '7:30 PM',  lock: 10 },
+      { headliner: false, name: 'Pelican Bay Band',     stage: 'Main Stage',  time: '6:00 PM',  lock: 11 },
+      { headliner: false, name: 'Low Water Mark',       stage: 'Dune Stage',  time: '4:30 PM',  lock: 12 },
+      { headliner: false, name: 'Blue Kelp',            stage: 'Cove Stage',  time: '3:00 PM',  lock: 13 },
+      { headliner: false, name: 'Tide & Bone',          stage: 'Main Stage',  time: '1:30 PM',  lock: 14 },
+      { headliner: false, name: 'Harbour Light',        stage: 'Dune Stage',  time: '12:15 PM', lock: 15 },
+      { headliner: false, name: 'Wrack Line',           stage: 'Cove Stage',  time: '11:00 AM', lock: 16 },
     ],
     sun: [
-      { headliner: true,  name: 'Waveform',             stage: 'Main Stage',  time: '8:30 PM',  seed: 'dw-act-wave' },
-      { headliner: false, name: 'The Shoreliners',      stage: 'Cove Stage',  time: '6:45 PM',  seed: 'dw-act-shore' },
-      { headliner: false, name: 'Inlet Sky',            stage: 'Main Stage',  time: '5:15 PM',  seed: 'dw-act-inlet' },
-      { headliner: false, name: 'Foam & Timber',        stage: 'Dune Stage',  time: '3:45 PM',  seed: 'dw-act-foam' },
-      { headliner: false, name: 'Groundswell',          stage: 'Cove Stage',  time: '2:30 PM',  seed: 'dw-act-ground' },
-      { headliner: false, name: 'Pacific Drift',        stage: 'Main Stage',  time: '1:15 PM',  seed: 'dw-act-pacific' },
-      { headliner: false, name: 'Ebb & Flow',           stage: 'Dune Stage',  time: '12:00 PM', seed: 'dw-act-ebb' },
-      { headliner: false, name: 'Coast Highway',        stage: 'Cove Stage',  time: '10:30 AM', seed: 'dw-act-coast' },
+      { headliner: true,  name: 'Waveform',             stage: 'Main Stage',  time: '8:30 PM',  lock: 17 },
+      { headliner: false, name: 'The Shoreliners',      stage: 'Cove Stage',  time: '6:45 PM',  lock: 18 },
+      { headliner: false, name: 'Inlet Sky',            stage: 'Main Stage',  time: '5:15 PM',  lock: 19 },
+      { headliner: false, name: 'Foam & Timber',        stage: 'Dune Stage',  time: '3:45 PM',  lock: 20 },
+      { headliner: false, name: 'Groundswell',          stage: 'Cove Stage',  time: '2:30 PM',  lock: 21 },
+      { headliner: false, name: 'Pacific Drift',        stage: 'Main Stage',  time: '1:15 PM',  lock: 22 },
+      { headliner: false, name: 'Ebb & Flow',           stage: 'Dune Stage',  time: '12:00 PM', lock: 23 },
+      { headliner: false, name: 'Coast Highway',        stage: 'Cove Stage',  time: '10:30 AM', lock: 24 },
     ],
   };
 
@@ -265,7 +265,7 @@
       <div class="act-card">
         ${act.headliner ? '<div class="headliner-tag">★ HEADLINER</div>' : ''}
         <div class="art">
-          <img src="https://picsum.photos/seed/${act.seed}/280/280" alt="${act.name}" loading="lazy">
+          <img src="https://loremflickr.com/280/280/concert,music?lock=${act.lock}" alt="${act.name}" loading="lazy">
         </div>
         <h4>${act.name}</h4>
         <p>${act.stage} · ${act.time}</p>
