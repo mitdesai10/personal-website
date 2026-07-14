@@ -135,13 +135,18 @@ function DisciplineDiagram() {
         const px  = cx + (nd.x - cx) * p.prog
         const py  = cy + (nd.y - cy) * p.prog
         const alpha = Math.sin(p.prog * Math.PI)
+        // glow via radial gradient — no shadowBlur (expensive)
+        const pg = ctx.createRadialGradient(px, py, 0, px, py, 4 * sc)
+        pg.addColorStop(0, nd.color + Math.round(alpha * 230).toString(16).padStart(2, '0'))
+        pg.addColorStop(1, nd.color + '00')
         ctx.beginPath()
-        ctx.arc(px, py, 2 * sc, 0, Math.PI * 2)
-        ctx.fillStyle = nd.color + Math.round(alpha * 230).toString(16).padStart(2,'0')
-        ctx.shadowBlur  = 7 * sc
-        ctx.shadowColor = nd.color
+        ctx.arc(px, py, 4 * sc, 0, Math.PI * 2)
+        ctx.fillStyle = pg
         ctx.fill()
-        ctx.shadowBlur  = 0
+        ctx.beginPath()
+        ctx.arc(px, py, 1.5 * sc, 0, Math.PI * 2)
+        ctx.fillStyle = nd.color + Math.round(alpha * 230).toString(16).padStart(2, '0')
+        ctx.fill()
       })
 
       // ── Center hub ────────────────────────────────────────
@@ -160,32 +165,42 @@ function DisciplineDiagram() {
       ctx.lineWidth = sc
       ctx.stroke()
 
+      // center dot glow via gradient — no shadowBlur
+      const dg = ctx.createRadialGradient(cx, cy, 0, cx, cy, 16 * sc)
+      dg.addColorStop(0, 'rgba(128,77,238,0.9)')
+      dg.addColorStop(1, 'rgba(128,77,238,0)')
+      ctx.beginPath()
+      ctx.arc(cx, cy, 16 * sc, 0, Math.PI * 2)
+      ctx.fillStyle = dg
+      ctx.fill()
       ctx.beginPath()
       ctx.arc(cx, cy, 5 * sc, 0, Math.PI * 2)
       ctx.fillStyle = '#804dee'
-      ctx.shadowBlur  = 14 * sc
-      ctx.shadowColor = '#804dee'
       ctx.fill()
-      ctx.shadowBlur  = 0
 
       // ── Nodes ─────────────────────────────────────────────
+      const fs = Math.max(7, 8 * sc)
+      ctx.font         = `600 ${fs}px 'IBM Plex Mono', monospace`
+      ctx.textAlign    = 'center'
+      ctx.textBaseline = 'middle'
+
       pos.forEach((p, i) => {
         // Expanding pulse ring (staggered per node)
         const ph2 = (t * 0.45 + i * 0.25) % 1
         if (ph2 < 0.7) {
           ctx.beginPath()
           ctx.arc(p.x, p.y, (7 + ph2 * 22) * sc, 0, Math.PI * 2)
-          ctx.strokeStyle = p.color + Math.round(55 * (1 - ph2 / 0.7)).toString(16).padStart(2,'0')
+          ctx.strokeStyle = p.color + Math.round(55 * (1 - ph2 / 0.7)).toString(16).padStart(2, '0')
           ctx.lineWidth = sc
           ctx.stroke()
         }
 
-        // Node glow
-        const ng = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 15 * sc)
-        ng.addColorStop(0, p.color + '55')
+        // Node glow (radial gradient — no shadowBlur)
+        const ng = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 18 * sc)
+        ng.addColorStop(0, p.color + '66')
         ng.addColorStop(1, p.color + '00')
         ctx.beginPath()
-        ctx.arc(p.x, p.y, 15 * sc, 0, Math.PI * 2)
+        ctx.arc(p.x, p.y, 18 * sc, 0, Math.PI * 2)
         ctx.fillStyle = ng
         ctx.fill()
 
@@ -194,21 +209,16 @@ function DisciplineDiagram() {
         ctx.arc(p.x, p.y, 7 * sc, 0, Math.PI * 2)
         ctx.fillStyle = p.color + '35'
         ctx.fill()
-        ctx.strokeStyle   = p.color
-        ctx.lineWidth     = 1.5 * sc
-        ctx.shadowBlur    = 10 * sc
-        ctx.shadowColor   = p.color
+        ctx.strokeStyle = p.color
+        ctx.lineWidth   = 1.5 * sc
         ctx.stroke()
-        ctx.shadowBlur    = 0
 
-        // Label (radially outside node, always horizontal)
-        const lx = cx + (R + 37 * sc) * Math.cos(p.ang)
-        const ly = cy + (R + 37 * sc) * Math.sin(p.ang)
-        const fs = Math.max(7, 8 * sc)
-        ctx.font          = `${fs}px 'IBM Plex Mono', monospace`
-        ctx.fillStyle     = p.color
-        ctx.textAlign     = 'center'
-        ctx.textBaseline  = 'middle'
+        // Label — tracks node position radially
+        const dx = p.x - cx, dy = p.y - cy
+        const dist = Math.sqrt(dx * dx + dy * dy) || 1
+        const lx = p.x + (dx / dist) * 30 * sc
+        const ly = p.y + (dy / dist) * 30 * sc
+        ctx.fillStyle = p.color
         ORBIT_NODES[i].label.forEach((line, li) => {
           ctx.fillText(line, lx, ly + (li - (ORBIT_NODES[i].label.length - 1) / 2) * (fs + 3))
         })
