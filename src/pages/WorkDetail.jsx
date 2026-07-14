@@ -151,6 +151,156 @@ function AnalyticsDetail({ project }) {
   )
 }
 
+function OlistDetail({ project }) {
+  const { title, tagline, stack, kpis, chartData, findings, dataset, datasetUrl, disciplines: discIds, status, year } = project
+  const DISC_MAP_LOCAL = Object.fromEntries(disciplines.map(d => [d.id, d]))
+  const scoreColor = (s) => s >= 4.2 ? TEAL : s >= 3.8 ? '#a78bfa' : PURPLE
+
+  return (
+    <main className="max-w-5xl mx-auto px-6 pt-32 pb-24">
+      <Link to="/work" className="inline-flex items-center gap-1.5 font-mono text-xs text-muted hover:text-body transition-colors mb-10">
+        ← All work
+      </Link>
+
+      <div className="mb-10">
+        <div className="flex flex-wrap gap-2 mb-4">
+          <span className="tag-cyan">{status}</span>
+          {discIds.map(id => {
+            const d = DISC_MAP_LOCAL[id]
+            return d ? <span key={id} className="tag-cyan">{d.label}</span> : null
+          })}
+          <span className="tag">{year}</span>
+        </div>
+        <h1 className="font-display font-bold text-3xl md:text-4xl text-heading tracking-tight leading-tight mb-3">{title}</h1>
+        <p className="text-body text-lg leading-relaxed max-w-2xl">{tagline}</p>
+        <div className="flex flex-wrap gap-2 mt-5">
+          {stack.map(s => <span key={s} className="tag">{s}</span>)}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {kpis.map((k) => (
+          <div key={k.label} className="bg-canvas-2 border border-border rounded-xl p-5">
+            <p className="font-mono text-xs text-muted mb-2">{k.label}</p>
+            <p className="font-display font-bold text-3xl text-heading mb-1">{k.value}</p>
+            <p className="font-mono text-xs text-muted leading-snug">{k.sub}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-6 mb-8">
+        <div className="bg-canvas-2 border border-border rounded-xl p-6 md:col-span-2">
+          <p className="font-mono text-xs text-muted mb-1">Avg Review Score by Delivery Time</p>
+          <p className="font-display text-sm text-heading font-semibold mb-5">22-day deliveries score 1.4 points lower than 7-day</p>
+          <ResponsiveContainer width="100%" height={200}>
+            <BarChart data={chartData.byDeliveryTime} barSize={56} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
+              <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.04)" />
+              <XAxis dataKey="bucket" tick={{ fill: 'rgba(255,255,255,0.45)', fontSize: 10, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 10, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} domain={[0, 5]} ticks={[0,1,2,3,4,5]} />
+              <Tooltip content={({ active, payload }) => {
+                if (!active || !payload?.length) return null
+                return (
+                  <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+                    <p className="text-muted mb-1">{payload[0]?.payload?.bucket}</p>
+                    <p className="text-heading">{payload[0]?.value} / 5</p>
+                  </div>
+                )
+              }} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
+              <Bar dataKey="score" radius={[4, 4, 0, 0]}>
+                {chartData.byDeliveryTime.map((d) => <Cell key={d.bucket} fill={scoreColor(d.score)} />)}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="bg-canvas-2 border border-border rounded-xl p-6">
+          <p className="font-mono text-xs text-muted mb-1">Monthly Order Volume</p>
+          <p className="font-display text-sm text-heading font-semibold mb-5">Nov 2017 Black Friday spike — then steady ~6.5K/mo</p>
+          <ResponsiveContainer width="100%" height={200}>
+            <AreaChart data={chartData.monthlyOrders} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
+              <defs>
+                <linearGradient id="ordersGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%"  stopColor={TEAL} stopOpacity={0.35} />
+                  <stop offset="95%" stopColor={TEAL} stopOpacity={0.02} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.04)" />
+              <XAxis dataKey="month" tick={{ fill: 'rgba(255,255,255,0.45)', fontSize: 9, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} interval={2} />
+              <YAxis tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 10, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} tickFormatter={v => `${(v/1000).toFixed(0)}K`} />
+              <Tooltip content={({ active, payload }) => {
+                if (!active || !payload?.length) return null
+                return (
+                  <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+                    <p className="text-muted mb-1">{payload[0]?.payload?.month}</p>
+                    <p className="text-heading">{payload[0]?.value?.toLocaleString()} orders</p>
+                  </div>
+                )
+              }} />
+              <Area type="monotone" dataKey="orders" stroke={TEAL} strokeWidth={2} fill="url(#ordersGrad)" dot={{ fill: TEAL, r: 3, strokeWidth: 0 }} />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="bg-canvas-2 border border-border rounded-xl p-6">
+          <p className="font-mono text-xs text-muted mb-1">Freight as % of Order Value by Price Band</p>
+          <p className="font-display text-sm text-heading font-semibold mb-5">Cheap orders carry a 33% freight burden</p>
+          <ResponsiveContainer width="100%" height={200}>
+            <BarChart data={chartData.freightByPrice} layout="vertical" barSize={20} margin={{ top: 0, right: 40, left: 20, bottom: 0 }}>
+              <CartesianGrid horizontal={false} stroke="rgba(255,255,255,0.04)" />
+              <XAxis type="number" tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 10, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} tickFormatter={v => `${v}%`} domain={[0, 40]} />
+              <YAxis type="category" dataKey="band" tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 10, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} width={70} />
+              <Tooltip content={({ active, payload }) => {
+                if (!active || !payload?.length) return null
+                return (
+                  <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+                    <p className="text-muted mb-1">{payload[0]?.payload?.band}</p>
+                    <p className="text-heading">{payload[0]?.value}% of order</p>
+                  </div>
+                )
+              }} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
+              <Bar dataKey="pct" radius={[0, 4, 4, 0]}>
+                {chartData.freightByPrice.map((d) => <Cell key={d.band} fill={chartColor(d.pct)} />)}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      <div className="mb-10">
+        <p className="section-label mb-5">Key Findings</p>
+        <div className="grid md:grid-cols-3 gap-5">
+          {findings.map((f) => (
+            <div key={f.title} className="bg-canvas-2 border border-border rounded-xl p-5">
+              <span className="text-2xl mb-3 block">{f.icon}</span>
+              <h3 className="font-display font-semibold text-sm text-heading mb-2">{f.title}</h3>
+              <p className="font-mono text-xs text-muted leading-relaxed">{f.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <p className="font-mono text-xs text-muted border-t border-border pt-6 mb-16">
+        Dataset:{' '}
+        <a href={datasetUrl} target="_blank" rel="noopener noreferrer" className="text-cyan hover:underline">{dataset}</a>
+        {' '}· Analysis by Mit Desai
+      </p>
+
+      <div className="pt-8 border-t border-border flex justify-between gap-4">
+        {(() => {
+          const idx = projects.findIndex(p => p.slug === project.slug)
+          const prev = projects[idx - 1], next = projects[idx + 1]
+          return (
+            <>
+              <div>{prev && <Link to={`/work/${prev.slug}`} className="group flex flex-col gap-0.5"><span className="font-mono text-xs text-muted group-hover:text-body transition-colors">← Previous</span><span className="font-display text-sm text-heading group-hover:text-cyan transition-colors">{prev.title}</span></Link>}</div>
+              <div className="text-right">{next && <Link to={`/work/${next.slug}`} className="group flex flex-col gap-0.5 items-end"><span className="font-mono text-xs text-muted group-hover:text-body transition-colors">Next →</span><span className="font-display text-sm text-heading group-hover:text-cyan transition-colors">{next.title}</span></Link>}</div>
+            </>
+          )
+        })()}
+      </div>
+    </main>
+  )
+}
+
 const DISC_MAP = Object.fromEntries(disciplines.map(d => [d.id, d]))
 
 const STATUS_STYLES = {
@@ -176,6 +326,7 @@ export default function WorkDetail() {
 
   if (!project) return <Navigate to="/work" replace />
   if (project.type === 'analytics') return <AnalyticsDetail project={project} />
+  if (project.type === 'analytics-olist') return <OlistDetail project={project} />
 
   const {
     title, tagline, disciplines: discIds, status,

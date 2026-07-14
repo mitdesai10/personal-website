@@ -226,6 +226,85 @@ export const projects = [
       'Identified three actionable levers: (1) contract conversion from M2M to annual is the single highest-ROI move, (2) a first-90-days onboarding intervention would address 53% early churn, (3) fiber optic pricing needs re-evaluation against satisfaction data.',
     featured: false,
   },
+
+  {
+    slug: 'olist-ecommerce-analysis',
+    title: 'Finding the Friction Points Across 99K Orders',
+    tagline: 'Joined 9 tables across a $16M Brazilian marketplace to pinpoint the delivery, freight, and seller-concentration issues suppressing platform revenue and customer satisfaction.',
+    disciplines: ['data'],
+    status: 'shipped',
+    year: '2024',
+    role: 'Data Analyst',
+    timeline: '2024 · Exploratory Analysis',
+    stack: ['Python', 'pandas', 'Matplotlib', 'Seaborn', 'Jupyter'],
+    stats: [
+      { value: '99K',   label: 'Orders Analysed' },
+      { value: 'R$16M', label: 'Total GMV' },
+      { value: '4.09',  label: 'Avg Review Score' },
+    ],
+    type: 'analytics-olist',
+    dataset: 'Brazilian E-Commerce Public Dataset by Olist · 99,441 orders',
+    datasetUrl: 'https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce',
+    kpis: [
+      { label: 'Total Orders',     value: '99,441',  sub: 'Sep 2016 – Aug 2018' },
+      { label: 'Total GMV',        value: 'R$16M',   sub: 'R$160.99 avg order value' },
+      { label: 'Avg Review Score', value: '4.09/5',  sub: '57.8% of customers give 5 stars' },
+      { label: 'On-Time Delivery', value: '91.9%',   sub: '7,826 orders arrived late' },
+    ],
+    chartData: {
+      byDeliveryTime: [
+        { bucket: '1–7 days',   score: 4.41 },
+        { bucket: '8–14 days',  score: 4.29 },
+        { bucket: '15–21 days', score: 4.10 },
+        { bucket: '22+ days',   score: 3.03 },
+      ],
+      monthlyOrders: [
+        { month: 'Sep 17', orders: 4150 },
+        { month: 'Oct 17', orders: 4478 },
+        { month: 'Nov 17', orders: 7289 },
+        { month: 'Dec 17', orders: 5513 },
+        { month: 'Jan 18', orders: 7069 },
+        { month: 'Feb 18', orders: 6555 },
+        { month: 'Mar 18', orders: 7003 },
+        { month: 'Apr 18', orders: 6798 },
+        { month: 'May 18', orders: 6749 },
+        { month: 'Jun 18', orders: 6099 },
+        { month: 'Jul 18', orders: 6159 },
+        { month: 'Aug 18', orders: 6351 },
+      ],
+      freightByPrice: [
+        { band: '<R$50',      pct: 33.2 },
+        { band: 'R$50–100',  pct: 18.9 },
+        { band: 'R$100–200', pct: 13.5 },
+        { band: 'R$200–500', pct: 9.1  },
+        { band: 'R$500+',    pct: 5.2  },
+      ],
+    },
+    findings: [
+      {
+        icon: '🚚',
+        title: 'Delivery time directly controls review score',
+        body: 'Orders delivered in under 7 days average 4.41/5. Orders taking 22+ days collapse to 3.03/5 — a 1.4-point drop. Just 8.1% of orders arrived late, yet they generate 30% of all 1-star reviews.',
+      },
+      {
+        icon: '📦',
+        title: 'Freight erodes unit economics on cheap orders',
+        body: 'For orders under R$50, freight averages 33.2% of total transaction value — making free-shipping promotions on small items structurally loss-making. Above R$200, freight drops to 9.1%, where the economics work.',
+      },
+      {
+        icon: '🏪',
+        title: 'Top 10% of sellers drive 67.5% of revenue',
+        body: 'Of 3,095 sellers, the top 310 account for two-thirds of all GMV. The median seller generates only R$821 in lifetime revenue — a long-tail base that needs better discovery and merchandising to scale.',
+      },
+    ],
+    problem:
+      'Olist, a Brazilian e-commerce marketplace, needed to understand what friction points were suppressing customer satisfaction and platform revenue across 99,000+ orders from 3,095 sellers.',
+    approach:
+      'Joined 9 tables across orders, items, payments, reviews, products, and sellers. Segmented review scores by delivery time bands, modelled freight economics by order value tier, and ran a Pareto breakdown of seller revenue concentration.',
+    result:
+      'Three platform levers identified: (1) enforce tighter seller SLAs — the 8.1% of late orders generate 30% of 1-star reviews; (2) raise the free-shipping threshold above R$100 where freight economics become viable; (3) build a seller performance tier to surface high-quality long-tail sellers.',
+    featured: false,
+  },
 ]
 
 // ─── WEB PROJECTS ────────────────────────────────────────────────────────────
