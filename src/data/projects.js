@@ -46,8 +46,8 @@ export const experiences = [
     location: 'Somerville, NJ',
     date: 'Mar 2025 – Present',
     initials: 'CI',
-    iconBg: '#0F2A2A',
-    iconColor: '#5EEAD4',
+    iconBg: '#1a0d3a',
+    iconColor: '#804dee',
     points: [
       'Designed and deployed Power BI dashboards for revenue, project performance, and staffing utilization, delivering real-time insights to senior leadership.',
       'Architected advanced analytics instrumentation using GA4, Google Tag Manager, and Microsoft Clarity — custom event tracking, scroll depth, and CTA analytics across client properties.',
@@ -61,8 +61,8 @@ export const experiences = [
     location: 'Atlanta, GA',
     date: 'Jun 2020 – Jul 2023',
     initials: 'K3',
-    iconBg: '#1A1400',
-    iconColor: '#F5A623',
+    iconBg: '#0a2520',
+    iconColor: '#00cea8',
     points: [
       'Optimized marketing spend across Google Ads, Bing, and Meta to achieve a 20× ROI, driving $2M+ in monthly revenue growth.',
       'Led SEO and SEM campaigns for Baxter Cabinets, driving a 30% YoY increase in online sales and a 28% boost in organic search traffic.',
@@ -77,8 +77,8 @@ export const experiences = [
     location: 'Mumbai, MH',
     date: 'May 2019 – May 2020',
     initials: 'CM',
-    iconBg: '#0F1A2A',
-    iconColor: '#5EEAD4',
+    iconBg: '#1a0d3a',
+    iconColor: '#804dee',
     points: [
       'Deployed client websites using WordPress, Wix, and SquareSpace with best practices in UI/UX and SEO, achieving a 40% uplift in web traffic.',
       'Managed the digital campaign for the Premier Badminton League (PBL) with StarSports, doubling Instagram and Facebook followers and increasing engagement by 115%.',

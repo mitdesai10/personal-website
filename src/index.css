@@ -3,14 +3,10 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-  }
+  html { scroll-behavior: smooth; }
 
   @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
+    html { scroll-behavior: auto; }
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
@@ -18,13 +14,9 @@
     }
   }
 
-  body {
-    @apply bg-canvas text-body font-sans antialiased;
-  }
+  body { @apply bg-canvas text-body font-sans antialiased; }
 
-  ::selection {
-    @apply bg-cyan/30 text-heading;
-  }
+  ::selection { @apply bg-cyan/30 text-heading; }
 
   :focus-visible {
     @apply outline-none ring-2 ring-cyan ring-offset-2 ring-offset-canvas rounded-sm;
@@ -34,21 +26,21 @@
 @layer components {
   .grid-bg {
     background-image:
-      linear-gradient(rgba(94, 234, 212, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(94, 234, 212, 0.04) 1px, transparent 1px);
+      linear-gradient(rgba(128, 77, 238, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(128, 77, 238, 0.06) 1px, transparent 1px);
     background-size: 40px 40px;
   }
 
   .tag {
-    @apply font-mono text-xs px-2 py-0.5 rounded border border-border-2 text-muted uppercase tracking-wider;
+    @apply font-mono text-xs px-2 py-0.5 rounded-full border border-border-2 text-muted uppercase tracking-wider;
   }
 
   .tag-cyan {
-    @apply font-mono text-xs px-2 py-0.5 rounded border border-cyan/30 text-cyan bg-cyan/5 uppercase tracking-wider;
+    @apply font-mono text-xs px-2 py-0.5 rounded-full border border-cyan/40 text-cyan bg-cyan/10 uppercase tracking-wider;
   }
 
   .tag-amber {
-    @apply font-mono text-xs px-2 py-0.5 rounded border border-amber/30 text-amber bg-amber/5 uppercase tracking-wider;
+    @apply font-mono text-xs px-2 py-0.5 rounded-full border border-amber/40 text-amber bg-amber/10 uppercase tracking-wider;
   }
 
   .section-label {
@@ -56,7 +48,7 @@
   }
 
   .stat-block {
-    @apply border border-border bg-canvas-2 p-4 rounded;
+    @apply border border-border bg-canvas-2 p-4 rounded-xl;
   }
 
   .divider {
@@ -70,31 +62,55 @@
   .prose-dark h3 {
     @apply font-display text-lg font-semibold text-heading mb-2 mt-6;
   }
+
+  /* Gradient border card wrapper */
+  .gradient-border {
+    background: linear-gradient(90.13deg, #00cea8 1.9%, #bf61ff 97.5%);
+    padding: 1px;
+    border-radius: 16px;
+  }
+
+  .gradient-border-inner {
+    @apply bg-canvas-2 rounded-2xl w-full h-full;
+  }
+
+  /* Violet gradient line */
+  .violet-line {
+    background: linear-gradient(180deg, #804dee 0%, rgba(60, 51, 80, 0) 100%);
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(90deg, #804dee, #00cea8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #12141C; }
-::-webkit-scrollbar-thumb { background: #2A2E3F; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #353A52; }
+::-webkit-scrollbar-track { background: #050816; }
+::-webkit-scrollbar-thumb { background: #1a1745; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #2d2b55; }
 
 /* ── Vertical Timeline overrides ─────────────────────────────────────────── */
 .vertical-timeline::before {
-  background: #2A2E3F !important;
+  background: #1a1745 !important;
   width: 2px !important;
 }
 .vertical-timeline-element-content {
-  background: #1A1D28 !important;
-  border: 1px solid #2A2E3F !important;
-  border-radius: 6px !important;
-  box-shadow: none !important;
+  background: #151030 !important;
+  border: 1px solid #1a1745 !important;
+  border-radius: 16px !important;
+  box-shadow: 0px 35px 120px -15px #211e35 !important;
   padding: 1.5rem !important;
 }
 .vertical-timeline-element-content-arrow {
-  border-right-color: #2A2E3F !important;
+  border-right-color: #1a1745 !important;
 }
 .vertical-timeline-element-date {
-  color: #6B7280 !important;
+  color: #7b7a9a !important;
   font-family: 'IBM Plex Mono', monospace !important;
   font-size: 0.75rem !important;
   letter-spacing: 0.05em !important;
