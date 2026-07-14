@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ashwood & Fen — Roasted in Small Batches</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bark:#2B1D14;
+    --parchment:#EFE6D8;
+    --copper:#B5651D;
+    --moss:#4A5D3A;
+    --cream:#F7F1E8;
+    --ink:#241811;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Work Sans',sans-serif;
+    line-height:1.5;
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+
+  /* ticker */
+  .ticker{
+    background:var(--bark);
+    color:var(--parchment);
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.06em;
+    padding:8px 0;
+    overflow:hidden;
+    white-space:nowrap;
+  }
+  .ticker span{padding:0 24px;}
+
+  /* nav */
+  header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:26px 32px;
+    max-width:1180px;margin:0 auto;
+    border-bottom:1px solid rgba(43,29,20,0.12);
+  }
+  .logo{
+    font-family:'Libre Caslon Display',serif;
+    font-size:24px;
+    letter-spacing:0.01em;
+  }
+  .logo em{color:var(--copper);font-style:normal;}
+  nav ul{list-style:none;display:flex;gap:36px;}
+  nav a{font-size:14px;font-weight:500;letter-spacing:0.02em;position:relative;}
+  nav a::after{content:'';position:absolute;left:0;bottom:-4px;width:0;height:1px;background:var(--copper);transition:width .25s ease;}
+  nav a:hover::after{width:100%;}
+  .cart-btn{
+    display:flex;align-items:center;gap:8px;
+    background:var(--bark);color:var(--cream);
+    padding:10px 18px;border-radius:2px;
+    font-size:13px;font-weight:600;letter-spacing:0.04em;
+    cursor:pointer;border:none;
+  }
+
+  /* hero */
+  .hero{
+    display:grid;grid-template-columns:1.1fr 0.9fr;
+    align-items:center;
+    padding:70px 32px 90px;
+    max-width:1180px;margin:0 auto;
+    gap:60px;
+  }
+  .hero .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;color:var(--copper);letter-spacing:0.1em;
+    margin-bottom:20px;
+  }
+  .hero h1{
+    font-family:'Libre Caslon Display',serif;
+    font-size:clamp(40px,5.2vw,64px);
+    line-height:1.05;
+    margin-bottom:24px;
+  }
+  .hero p{font-size:17px;max-width:440px;color:#463527;margin-bottom:32px;}
+  .hero-cta{display:flex;gap:14px;}
+  .btn-primary{
+    background:var(--copper);color:var(--cream);
+    padding:15px 28px;border:none;border-radius:2px;
+    font-weight:600;font-size:14px;letter-spacing:0.03em;cursor:pointer;
+  }
+  .btn-ghost{
+    background:transparent;border:1px solid var(--bark);
+    padding:15px 28px;border-radius:2px;
+    font-weight:600;font-size:14px;letter-spacing:0.03em;cursor:pointer;
+  }
+  .hero-art{
+    aspect-ratio:1/1.05;
+    background:
+      radial-gradient(circle at 30% 25%, rgba(181,101,29,0.55), transparent 55%),
+      linear-gradient(160deg,var(--bark),#3d2a1c 70%);
+    border-radius:4px;
+    position:relative;
+    display:flex;align-items:flex-end;padding:26px;
+  }
+  .roast-stamp{
+    background:var(--parchment);
+    color:var(--bark);
+    padding:14px 18px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;line-height:1.6;
+    border:1px dashed var(--copper);
+    transform:rotate(-2deg);
+  }
+
+  /* section label */
+  .section-head{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    margin-bottom:36px;
+  }
+  .section-head h2{font-family:'Libre Caslon Display',serif;font-size:34px;}
+  .section-head .tag{
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--copper);
+  }
+
+  /* products */
+  .products{padding:60px 32px 90px;max-width:1180px;margin:0 auto;}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+  .card{
+    background:var(--parchment);
+    border-radius:3px;overflow:hidden;
+    display:flex;flex-direction:column;
+  }
+  .card-art{
+    aspect-ratio:1;
+    background:linear-gradient(155deg,var(--bark) 0%, #4a3524 100%);
+    position:relative;
+  }
+  .card-art .batch{
+    position:absolute;top:12px;left:12px;
+    font-family:'JetBrains Mono',monospace;font-size:10px;
+    color:var(--parchment);background:rgba(0,0,0,0.35);
+    padding:4px 8px;border-radius:2px;letter-spacing:0.04em;
+  }
+  .card-body{padding:18px 18px 20px;}
+  .card-body .origin{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--copper);margin-bottom:6px;}
+  .card-body h3{font-family:'Libre Caslon Display',serif;font-size:19px;margin-bottom:8px;}
+  .card-body p.notes{font-size:13px;color:#5c4a3a;margin-bottom:14px;}
+  .card-foot{display:flex;justify-content:space-between;align-items:center;}
+  .price{font-weight:700;font-size:15px;}
+  .add-btn{
+    background:var(--bark);color:var(--cream);border:none;
+    padding:8px 14px;font-size:12px;font-weight:600;border-radius:2px;cursor:pointer;
+  }
+
+  /* process band */
+  .band{background:var(--moss);color:var(--cream);padding:64px 32px;}
+  .band-inner{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:32px;}
+  .band h4{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.08em;opacity:0.75;margin-bottom:10px;}
+  .band p{font-size:14px;line-height:1.6;opacity:0.92;}
+
+  /* footer */
+  footer{padding:50px 32px 40px;max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(43,29,20,0.12);margin-top:20px;}
+  footer .f-logo{font-family:'Libre Caslon Display',serif;font-size:18px;}
+  footer .f-links{display:flex;gap:24px;font-size:13px;}
+
+  @media(max-width:900px){
+    .hero{grid-template-columns:1fr;}
+    .grid{grid-template-columns:repeat(2,1fr);}
+    nav ul{display:none;}
+    .band-inner{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<div class="ticker"><span>FREE SHIPPING OVER $45 —</span><span>NEW: KAYON MOUNTAIN NATURAL, DROPS FRIDAY —</span><span>ROASTED WEEKLY IN SMALL BATCHES —</span><span>FREE SHIPPING OVER $45 —</span><span>NEW: KAYON MOUNTAIN NATURAL, DROPS FRIDAY —</span></div>
+
+<header>
+  <div class="logo">Ashwood <em>&</em> Fen</div>
+  <nav><ul>
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#origins">Origins</a></li>
+    <li><a href="#subscribe">Subscribe</a></li>
+  </ul></nav>
+  <button class="cart-btn">Cart (0)</button>
+</header>
+
+<section class="hero">
+  <div>
+    <div class="eyebrow">BATCH №214 · ROASTED TUESDAY</div>
+    <h1>Coffee, traced back to the hands that grew it.</h1>
+    <p>We roast in 12kg batches, twice a week, and put the farm, the harvest, and the roast date on every bag. No blends you can't trace.</p>
+    <div class="hero-cta">
+      <button class="btn-primary">Shop This Week's Roast</button>
+      <button class="btn-ghost">Our Sourcing</button>
+    </div>
+  </div>
+  <div class="hero-art">
+    <div class="roast-stamp">
+      LOT: ETH-YIR-0447<br>
+      FARM: Yirgacheffe Coop<br>
+      ROAST: Light · Filter<br>
+      DATE: 07·09·2026
+    </div>
+  </div>
+</section>
+
+<section class="products" id="shop">
+  <div class="section-head">
+    <h2>This week's lineup</h2>
+    <div class="tag">4 ORIGINS · 240 BAGS ROASTED</div>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <div class="card-art"><span class="batch">LOT 0447</span></div>
+      <div class="card-body">
+        <div class="origin">ETHIOPIA · YIRGACHEFFE</div>
+        <h3>Kayon Mountain</h3>
+        <p class="notes">Bergamot, stone fruit, black tea finish.</p>
+        <div class="card-foot"><span class="price">$21</span><button class="add-btn">Add to bag</button></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-art"><span class="batch">LOT 0441</span></div>
+      <div class="card-body">
+        <div class="origin">COLOMBIA · HUILA</div>
+        <h3>La Esperanza</h3>
+        <p class="notes">Brown sugar, red apple, soft acidity.</p>
+        <div class="card-foot"><span class="price">$19</span><button class="add-btn">Add to bag</button></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-art"><span class="batch">LOT 0439</span></div>
+      <div class="card-body">
+        <div class="origin">GUATEMALA · HUEHUETENANGO</div>
+        <h3>Finca Vista Alta</h3>
+        <p class="notes">Cocoa nib, orange zest, heavy body.</p>
+        <div class="card-foot"><span class="price">$20</span><button class="add-btn">Add to bag</button></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-art"><span class="batch">LOT 0450</span></div>
+      <div class="card-body">
+        <div class="origin">INDONESIA · SUMATRA</div>
+        <h3>Lintong Reserve</h3>
+        <p class="notes">Cedar, dark chocolate, low acid.</p>
+        <div class="card-foot"><span class="price">$22</span><button class="add-btn">Add to bag</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="process">
+  <div class="band-inner">
+    <div><h4>01 · SOURCE</h4><p>We buy direct from 14 farms and cooperatives, at prices set above Fair Trade minimums.</p></div>
+    <div><h4>02 · CUP</h4><p>Every lot is cupped blind by three roasters before it earns a place in the lineup.</p></div>
+    <div><h4>03 · ROAST</h4><p>Small 12kg batches on a 1962 Probat, logged and adjusted by ear and smell.</p></div>
+    <div><h4>04 · SHIP</h4><p>Bagged within 48 hours of roasting, one-way valve, out the door within a week.</p></div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo">Ashwood & Fen</div>
+  <div class="f-links"><a href="#">Wholesale</a><a href="#">Subscriptions</a><a href="#">Find a Cafe</a><a href="#">Contact</a></div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ember & Salt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --charcoal:#241F1D;
+    --ember:#C1552C;
+    --olive:#6B7052;
+    --bone:#F2EEE6;
+    --gold:#C9A15A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--charcoal);color:var(--bone);font-family:'Karla',sans-serif;}
+  a{color:inherit;text-decoration:none;}
+
+  header{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:30px 48px;position:relative;z-index:5;
+  }
+  .logo{font-family:'DM Serif Display',serif;font-size:24px;letter-spacing:0.02em;}
+  nav ul{list-style:none;display:flex;gap:32px;}
+  nav a{font-size:13px;letter-spacing:0.08em;text-transform:uppercase;opacity:0.85;}
+  nav a:hover{opacity:1;color:var(--gold);}
+  .reserve-btn{border:1px solid var(--gold);color:var(--gold);padding:10px 20px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;border-radius:2px;}
+
+  .hero{
+    position:relative;
+    min-height:640px;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+    padding:80px 32px;
+    background:
+      radial-gradient(ellipse at 50% 100%, rgba(193,85,44,0.35), transparent 60%),
+      linear-gradient(180deg, var(--charcoal) 0%, #1a1512 100%);
+    overflow:hidden;
+  }
+  .hero::before{
+    content:'';position:absolute;bottom:-40%;left:50%;transform:translateX(-50%);
+    width:900px;height:900px;border-radius:50%;
+    background:radial-gradient(circle, rgba(193,85,44,0.25), transparent 65%);
+  }
+  .hero .kicker{font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:22px;position:relative;}
+  .hero h1{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(46px,7vw,88px);line-height:1.05;max-width:800px;position:relative;margin-bottom:26px;}
+  .hero p{max-width:460px;font-size:16px;opacity:0.8;line-height:1.6;position:relative;margin-bottom:34px;}
+  .hero-cta{display:flex;gap:16px;position:relative;}
+  .btn-fill{background:var(--ember);color:var(--bone);padding:15px 30px;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;border:none;border-radius:2px;}
+  .btn-outline{border:1px solid rgba(242,238,230,0.4);color:var(--bone);padding:15px 30px;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;border-radius:2px;}
+
+  .divider{display:flex;align-items:center;justify-content:center;gap:16px;padding:50px 0 30px;}
+  .divider span{width:40px;height:1px;background:rgba(242,238,230,0.3);}
+  .divider p{font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);}
+
+  .menu{max-width:900px;margin:0 auto;padding:0 32px 90px;}
+  .menu-section{margin-bottom:50px;}
+  .menu-section h3{font-family:'DM Serif Display',serif;font-style:italic;font-size:26px;color:var(--gold);margin-bottom:24px;text-align:center;}
+  .menu-item{display:flex;justify-content:space-between;align-items:baseline;padding:16px 0;border-bottom:1px dotted rgba(242,238,230,0.2);gap:20px;}
+  .menu-item .name{font-family:'Karla',sans-serif;font-weight:600;font-size:16px;}
+  .menu-item .desc{font-size:13px;opacity:0.65;margin-top:4px;font-style:italic;}
+  .menu-item .price{font-size:15px;color:var(--gold);white-space:nowrap;}
+
+  .about{background:var(--bone);color:var(--charcoal);padding:90px 32px;}
+  .about-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:0.9fr 1.1fr;gap:60px;align-items:center;}
+  .about-art{aspect-ratio:4/5;background:linear-gradient(155deg,var(--olive),#41442f 80%);border-radius:4px;}
+  .about-text .kicker{color:var(--ember);font-size:13px;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:16px;}
+  .about-text h2{font-family:'DM Serif Display',serif;font-size:36px;margin-bottom:20px;line-height:1.2;}
+  .about-text p{font-size:15px;line-height:1.7;color:#4a423c;margin-bottom:16px;}
+
+  .hours-band{background:var(--olive);padding:60px 32px;}
+  .hours-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+  .hours-inner h4{font-family:'DM Serif Display',serif;font-style:italic;font-size:22px;margin-bottom:18px;}
+  .hours-row{display:flex;justify-content:space-between;font-size:14px;padding:8px 0;border-bottom:1px solid rgba(242,238,230,0.15);}
+
+  footer{padding:50px 32px;text-align:center;}
+  footer .logo{font-size:22px;margin-bottom:14px;}
+  footer p{font-size:13px;opacity:0.6;}
+
+  @media(max-width:800px){
+    nav ul{display:none;}
+    .about-inner{grid-template-columns:1fr;}
+    .hours-inner{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Ember & Salt</div>
+  <nav><ul>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#hours">Hours</a></li>
+  </ul></nav>
+  <button class="reserve-btn">Reserve</button>
+</header>
+
+<section class="hero">
+  <div class="kicker">Wood-Fired · Neighborhood · Since 2019</div>
+  <h1>Everything we cook touches the fire.</h1>
+  <p>A small wood-fired kitchen on the corner of 5th and Alder, serving seasonal plates built around whatever's good that week.</p>
+  <div class="hero-cta">
+    <button class="btn-fill">Reserve a table</button>
+    <button class="btn-outline">View menu</button>
+  </div>
+</section>
+
+<div class="divider"><span></span><p>Tonight's Menu</p><span></span></div>
+
+<section class="menu" id="menu">
+  <div class="menu-section">
+    <h3>To Start</h3>
+    <div class="menu-item"><div><div class="name">Charred Octopus</div><div class="desc">white bean purée, smoked paprika oil</div></div><div class="price">$19</div></div>
+    <div class="menu-item"><div><div class="name">Fire-Roasted Beets</div><div class="desc">whipped goat cheese, hazelnut, honey</div></div><div class="price">$14</div></div>
+    <div class="menu-item"><div><div class="name">Embered Flatbread</div><div class="desc">confit garlic, rosemary, sea salt</div></div><div class="price">$11</div></div>
+  </div>
+  <div class="menu-section">
+    <h3>Mains</h3>
+    <div class="menu-item"><div><div class="name">Whole Fire-Roasted Trout</div><div class="desc">brown butter, capers, charred lemon</div></div><div class="price">$32</div></div>
+    <div class="menu-item"><div><div class="name">Dry-Aged Ribeye</div><div class="desc">bone marrow butter, ember-roasted potatoes</div></div><div class="price">$48</div></div>
+    <div class="menu-item"><div><div class="name">Wood-Fired Mushroom Risotto</div><div class="desc">taleggio, thyme, crispy shallot</div></div><div class="price">$26</div></div>
+  </div>
+  <div class="menu-section">
+    <h3>To Finish</h3>
+    <div class="menu-item"><div><div class="name">Burnt Basque Cheesecake</div><div class="desc">macerated berries</div></div><div class="price">$12</div></div>
+    <div class="menu-item"><div><div class="name">Affogato</div><div class="desc">espresso, vanilla bean gelato</div></div><div class="price">$9</div></div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-art"></div>
+    <div class="about-text">
+      <div class="kicker">Our Story</div>
+      <h2>Started with one oven and a produce stand.</h2>
+      <p>Ember & Salt opened in 2019 as a fourteen-seat counter built around a single wood-fired oven. Seven years later, the oven is still the whole point — the menu changes with what the fire and the farmers' market give us that week.</p>
+      <p>Chef Dana Reyes leads a small kitchen that sources from six farms within forty miles, and the wine list is built to match — mostly small producers, mostly things you haven't heard of yet.</p>
+    </div>
+  </div>
+</section>
+
+<section class="hours-band" id="hours">
+  <div class="hours-inner">
+    <div>
+      <h4>Hours</h4>
+      <div class="hours-row"><span>Tuesday – Thursday</span><span>5:00pm – 10:00pm</span></div>
+      <div class="hours-row"><span>Friday – Saturday</span><span>5:00pm – 11:00pm</span></div>
+      <div class="hours-row"><span>Sunday</span><span>5:00pm – 9:00pm</span></div>
+      <div class="hours-row"><span>Monday</span><span>Closed</span></div>
+    </div>
+    <div>
+      <h4>Find Us</h4>
+      <div class="hours-row"><span>Address</span><span>412 5th Ave, Portland OR</span></div>
+      <div class="hours-row"><span>Reservations</span><span>(503) 555-0192</span></div>
+      <div class="hours-row"><span>Private events</span><span>events@emberandsalt.com</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">Ember & Salt</div>
+  <p>412 5th Ave, Portland OR · © 2026</p>
+</footer>
+
+</body>
+</html>

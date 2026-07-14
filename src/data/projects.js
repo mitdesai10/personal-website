@@ -159,6 +159,90 @@ export const projects = [
   },
 ]
 
+// ─── WEB PROJECTS ────────────────────────────────────────────────────────────
+export const webProjects = [
+  {
+    id: 'ashwood-fen',
+    name: 'Ashwood & Fen',
+    subtitle: 'Specialty Coffee Roastery',
+    format: 'Ecommerce',
+    tagline: 'Product-grid ecommerce with batch traceability and cart UX patterns.',
+    palette: ['#3b1f0e', '#b87333', '#6b7c45', '#f5f0e8'],
+    highlights: [
+      'Product card system with origin/batch metadata',
+      'Promotional ticker / DTC marquee pattern',
+      'Process trust band (source → cup → roast → ship)',
+      'Serif + monospace typographic pairing',
+    ],
+    file: '/sites/01-ashwood-fen-ecommerce.html',
+    color: 'amber',
+  },
+  {
+    id: 'kessler-ito',
+    name: 'Kessler Ito',
+    subtitle: 'Architecture Studio',
+    format: 'Static Portfolio',
+    tagline: 'Long-form static portfolio with editorial pacing and blueprint-driven layout.',
+    palette: ['#1a1a1a', '#2c2c2c', '#f4f1ec', '#9b8b70'],
+    highlights: [
+      'Single-scroll sticky nav with full-bleed project blocks',
+      'Editorial type pairing — condensed grotesque + classic serif',
+      'Blueprint grid overlay throughout',
+      'Three colors, two typefaces — no animation gimmicks',
+    ],
+    file: '/sites/02-kessler-ito-static.html',
+    color: 'cyan',
+  },
+  {
+    id: 'portside',
+    name: 'Portside',
+    subtitle: 'B2B Logistics SaaS',
+    format: 'SaaS Marketing Site',
+    tagline: 'Full B2B SaaS marketing site — hero, feature grid, pricing tiers, and live-product UI.',
+    palette: ['#0f1f3d', '#1e3a6e', '#f59e0b', '#94a3b8'],
+    highlights: [
+      'Full SaaS site: hero, social proof, features, pricing, CTA',
+      'Embedded "live product" panel with status pills in the hero',
+      'Three-tier pricing table with featured/recommended tier',
+      'Logo bar + stats band social proof patterns',
+    ],
+    file: '/sites/03-portside-corporate.html',
+    color: 'cyan',
+  },
+  {
+    id: 'ember-salt',
+    name: 'Ember & Salt',
+    subtitle: 'Neighborhood Bistro',
+    format: 'Restaurant',
+    tagline: 'Mood-driven restaurant site with itemized menu and reservation-focused CTAs.',
+    palette: ['#1c1008', '#c2440c', '#d4a017', '#f7f0e6'],
+    highlights: [
+      'Atmosphere via gradient firelight — no photography needed',
+      'Menu section with dotted price leaders and italic descriptors',
+      'Tight single-CTA strategy (reserve a table)',
+      'Italic serif display for hospitality mood',
+    ],
+    file: '/sites/04-ember-salt-restaurant.html',
+    color: 'amber',
+  },
+  {
+    id: 'driftwood-festival',
+    name: 'Driftwood Festival',
+    subtitle: 'Three-Day Coastal Music Festival',
+    format: 'Event & Ticketing',
+    tagline: 'High-energy event site with countdown, lineup grid, and tiered ticket sales.',
+    palette: ['#2d1b6b', '#e8553b', '#f5c842', '#00c9b1'],
+    highlights: [
+      'Live countdown timer to event date',
+      'Day-tabbed lineup grid for browsability',
+      'Tiered ticketing with "most popular" highlight',
+      'Bold saturated palette — earned visual energy for a festival brand',
+    ],
+    file: '/sites/05-driftwood-festival-event.html',
+    color: 'cyan',
+  },
+]
+
 // ─── ABOUT ───────────────────────────────────────────────────────────────────
 export const about = {
   name: 'Mit Desai',

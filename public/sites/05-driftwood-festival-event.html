@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Driftwood Festival 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --purple:#2D1B4E;
+    --coral:#FF6B5B;
+    --gold:#FFC857;
+    --teal:#1C8C8C;
+    --cream:#FFF8ED;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--purple);color:var(--cream);font-family:'Work Sans',sans-serif;overflow-x:hidden;}
+  a{color:inherit;text-decoration:none;}
+  .display{font-family:'Bebas Neue',sans-serif;letter-spacing:0.02em;}
+
+  header{display:flex;justify-content:space-between;align-items:center;padding:26px 40px;position:relative;z-index:10;}
+  .logo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:0.04em;}
+  nav ul{list-style:none;display:flex;gap:30px;}
+  nav a{font-size:14px;font-weight:500;}
+  .tix-btn{background:var(--coral);color:var(--purple);padding:11px 22px;border-radius:30px;font-weight:700;font-size:13px;}
+
+  .hero{
+    position:relative;min-height:640px;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+    padding:60px 32px;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(255,200,87,0.25), transparent 45%),
+      radial-gradient(circle at 80% 70%, rgba(28,140,140,0.3), transparent 45%),
+      linear-gradient(180deg, var(--purple), #1c1033);
+    overflow:hidden;
+  }
+  .wave-line{position:absolute;bottom:0;left:0;width:100%;height:120px;opacity:0.5;}
+  .hero .dates{font-size:14px;letter-spacing:0.2em;color:var(--gold);margin-bottom:18px;font-weight:600;}
+  .hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,13vw,180px);line-height:0.85;letter-spacing:0.01em;
+    background:linear-gradient(120deg,var(--coral),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero .sub{font-size:16px;max-width:480px;margin:22px 0 34px;opacity:0.85;}
+  .hero-cta{display:flex;gap:16px;position:relative;z-index:2;}
+  .btn-fill{background:var(--coral);color:var(--purple);padding:16px 32px;border-radius:30px;font-weight:700;font-size:14px;border:none;}
+  .btn-outline{border:1px solid rgba(255,248,237,0.4);padding:16px 32px;border-radius:30px;font-weight:700;font-size:14px;}
+  .countdown{display:flex;gap:22px;margin-top:44px;position:relative;z-index:2;}
+  .countdown div{text-align:center;}
+  .countdown .n{font-family:'Bebas Neue',sans-serif;font-size:34px;color:var(--teal);background:rgba(255,248,237,0.08);width:70px;height:70px;border-radius:12px;display:flex;align-items:center;justify-content:center;}
+  .countdown .l{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;opacity:0.7;margin-top:8px;}
+
+  .lineup{padding:90px 32px;max-width:1200px;margin:0 auto;}
+  .section-head{text-align:center;margin-bottom:50px;}
+  .section-head .tag{color:var(--gold);font-size:13px;letter-spacing:0.15em;text-transform:uppercase;font-weight:600;margin-bottom:12px;}
+  .section-head h2{font-family:'Bebas Neue',sans-serif;font-size:52px;letter-spacing:0.02em;}
+
+  .day-tabs{display:flex;justify-content:center;gap:14px;margin-bottom:44px;}
+  .day-tabs span{padding:10px 24px;border-radius:30px;font-size:13px;font-weight:600;border:1px solid rgba(255,248,237,0.25);}
+  .day-tabs span.active{background:var(--teal);border-color:var(--teal);}
+
+  .lineup-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .act-card{
+    background:rgba(255,248,237,0.06);border-radius:12px;padding:22px;
+    border:1px solid rgba(255,248,237,0.1);
+  }
+  .act-card .headliner-tag{font-size:10px;letter-spacing:0.1em;color:var(--coral);font-weight:700;margin-bottom:10px;}
+  .act-card .art{aspect-ratio:1;border-radius:8px;margin-bottom:14px;background:linear-gradient(155deg,var(--teal),var(--purple));}
+  .act-card h4{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.02em;}
+  .act-card p{font-size:12px;opacity:0.65;margin-top:4px;}
+
+  .tickets{background:var(--cream);color:var(--purple);padding:90px 32px;}
+  .tickets .section-head .tag{color:var(--teal);}
+  .tickets .section-head h2{color:var(--purple);}
+  .tix-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .tix-card{border:2px solid rgba(45,27,78,0.1);border-radius:14px;padding:30px;text-align:center;}
+  .tix-card.popular{border-color:var(--coral);position:relative;}
+  .tix-card .badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--coral);color:white;font-size:11px;font-weight:700;padding:5px 16px;border-radius:20px;}
+  .tix-card h4{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:0.02em;margin-bottom:8px;}
+  .tix-card .price{font-family:'Bebas Neue',sans-serif;font-size:48px;margin:10px 0;}
+  .tix-card .price span{font-size:14px;font-family:'Work Sans',sans-serif;}
+  .tix-card ul{list-style:none;margin:20px 0;font-size:13px;color:#5a4d75;text-align:left;}
+  .tix-card li{padding:8px 0;border-top:1px solid rgba(45,27,78,0.08);}
+  .tix-card button{width:100%;padding:14px;border-radius:30px;font-weight:700;font-size:14px;border:none;margin-top:14px;}
+  .tix-card:not(.popular) button{background:var(--purple);color:var(--cream);}
+  .tix-card.popular button{background:var(--coral);color:white;}
+
+  .info-band{padding:80px 32px;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:40px;}
+  .info-band h5{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--gold);letter-spacing:0.05em;margin-bottom:10px;}
+  .info-band p{font-size:14px;opacity:0.8;line-height:1.6;}
+
+  footer{padding:50px 32px;text-align:center;border-top:1px solid rgba(255,248,237,0.1);}
+  footer .logo{font-size:24px;margin-bottom:10px;}
+  footer p{font-size:13px;opacity:0.6;}
+
+  @media(max-width:900px){
+    nav ul{display:none;}
+    .lineup-grid{grid-template-columns:repeat(2,1fr);}
+    .tix-grid,.info-band{grid-template-columns:1fr;}
+    .countdown{gap:12px;}
+    .countdown .n{width:56px;height:56px;font-size:26px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">DRIFTWOOD</div>
+  <nav><ul>
+    <li><a href="#lineup">Lineup</a></li>
+    <li><a href="#tickets">Tickets</a></li>
+    <li><a href="#">Camping</a></li>
+    <li><a href="#">FAQ</a></li>
+  </ul></nav>
+  <button class="tix-btn">Get Tickets</button>
+</header>
+
+<section class="hero">
+  <div class="dates">SEPTEMBER 11–13, 2026 · CANNON BEACH, OR</div>
+  <h1 class="display">DRIFTWOOD</h1>
+  <p class="sub">Three days of music on the sand. Forty-two acts, four stages, one shoreline.</p>
+  <div class="hero-cta">
+    <button class="btn-fill">Get Tickets</button>
+    <button class="btn-outline">See Lineup</button>
+  </div>
+  <div class="countdown">
+    <div><div class="n">61</div><div class="l">Days</div></div>
+    <div><div class="n">14</div><div class="l">Hours</div></div>
+    <div><div class="n">37</div><div class="l">Minutes</div></div>
+  </div>
+</section>
+
+<section class="lineup" id="lineup">
+  <div class="section-head">
+    <div class="tag">42 Acts · 4 Stages</div>
+    <h2 class="display">Who's Playing</h2>
+  </div>
+  <div class="day-tabs">
+    <span class="active">Fri Sep 11</span>
+    <span>Sat Sep 12</span>
+    <span>Sun Sep 13</span>
+  </div>
+  <div class="lineup-grid">
+    <div class="act-card"><div class="headliner-tag">HEADLINER</div><div class="art"></div><h4>Coral & Bone</h4><p>Main Stage · 9:30PM</p></div>
+    <div class="act-card"><div class="art"></div><h4>Lowtide Collective</h4><p>Dune Stage · 7:15PM</p></div>
+    <div class="act-card"><div class="art"></div><h4>Marina Vale</h4><p>Main Stage · 5:45PM</p></div>
+    <div class="act-card"><div class="art"></div><h4>Salt Radio</h4><p>Cove Stage · 4:00PM</p></div>
+    <div class="act-card"><div class="art"></div><h4>The Undertow</h4><p>Dune Stage · 2:30PM</p></div>
+    <div class="act-card"><div class="art"></div><h4>Jonah Pines</h4><p>Cove Stage · 1:00PM</p></div>
+    <div class="act-card"><div class="art"></div><h4>Echo & Ivy</h4><p>Main Stage · 11:30AM</p></div>
+    <div class="act-card"><div class="art"></div><h4>Ruth & The Riptide</h4><p>Dune Stage · 12:00PM</p></div>
+  </div>
+</section>
+
+<section class="tickets" id="tickets">
+  <div class="section-head">
+    <div class="tag">Passes</div>
+    <h2 class="display">Get Your Tickets</h2>
+  </div>
+  <div class="tix-grid">
+    <div class="tix-card">
+      <h4>Single Day</h4>
+      <div class="price">$95</div>
+      <ul><li>One day, any stage</li><li>General admission</li><li>Free water refill stations</li></ul>
+      <button>Select Day</button>
+    </div>
+    <div class="tix-card popular">
+      <div class="badge">MOST POPULAR</div>
+      <h4>3-Day Pass</h4>
+      <div class="price">$220</div>
+      <ul><li>All 3 days, all stages</li><li>Priority entry lanes</li><li>Festival tote + pin set</li></ul>
+      <button>Get Pass</button>
+    </div>
+    <div class="tix-card">
+      <h4>VIP Weekend</h4>
+      <div class="price">$480</div>
+      <ul><li>Everything in 3-Day Pass</li><li>Elevated viewing deck</li><li>VIP lounge + private bars</li></ul>
+      <button>Get VIP</button>
+    </div>
+  </div>
+</section>
+
+<section class="info-band">
+  <div><h5>Camping</h5><p>On-site beachfront camping opens Thursday at noon. RV and tent sites both available, first-come.</p></div>
+  <div><h5>Getting There</h5><p>Shuttle buses run from Portland every 90 minutes on Friday and Saturday. Parking on-site is limited.</p></div>
+  <div><h5>What to Bring</h5><p>Reusable water bottle, sunscreen, layers for the evening — it's the coast, and it cools off fast after sunset.</p></div>
+</section>
+
+<footer>
+  <div class="logo display">DRIFTWOOD</div>
+  <p>Cannon Beach, Oregon · Sept 11–13, 2026</p>
+</footer>
+
+</body>
+</html>

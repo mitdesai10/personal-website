@@ -3,10 +3,11 @@ import { NavLink, Link, useLocation } from 'react-router-dom'
 import { about, contact } from '../data/projects'
 
 const navItems = [
-  { to: '/',        label: 'Home',  end: true },
-  { to: '/work',    label: 'Work',  end: false },
-  { to: '/about',   label: 'About', end: true },
-  { to: '/contact', label: 'Contact', end: true },
+  { to: '/',         label: 'Home',     end: true },
+  { to: '/work',     label: 'Work',     end: false },
+  { to: '/websites', label: 'Websites', end: true },
+  { to: '/about',    label: 'About',    end: true },
+  { to: '/contact',  label: 'Contact',  end: true },
 ]
 
 export default function Navbar() {
