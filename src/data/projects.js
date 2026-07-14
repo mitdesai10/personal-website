@@ -157,6 +157,75 @@ export const projects = [
       'Full GTM plan delivered: scoped a lower-risk technical approach over the more impressive one, sequenced a beta before full launch, and defined metrics that catch a "fast but shallow" false positive (activation uptick that doesn\'t hold at week 2) rather than just celebrating early numbers. Risks documented upfront: trust risk, scope creep risk, and measurement lag risk.',
     featured: true,
   },
+
+  {
+    slug: 'telco-churn-analysis',
+    title: 'Diagnosing $139K in Monthly Customer Churn',
+    tagline: 'Segmented 7,043 customer records to identify the highest-impact retention levers — contract type, tenure, and service tier.',
+    disciplines: ['data'],
+    status: 'shipped',
+    year: '2024',
+    role: 'Data Analyst',
+    timeline: '2024 · Exploratory Analysis',
+    stack: ['Python', 'pandas', 'scikit-learn', 'Matplotlib', 'Seaborn', 'Jupyter'],
+    stats: [
+      { value: '26.5%', label: 'Churn Rate' },
+      { value: '$139K', label: 'MRR at Risk' },
+      { value: '15×',   label: 'Contract Impact' },
+    ],
+    type: 'analytics',
+    dataset: 'IBM Telco Customer Churn · 7,043 records',
+    datasetUrl: 'https://www.kaggle.com/datasets/blastchar/telco-customer-churn',
+    kpis: [
+      { label: 'Churn Rate',        value: '26.5%', sub: '1,869 of 7,043 customers lost' },
+      { label: 'MRR at Risk',       value: '$139K',  sub: '30.5% of $456K monthly revenue' },
+      { label: 'Early-Stage Churn', value: '53.3%', sub: 'Lost within the first 6 months' },
+      { label: 'Best Retention',    value: '2.8%',  sub: 'Churn rate on two-year contracts' },
+    ],
+    chartData: {
+      byContract: [
+        { name: 'Month-to-month', rate: 42.7 },
+        { name: 'One year',       rate: 11.3 },
+        { name: 'Two year',       rate: 2.8  },
+      ],
+      byTenure: [
+        { band: '0–6 mo',   rate: 53.3 },
+        { band: '7–12 mo',  rate: 35.9 },
+        { band: '13–24 mo', rate: 28.7 },
+        { band: '25–48 mo', rate: 20.4 },
+        { band: '49–72 mo', rate: 9.5  },
+      ],
+      byService: [
+        { name: 'No Internet', rate: 7.4  },
+        { name: 'DSL',         rate: 19.0 },
+        { name: 'Fiber Optic', rate: 41.9 },
+      ],
+    },
+    findings: [
+      {
+        icon: '⚡',
+        title: 'Contract type is the biggest lever',
+        body: 'Month-to-month customers churn at 42.7% vs 2.8% on two-year contracts — a 15× difference. Converting even 10% of M2M customers to annual contracts would recover ~$8K MRR.',
+      },
+      {
+        icon: '🕐',
+        title: 'The first 6 months are make-or-break',
+        body: '53% of churned customers leave within the first 6 months, pointing to an onboarding gap — customers never reach the activation moment that drives long-term retention.',
+      },
+      {
+        icon: '📡',
+        title: 'Fiber optic has a product-quality signal',
+        body: 'Fiber optic customers churn at 41.9% vs 19% on DSL — despite paying more. High charges combined with poor satisfaction is the likely driver.',
+      },
+    ],
+    problem:
+      'A telecom company was losing 26.5% of its customer base per cycle with no clear picture of why. The goal was to identify the highest-impact retention levers from existing customer data.',
+    approach:
+      'Ran a full segmentation across contract type, customer tenure, internet service tier, and payment method. Used StandardScaler and K-Means clustering to group customers, with silhouette scoring to validate segments. Translated statistical findings into plain business recommendations.',
+    result:
+      'Identified three actionable levers: (1) contract conversion from M2M to annual is the single highest-ROI move, (2) a first-90-days onboarding intervention would address 53% early churn, (3) fiber optic pricing needs re-evaluation against satisfaction data.',
+    featured: false,
+  },
 ]
 
 // ─── WEB PROJECTS ────────────────────────────────────────────────────────────

@@ -7,7 +7,6 @@ import WorkDetail from './pages/WorkDetail'
 import About from './pages/About'
 import Contact from './pages/Contact'
 import Websites from './pages/Websites'
-import Analytics from './pages/Analytics'
 
 function NotFound() {
   return (
@@ -31,7 +30,6 @@ export default function App() {
             <Route path="/work"       element={<Work />} />
             <Route path="/work/:slug" element={<WorkDetail />} />
             <Route path="/websites"    element={<Websites />} />
-            <Route path="/analytics"   element={<Analytics />} />
             <Route path="/about"      element={<About />} />
             <Route path="/contact"    element={<Contact />} />
             <Route path="*"           element={<NotFound />} />
