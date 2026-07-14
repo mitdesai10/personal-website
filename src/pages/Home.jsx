@@ -25,47 +25,51 @@ const ORBIT_NODES = [
 
 function DisciplineDiagram() {
   const canvasRef = useRef(null)
+  const labelRefs = useRef([])
 
   useEffect(() => {
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
-    let animId
-    let t = 0
+    const labels = labelRefs.current
+    let animId, t = 0
 
     const particles = ORBIT_NODES.flatMap((_, i) => [
       { nodeIdx: i, prog: i * 0.25,              speed: 0.0055 + i * 0.0003 },
       { nodeIdx: i, prog: (i * 0.25 + 0.5) % 1, speed: 0.0065 + i * 0.0002 },
     ])
 
+    // Cache layout values — only recompute on resize
+    let W = 0, H = 0, cx = 0, cy = 0, sc = 1, R = 88
+
     const resize = () => {
-      canvas.width  = canvas.offsetWidth
-      canvas.height = canvas.offsetHeight
+      W  = canvas.width  = canvas.offsetWidth
+      H  = canvas.height = canvas.offsetHeight
+      cx = W / 2; cy = H / 2
+      sc = Math.min(W, H) / 300
+      R  = 88 * sc
+      const fs = Math.max(9, 9 * sc)
+      labels.forEach(el => { if (el) el.style.fontSize = `${fs}px` })
     }
     resize()
     const ro = new ResizeObserver(resize)
     ro.observe(canvas)
 
     const draw = () => {
-      const W = canvas.width, H = canvas.height
       if (!W || !H) { animId = requestAnimationFrame(draw); return }
-      const cx = W / 2, cy = H / 2
-      const sc = Math.min(W, H) / 300
-      const R  = 88 * sc
 
       ctx.clearRect(0, 0, W, H)
       t += 0.008
 
-      // Current node positions (slow orbit + gentle float)
       const pos = ORBIT_NODES.map((n, i) => {
         const ang = n.angle + t * 0.04
         return {
-          x:   cx + R * Math.cos(ang) + Math.sin(t * 0.6 + i * 1.3) * 2.5 * sc,
-          y:   cy + R * Math.sin(ang) + Math.cos(t * 0.8 + i * 1.0) * 2.5 * sc,
-          ang, color: n.color, label: n.label,
+          x: cx + R * Math.cos(ang) + Math.sin(t * 0.6 + i * 1.3) * 2.5 * sc,
+          y: cy + R * Math.sin(ang) + Math.cos(t * 0.8 + i * 1.0) * 2.5 * sc,
+          ang, color: n.color,
         }
       })
 
-      // ── Outer dashed ring (clockwise) ─────────────────────
+      // ── Outer dashed ring ─────────────────────────────────
       ctx.save()
       ctx.translate(cx, cy)
       ctx.rotate(t * 0.18)
@@ -78,7 +82,7 @@ function DisciplineDiagram() {
       ctx.setLineDash([])
       ctx.restore()
 
-      // ── Inner counter-rotating ring (teal) ────────────────
+      // ── Inner counter-rotating ring ───────────────────────
       ctx.save()
       ctx.translate(cx, cy)
       ctx.rotate(-t * 0.28)
@@ -91,14 +95,14 @@ function DisciplineDiagram() {
       ctx.setLineDash([])
       ctx.restore()
 
-      // ── Orbit path (ghost ring) ────────────────────────────
+      // ── Orbit ghost ring ──────────────────────────────────
       ctx.beginPath()
       ctx.arc(cx, cy, R, 0, Math.PI * 2)
       ctx.strokeStyle = 'rgba(128,77,238,0.07)'
       ctx.lineWidth = sc
       ctx.stroke()
 
-      // ── Connection lines (center → each node) ─────────────
+      // ── Connection lines center → nodes ───────────────────
       pos.forEach(p => {
         const g = ctx.createLinearGradient(cx, cy, p.x, p.y)
         g.addColorStop(0,   p.color + '00')
@@ -112,12 +116,10 @@ function DisciplineDiagram() {
         ctx.stroke()
       })
 
-      // ── Cross-connections ──────────────────────────────────
+      // ── Cross-connections ─────────────────────────────────
       const crossPairs = [[0,1],[2,3],[0,2],[1,3]]
       for (let ci = 0; ci < crossPairs.length; ci++) {
-        const a = crossPairs[ci][0]
-        const b = crossPairs[ci][1]
-        const pa = pos[a], pb = pos[b]
+        const pa = pos[crossPairs[ci][0]], pb = pos[crossPairs[ci][1]]
         if (!pa || !pb) continue
         ctx.beginPath()
         ctx.moveTo(pa.x, pa.y)
@@ -127,17 +129,17 @@ function DisciplineDiagram() {
         ctx.stroke()
       }
 
-      // ── Signal particles ───────────────────────────────────
+      // ── Signal particles ──────────────────────────────────
       particles.forEach(p => {
         p.prog = (p.prog + p.speed) % 1
-        const nd  = pos[p.nodeIdx]
+        const nd = pos[p.nodeIdx]
         if (!nd) return
-        const px  = cx + (nd.x - cx) * p.prog
-        const py  = cy + (nd.y - cy) * p.prog
+        const px = cx + (nd.x - cx) * p.prog
+        const py = cy + (nd.y - cy) * p.prog
         const alpha = Math.sin(p.prog * Math.PI)
-        // glow via radial gradient — no shadowBlur (expensive)
+        const hex = Math.round(alpha * 230).toString(16).padStart(2, '0')
         const pg = ctx.createRadialGradient(px, py, 0, px, py, 4 * sc)
-        pg.addColorStop(0, nd.color + Math.round(alpha * 230).toString(16).padStart(2, '0'))
+        pg.addColorStop(0, nd.color + hex)
         pg.addColorStop(1, nd.color + '00')
         ctx.beginPath()
         ctx.arc(px, py, 4 * sc, 0, Math.PI * 2)
@@ -145,7 +147,7 @@ function DisciplineDiagram() {
         ctx.fill()
         ctx.beginPath()
         ctx.arc(px, py, 1.5 * sc, 0, Math.PI * 2)
-        ctx.fillStyle = nd.color + Math.round(alpha * 230).toString(16).padStart(2, '0')
+        ctx.fillStyle = nd.color + hex
         ctx.fill()
       })
 
@@ -165,7 +167,6 @@ function DisciplineDiagram() {
       ctx.lineWidth = sc
       ctx.stroke()
 
-      // center dot glow via gradient — no shadowBlur
       const dg = ctx.createRadialGradient(cx, cy, 0, cx, cy, 16 * sc)
       dg.addColorStop(0, 'rgba(128,77,238,0.9)')
       dg.addColorStop(1, 'rgba(128,77,238,0)')
@@ -178,14 +179,8 @@ function DisciplineDiagram() {
       ctx.fillStyle = '#804dee'
       ctx.fill()
 
-      // ── Nodes ─────────────────────────────────────────────
-      const fs = Math.max(7, 8 * sc)
-      ctx.font         = `600 ${fs}px 'IBM Plex Mono', monospace`
-      ctx.textAlign    = 'center'
-      ctx.textBaseline = 'middle'
-
+      // ── Nodes (no text — labels are HTML) ────────────────
       pos.forEach((p, i) => {
-        // Expanding pulse ring (staggered per node)
         const ph2 = (t * 0.45 + i * 0.25) % 1
         if (ph2 < 0.7) {
           ctx.beginPath()
@@ -194,8 +189,6 @@ function DisciplineDiagram() {
           ctx.lineWidth = sc
           ctx.stroke()
         }
-
-        // Node glow (radial gradient — no shadowBlur)
         const ng = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 18 * sc)
         ng.addColorStop(0, p.color + '66')
         ng.addColorStop(1, p.color + '00')
@@ -203,8 +196,6 @@ function DisciplineDiagram() {
         ctx.arc(p.x, p.y, 18 * sc, 0, Math.PI * 2)
         ctx.fillStyle = ng
         ctx.fill()
-
-        // Node circle
         ctx.beginPath()
         ctx.arc(p.x, p.y, 7 * sc, 0, Math.PI * 2)
         ctx.fillStyle = p.color + '35'
@@ -213,15 +204,14 @@ function DisciplineDiagram() {
         ctx.lineWidth   = 1.5 * sc
         ctx.stroke()
 
-        // Label — tracks node position radially
+        // Move HTML label — GPU-composited, always smooth
         const dx = p.x - cx, dy = p.y - cy
         const dist = Math.sqrt(dx * dx + dy * dy) || 1
         const lx = p.x + (dx / dist) * 30 * sc
         const ly = p.y + (dy / dist) * 30 * sc
-        ctx.fillStyle = p.color
-        ORBIT_NODES[i].label.forEach((line, li) => {
-          ctx.fillText(line, lx, ly + (li - (ORBIT_NODES[i].label.length - 1) / 2) * (fs + 3))
-        })
+        if (labels[i]) {
+          labels[i].style.transform = `translate(${lx}px,${ly}px) translate(-50%,-50%)`
+        }
       })
 
       animId = requestAnimationFrame(draw)
@@ -232,12 +222,30 @@ function DisciplineDiagram() {
   }, [])
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="w-full select-none"
-      style={{ aspectRatio: '1 / 1', display: 'block' }}
-      aria-label="Four disciplines animated orbital diagram"
-    />
+    <div className="relative w-full select-none" style={{ aspectRatio: '1 / 1' }}>
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full"
+        aria-hidden="true"
+      />
+      {ORBIT_NODES.map((node, i) => (
+        <div
+          key={i}
+          ref={el => { labelRefs.current[i] = el }}
+          className="absolute top-0 left-0 text-center pointer-events-none leading-snug"
+          style={{
+            fontFamily: "'IBM Plex Mono', monospace",
+            fontSize: '10px',
+            fontWeight: 600,
+            color: node.color,
+            willChange: 'transform',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {node.label.map((line, li) => <div key={li}>{line}</div>)}
+        </div>
+      ))}
+    </div>
   )
 }
 
