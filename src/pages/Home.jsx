@@ -33,31 +33,26 @@ function DisciplineDiagram() {
     let t = 0
 
     const particles = ORBIT_NODES.flatMap((_, i) => [
-      { nodeIdx: i, prog: i * 0.25,            speed: 0.0055 + i * 0.0003 },
+      { nodeIdx: i, prog: i * 0.25,              speed: 0.0055 + i * 0.0003 },
       { nodeIdx: i, prog: (i * 0.25 + 0.5) % 1, speed: 0.0065 + i * 0.0002 },
     ])
 
-    const dpr = window.devicePixelRatio || 1
-
     const resize = () => {
-      const side = canvas.offsetWidth
-      canvas.width  = side * dpr
-      canvas.height = side * dpr
-      ctx.resetTransform()
-      ctx.scale(dpr, dpr)
+      canvas.width  = canvas.offsetWidth
+      canvas.height = canvas.offsetHeight
     }
     resize()
     const ro = new ResizeObserver(resize)
     ro.observe(canvas)
 
     const draw = () => {
-      const side = canvas.offsetWidth
-      if (!side) { animId = requestAnimationFrame(draw); return }
-      const cx = side / 2, cy = side / 2
-      const sc = side / 300
+      const W = canvas.width, H = canvas.height
+      if (!W || !H) { animId = requestAnimationFrame(draw); return }
+      const cx = W / 2, cy = H / 2
+      const sc = Math.min(W, H) / 300
       const R  = 88 * sc
 
-      ctx.clearRect(0, 0, side, side)
+      ctx.clearRect(0, 0, W, H)
       t += 0.008
 
       // Current node positions (slow orbit + gentle float)
@@ -223,7 +218,8 @@ function DisciplineDiagram() {
   return (
     <canvas
       ref={canvasRef}
-      className="w-full aspect-square select-none"
+      className="w-full select-none"
+      style={{ aspectRatio: '1 / 1', display: 'block' }}
       aria-label="Four disciplines animated orbital diagram"
     />
   )
