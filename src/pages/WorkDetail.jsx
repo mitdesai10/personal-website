@@ -2,7 +2,7 @@ import { useParams, Link, Navigate } from 'react-router-dom'
 import { projects, disciplines } from '../data/projects'
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell,
-  AreaChart, Area, CartesianGrid,
+  AreaChart, Area, CartesianGrid, ReferenceLine,
 } from 'recharts'
 
 const PURPLE = '#804dee'
@@ -135,6 +135,159 @@ function AnalyticsDetail({ project }) {
       </p>
 
       {/* Prev / Next */}
+      <div className="pt-8 border-t border-border flex justify-between gap-4">
+        {(() => {
+          const idx = projects.findIndex(p => p.slug === project.slug)
+          const prev = projects[idx - 1], next = projects[idx + 1]
+          return (
+            <>
+              <div>{prev && <Link to={`/work/${prev.slug}`} className="group flex flex-col gap-0.5"><span className="font-mono text-xs text-muted group-hover:text-body transition-colors">← Previous</span><span className="font-display text-sm text-heading group-hover:text-cyan transition-colors">{prev.title}</span></Link>}</div>
+              <div className="text-right">{next && <Link to={`/work/${next.slug}`} className="group flex flex-col gap-0.5 items-end"><span className="font-mono text-xs text-muted group-hover:text-body transition-colors">Next →</span><span className="font-display text-sm text-heading group-hover:text-cyan transition-colors">{next.title}</span></Link>}</div>
+            </>
+          )
+        })()}
+      </div>
+    </main>
+  )
+}
+
+function SuperstoreDetail({ project }) {
+  const { title, tagline, stack, kpis, chartData, findings, dataset, datasetUrl, disciplines: discIds, status, year } = project
+  const DISC_MAP_LOCAL = Object.fromEntries(disciplines.map(d => [d.id, d]))
+  const marginColor = (m) => m >= 10 ? TEAL : m >= 0 ? '#a78bfa' : PURPLE
+  const profitColor = (p) => p >= 0 ? TEAL : PURPLE
+
+  return (
+    <main className="max-w-5xl mx-auto px-6 pt-32 pb-24">
+      <Link to="/work" className="inline-flex items-center gap-1.5 font-mono text-xs text-muted hover:text-body transition-colors mb-10">
+        ← All work
+      </Link>
+
+      <div className="mb-10">
+        <div className="flex flex-wrap gap-2 mb-4">
+          <span className="tag-cyan">{status}</span>
+          {discIds.map(id => {
+            const d = DISC_MAP_LOCAL[id]
+            return d ? <span key={id} className="tag-cyan">{d.label}</span> : null
+          })}
+          <span className="tag">{year}</span>
+        </div>
+        <h1 className="font-display font-bold text-3xl md:text-4xl text-heading tracking-tight leading-tight mb-3">{title}</h1>
+        <p className="text-body text-lg leading-relaxed max-w-2xl">{tagline}</p>
+        <div className="flex flex-wrap gap-2 mt-5">
+          {stack.map(s => <span key={s} className="tag">{s}</span>)}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {kpis.map((k) => (
+          <div key={k.label} className="bg-canvas-2 border border-border rounded-xl p-5">
+            <p className="font-mono text-xs text-muted mb-2">{k.label}</p>
+            <p className="font-display font-bold text-3xl text-heading mb-1">{k.value}</p>
+            <p className="font-mono text-xs text-muted leading-snug">{k.sub}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-6 mb-8">
+        {/* Chart 1: Margin by discount band — full width */}
+        <div className="bg-canvas-2 border border-border rounded-xl p-6 md:col-span-2">
+          <p className="font-mono text-xs text-muted mb-1">Profit Margin by Discount Band</p>
+          <p className="font-display text-sm text-heading font-semibold mb-5">Cross 20% discount and margin turns negative</p>
+          <ResponsiveContainer width="100%" height={220}>
+            <BarChart data={chartData.byDiscount} barSize={48} margin={{ top: 4, right: 4, left: -10, bottom: 0 }}>
+              <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.04)" />
+              <XAxis dataKey="band" tick={{ fill: 'rgba(255,255,255,0.45)', fontSize: 10, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 10, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} tickFormatter={v => `${v}%`} domain={[-130, 35]} />
+              <ReferenceLine y={0} stroke="rgba(255,255,255,0.2)" strokeDasharray="3 3" />
+              <Tooltip content={({ active, payload }) => {
+                if (!active || !payload?.length) return null
+                return (
+                  <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+                    <p className="text-muted mb-1">{payload[0]?.payload?.band}</p>
+                    <p className="text-heading">{payload[0]?.value}% margin</p>
+                  </div>
+                )
+              }} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
+              <Bar dataKey="margin" radius={[4, 4, 0, 0]}>
+                {chartData.byDiscount.map((d) => <Cell key={d.band} fill={marginColor(d.margin)} />)}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Chart 2: Sub-category profit — horizontal diverging bar */}
+        <div className="bg-canvas-2 border border-border rounded-xl p-6">
+          <p className="font-mono text-xs text-muted mb-1">Profit by Sub-Category</p>
+          <p className="font-display text-sm text-heading font-semibold mb-5">Tables and Bookcases are loss-making</p>
+          <ResponsiveContainer width="100%" height={260}>
+            <BarChart data={chartData.bySubCategory} layout="vertical" barSize={16} margin={{ top: 0, right: 50, left: 10, bottom: 0 }}>
+              <CartesianGrid horizontal={false} stroke="rgba(255,255,255,0.04)" />
+              <XAxis type="number" tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 9, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} tickFormatter={v => `$${(v/1000).toFixed(0)}K`} />
+              <YAxis type="category" dataKey="name" tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 9, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} width={80} />
+              <ReferenceLine x={0} stroke="rgba(255,255,255,0.2)" strokeDasharray="3 3" />
+              <Tooltip content={({ active, payload }) => {
+                if (!active || !payload?.length) return null
+                const v = payload[0]?.value
+                return (
+                  <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+                    <p className="text-muted mb-1">{payload[0]?.payload?.name}</p>
+                    <p className="text-heading">${v?.toLocaleString()} profit</p>
+                  </div>
+                )
+              }} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
+              <Bar dataKey="profit" radius={[0, 4, 4, 0]}>
+                {chartData.bySubCategory.map((d) => <Cell key={d.name} fill={profitColor(d.profit)} />)}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Chart 3: Region margin */}
+        <div className="bg-canvas-2 border border-border rounded-xl p-6">
+          <p className="font-mono text-xs text-muted mb-1">Profit Margin by Region</p>
+          <p className="font-display text-sm text-heading font-semibold mb-5">Central region runs at half the margin of West</p>
+          <ResponsiveContainer width="100%" height={260}>
+            <BarChart data={chartData.byRegion} barSize={44} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
+              <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.04)" />
+              <XAxis dataKey="region" tick={{ fill: 'rgba(255,255,255,0.45)', fontSize: 10, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 10, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} tickFormatter={v => `${v}%`} domain={[0, 18]} />
+              <Tooltip content={({ active, payload }) => {
+                if (!active || !payload?.length) return null
+                return (
+                  <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+                    <p className="text-muted mb-1">{payload[0]?.payload?.region}</p>
+                    <p className="text-heading">{payload[0]?.value}% margin</p>
+                  </div>
+                )
+              }} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
+              <Bar dataKey="margin" radius={[4, 4, 0, 0]}>
+                {chartData.byRegion.map((d) => <Cell key={d.region} fill={marginColor(d.margin)} />)}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      <div className="mb-10">
+        <p className="section-label mb-5">Key Findings</p>
+        <div className="grid md:grid-cols-3 gap-5">
+          {findings.map((f) => (
+            <div key={f.title} className="bg-canvas-2 border border-border rounded-xl p-5">
+              <span className="text-2xl mb-3 block">{f.icon}</span>
+              <h3 className="font-display font-semibold text-sm text-heading mb-2">{f.title}</h3>
+              <p className="font-mono text-xs text-muted leading-relaxed">{f.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <p className="font-mono text-xs text-muted border-t border-border pt-6 mb-16">
+        Dataset:{' '}
+        <a href={datasetUrl} target="_blank" rel="noopener noreferrer" className="text-cyan hover:underline">{dataset}</a>
+        {' '}· Analysis by Mit Desai
+      </p>
+
       <div className="pt-8 border-t border-border flex justify-between gap-4">
         {(() => {
           const idx = projects.findIndex(p => p.slug === project.slug)
@@ -327,6 +480,7 @@ export default function WorkDetail() {
   if (!project) return <Navigate to="/work" replace />
   if (project.type === 'analytics') return <AnalyticsDetail project={project} />
   if (project.type === 'analytics-olist') return <OlistDetail project={project} />
+  if (project.type === 'analytics-superstore') return <SuperstoreDetail project={project} />
 
   const {
     title, tagline, disciplines: discIds, status,

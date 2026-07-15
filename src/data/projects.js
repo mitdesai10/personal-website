@@ -305,6 +305,82 @@ export const projects = [
       'Three platform levers identified: (1) enforce tighter seller SLAs — the 8.1% of late orders generate 30% of 1-star reviews; (2) raise the free-shipping threshold above R$100 where freight economics become viable; (3) build a seller performance tier to surface high-quality long-tail sellers.',
     featured: false,
   },
+
+  {
+    slug: 'superstore-profitability-audit',
+    title: '$156K in Preventable Losses — A Retail Profitability Audit',
+    tagline: 'Audited 9,994 orders across a US retail chain to find where discounting strategy, product mix, and regional execution are quietly destroying a 12.5% margin.',
+    disciplines: ['data'],
+    status: 'shipped',
+    year: '2024',
+    role: 'Data Analyst',
+    timeline: '2024 · Exploratory Analysis',
+    stack: ['Python', 'pandas', 'Matplotlib', 'Seaborn', 'Jupyter'],
+    stats: [
+      { value: '$2.3M', label: 'Total Sales' },
+      { value: '12.5%', label: 'Profit Margin' },
+      { value: '18.7%', label: 'Loss-Making Orders' },
+    ],
+    type: 'analytics-superstore',
+    dataset: 'Sample Superstore Dataset · 9,994 orders across 49 US states',
+    datasetUrl: 'https://www.kaggle.com/datasets/vivek468/superstore-dataset-final',
+    kpis: [
+      { label: 'Total Sales',        value: '$2.3M',  sub: '9,994 orders · 49 states' },
+      { label: 'Total Profit',       value: '$286K',  sub: '12.5% overall margin' },
+      { label: 'Preventable Losses', value: '$156K',  sub: 'From 1,871 loss-making orders' },
+      { label: 'Avg Discount',       value: '15.6%',  sub: '48.1% avg on loss-making rows' },
+    ],
+    chartData: {
+      byDiscount: [
+        { band: 'No discount', margin: 29.5  },
+        { band: '1–10%',       margin: 16.6  },
+        { band: '11–20%',      margin: 11.6  },
+        { band: '21–30%',      margin: -10.0 },
+        { band: '31–50%',      margin: -24.8 },
+        { band: '51%+',        margin: -119.2 },
+      ],
+      bySubCategory: [
+        { name: 'Tables',      profit: -17726 },
+        { name: 'Bookcases',   profit: -3473  },
+        { name: 'Supplies',    profit: -1189  },
+        { name: 'Machines',    profit: 3385   },
+        { name: 'Chairs',      profit: 26590  },
+        { name: 'Accessories', profit: 41937  },
+        { name: 'Phones',      profit: 44516  },
+        { name: 'Copiers',     profit: 55618  },
+      ],
+      byRegion: [
+        { region: 'Central', margin: 7.9  },
+        { region: 'South',   margin: 11.9 },
+        { region: 'East',    margin: 13.5 },
+        { region: 'West',    margin: 14.9 },
+      ],
+    },
+    findings: [
+      {
+        icon: '✂️',
+        title: 'Discounts above 20% are structurally loss-making',
+        body: 'Cross the 20% threshold and margin flips from +11.6% to -10%. At 51%+, every dollar of revenue costs $1.19 to generate. The 1,166 high-discount orders (>30%) account for $124K of the $156K in total losses.',
+      },
+      {
+        icon: '🪑',
+        title: 'Furniture is subsidised by Technology and Office Supplies',
+        body: 'Tables lose -$17.7K on $207K in sales (-8.6% margin). Bookcases add another -$3.5K. The whole Furniture category runs at just 2.5% margin — Tech (17.4%) and Office Supplies (17.0%) are quietly covering the shortfall.',
+      },
+      {
+        icon: '🗺️',
+        title: 'Central region underperforms at every category level',
+        body: 'Central margin is 7.9% vs 14.9% in the West. Furniture is cash-negative in Central (-$2,871). Texas, Ohio, and Illinois — all Central-heavy states — are the three biggest loss-making states in the business.',
+      },
+    ],
+    problem:
+      'A US retail chain with $2.3M in annual sales was posting a 12.5% overall margin with no clear view of which products, discounts, or geographies were dragging profitability down.',
+    approach:
+      'Segmented 9,994 order rows by discount band, sub-category, region, and state. Used pandas groupby aggregations to isolate margin at each intersection, then ranked loss-makers by total profit impact rather than margin percentage alone.',
+    result:
+      'Three levers identified: (1) cap discounts at 20% — high-discount orders cause $124K of the $156K in losses; (2) reprice or discontinue Tables and Bookcases which are loss-making at any discount level; (3) audit Central region execution, particularly in Texas, Ohio, and Illinois.',
+    featured: false,
+  },
 ]
 
 // ─── WEB PROJECTS ────────────────────────────────────────────────────────────
