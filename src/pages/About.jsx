@@ -102,7 +102,8 @@ export default function About() {
           <img
             src="/photo.png"
             alt={about.name}
-            className="w-full aspect-square object-cover object-top rounded border border-border"
+            className="w-full rounded border border-border"
+            style={{ aspectRatio: '3/4', objectFit: 'cover', objectPosition: '50% 10%' }}
           />
         </motion.div>
       </div>
