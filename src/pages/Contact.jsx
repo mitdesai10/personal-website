@@ -10,7 +10,7 @@ export default function Contact() {
           Let's talk
         </h1>
         <p className="text-body leading-relaxed max-w-lg">
-          [Replace: a line or two on what kinds of conversations you're open to — new roles, advisory work, collaborations, etc.]
+          Open to product and data roles, advisory conversations, and anything at the intersection of the two. If you have something interesting, send a note.
         </p>
       </div>
 
