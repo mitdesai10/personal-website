@@ -24,7 +24,7 @@ export const disciplines = [
     color: 'amber',
     icon: '◎',
     summary:
-      'Paid acquisition, attribution modelling, and growth loops — measured in actual revenue, not vanity metrics.',
+      'Paid acquisition, attribution modelling, and growth loops. Measured in actual revenue, not vanity metrics.',
     skills: ['Google Ads', 'Meta Ads', 'Bing Ads', 'SEO/SEM', 'Google Search Console', 'Semrush', 'HubSpot'],
   },
   {
@@ -33,7 +33,7 @@ export const disciplines = [
     color: 'amber',
     icon: '◇',
     summary:
-      'From quick landing pages to full-stack apps — enough engineering depth to ship without waiting for a sprint.',
+      'From quick landing pages to full-stack apps. Enough engineering depth to ship without waiting for a sprint.',
     skills: ['React', 'JavaScript', 'CSS', 'WordPress', 'GTM', 'GA4', 'Vercel', 'Microsoft Clarity'],
   },
 ]
@@ -50,7 +50,7 @@ export const experiences = [
     iconColor: '#804dee',
     points: [
       'Designed and deployed Power BI dashboards for revenue, project performance, and staffing utilization, delivering real-time insights to senior leadership.',
-      'Architected advanced analytics instrumentation using GA4, Google Tag Manager, and Microsoft Clarity — custom event tracking, scroll depth, and CTA analytics across client properties.',
+      'Architected advanced analytics instrumentation using GA4, Google Tag Manager, and Microsoft Clarity: custom event tracking, scroll depth, and CTA analytics across client properties.',
       'Built Power Automate workflows automating form submissions, Outlook notifications, and SharePoint updates to improve cross-team collaboration speed.',
       'Built a dynamic staffing calculator with complex margin, rate, and cost-allocation logic to automate pricing and resourcing decisions.',
     ],
@@ -66,7 +66,7 @@ export const experiences = [
     points: [
       'Optimized marketing spend across Google Ads, Bing, and Meta to achieve a 20× ROI, driving $2M+ in monthly revenue growth.',
       'Led SEO and SEM campaigns for Baxter Cabinets, driving a 30% YoY increase in online sales and a 28% boost in organic search traffic.',
-      'Designed and launched demo.kitchen365.com — a digital product demo platform that improved client engagement by 50%.',
+      'Designed and launched demo.kitchen365.com, a digital product demo platform that improved client engagement by 50%.',
       'Implemented AI-driven automation using Zapier, Python, and Google Cloud AutoML, reducing manual processes by 50% and built SQL-based ETL pipelines.',
       'Developed forecasting models in Python to predict customer demand, reducing inventory costs by 20%.',
     ],
@@ -104,11 +104,11 @@ export const projects = [
       { value: '2',   label: 'Phase Rollout' },
     ],
     problem:
-      'Sales reps and delivery staff were losing time and deals to a knowledge access problem. SOPs, pricing logic, and past proposal language were scattered across SharePoint, Salesforce, email threads, and individual employees\' memory — and finding the right answer during a live client call could take longer than a prospect was willing to wait.',
+      'Sales reps and delivery staff were losing time and deals to a knowledge access problem. SOPs, pricing logic, and past proposal language were scattered across SharePoint, Salesforce, email threads, and individual employee memory. Finding the right answer during a live client call could take longer than a prospect was willing to wait.',
     approach:
-      'Audited documentation across the org and interviewed sales and delivery staff before proposing any solution. Two findings shaped the roadmap: (1) the knowledge problem had to be solved before the AI problem — no point building a chatbot on fragmented, outdated SOPs; (2) IT approval timelines and existing M365 licensing meant the "best" AI model wasn\'t necessarily the right one for V1. Chose a phased approach: V1 used Microsoft Copilot Studio (already licensed, faster to approve) connected to a newly consolidated 10-section SOP library on SharePoint, deployed inside Teams. V2 scopes full Claude integration as part of a broader company-wide AI platform rollout.',
+      'Audited documentation across the org and interviewed sales and delivery staff before proposing any solution. Two findings shaped the roadmap: (1) the knowledge problem had to be solved before the AI problem, no point building a chatbot on fragmented, outdated SOPs; (2) IT approval timelines and existing M365 licensing meant the "best" AI model was not necessarily the right one for V1. Chose a phased approach: V1 used Microsoft Copilot Studio (already licensed, faster to approve) connected to a newly consolidated 10-section SOP library on SharePoint, deployed inside Teams. V2 scopes full Claude integration as part of a broader company-wide AI platform rollout.',
     result:
-      'V1 shipped and live. The 10-section master SOP document — covering Finance, Lead Intake, Pipeline, Proposal/SOW, Auto-Renewal, Commission, and Project Process — became the foundation both for V1 retrieval and V2 planning. Key lesson: an AI chatbot project is a knowledge management project first and a model-selection project second. Teams that skip straight to picking a model end up automating access to bad information faster.',
+      'V1 shipped and live. The 10-section master SOP document (covering Finance, Lead Intake, Pipeline, Proposal/SOW, Auto-Renewal, Commission, and Project Process) became the foundation for both V1 retrieval and V2 planning. Key lesson: an AI chatbot project is a knowledge management project first and a model-selection project second. Teams that skip straight to picking a model end up automating access to bad information faster.',
     featured: true,
   },
   {
@@ -127,11 +127,11 @@ export const projects = [
       { value: 'V2',   label: 'Next: Predictive' },
     ],
     problem:
-      'Renewals were tracked manually across Salesforce reports, personal spreadsheets, and account managers\' memory. Renewal risk was invisible until it was too late — teams found out when a client said no, not before. Reporting was backward-looking, and ownership of at-risk accounts was unclear.',
+      'Renewals were tracked manually across Salesforce reports, personal spreadsheets, and account managers\' memory. Renewal risk was invisible until it was too late. Teams found out when a client said no, not before. Reporting was backward-looking, and ownership of at-risk accounts was unclear.',
     approach:
-      'Pulled and audited existing Salesforce renewal data to understand what signals were actually available (contract end dates, usage data, support ticket volume, last contact date). Most of the raw signal already existed in Salesforce — it just wasn\'t surfaced or scored. Scoped V1 toward a structured tracker rather than a predictive model: fast to ship, uses data that already exists, and generates the labeled churn outcome data needed to build a real predictive model in V2. RICE-scored the full feature backlog — auto-flagging from Salesforce fields and the core risk dashboard scored highest on Reach and Impact.',
+      'Pulled and audited existing Salesforce renewal data to understand what signals were actually available (contract end dates, usage data, support ticket volume, last contact date). Most of the raw signal already existed in Salesforce but was not surfaced or scored. Scoped V1 toward a structured tracker rather than a predictive model: fast to ship, uses data that already exists, and generates the labeled churn outcome data needed to build a real predictive model in V2. RICE-scored the full feature backlog. Auto-flagging from Salesforce fields and the core risk dashboard scored highest on Reach and Impact.',
     result:
-      'V1 tracker shipped as a Salesforce-integrated reporting layer. Account managers can flag accounts as On Track / Watch / At Risk / Churned with a reason and next action. Auto-flagging derives signals from Salesforce activity data. Key lesson: renewal risk usually isn\'t a data problem, it\'s a visibility problem — the people closest to the account already know more than any dashboard will tell them. The highest-leverage version of this tool made that existing knowledge visible and structured before trying to automate it.',
+      'V1 tracker shipped as a Salesforce-integrated reporting layer. Account managers can flag accounts as On Track / Watch / At Risk / Churned with a reason and next action. Auto-flagging derives signals from Salesforce activity data. Key lesson: renewal risk is usually a visibility problem, not a data problem. The people closest to the account already know more than any dashboard will tell them. The highest-leverage version of this tool made that existing knowledge visible and structured before trying to automate it.',
     featured: true,
   },
   {
@@ -152,7 +152,7 @@ export const projects = [
     problem:
       'Flowline (a hypothetical B2B PM tool) loses a meaningful share of trial signups before they ever create a real project. Root causes: blank-canvas paralysis when new users are dropped into an empty workspace, generic templates that don\'t match real workflows, and time-to-value that\'s too slow relative to trial length.',
     approach:
-      'Designed an AI onboarding assistant that runs a 2-minute conversation to set up a tailored project structure, rather than offering generic templates. Key scoping decision: chose "template + AI refinement" over "full custom generation" for V1 — a wrong AI-generated workspace on first impression is worse than a slightly generic-but-safe one. Planned a beta with a subset of new signups against an instrumented baseline before wide release, with a skip option preserved for power users.',
+      'Designed an AI onboarding assistant that runs a 2-minute conversation to set up a tailored project structure, rather than offering generic templates. Key scoping decision: chose "template + AI refinement" over "full custom generation" for V1, because a wrong AI-generated workspace on first impression is worse than a slightly generic-but-safe one. Planned a beta with a subset of new signups against an instrumented baseline before wide release, with a skip option preserved for power users.',
     result:
       'Full GTM plan delivered: scoped a lower-risk technical approach over the more impressive one, sequenced a beta before full launch, and defined metrics that catch a "fast but shallow" false positive (activation uptick that doesn\'t hold at week 2) rather than just celebrating early numbers. Risks documented upfront: trust risk, scope creep risk, and measurement lag risk.',
     featured: true,
@@ -161,7 +161,7 @@ export const projects = [
   {
     slug: 'telco-churn-analysis',
     title: 'Diagnosing $139K in Monthly Customer Churn',
-    tagline: 'Segmented 7,043 customer records to identify the highest-impact retention levers — contract type, tenure, and service tier.',
+    tagline: 'Segmented 7,043 customer records to identify the highest-impact retention levers: contract type, tenure, and service tier.',
     disciplines: ['data'],
     status: 'shipped',
     year: '2024',
@@ -205,17 +205,17 @@ export const projects = [
       {
         icon: '⚡',
         title: 'Contract type is the biggest lever',
-        body: 'Month-to-month customers churn at 42.7% vs 2.8% on two-year contracts — a 15× difference. Converting even 10% of M2M customers to annual contracts would recover ~$8K MRR.',
+        body: 'Month-to-month customers churn at 42.7% vs 2.8% on two-year contracts, a 15x difference. Converting even 10% of M2M customers to annual contracts would recover ~$8K MRR.',
       },
       {
         icon: '🕐',
         title: 'The first 6 months are make-or-break',
-        body: '53% of churned customers leave within the first 6 months, pointing to an onboarding gap — customers never reach the activation moment that drives long-term retention.',
+        body: '53% of churned customers leave within the first 6 months, pointing to an onboarding gap. Customers never reach the activation moment that drives long-term retention.',
       },
       {
         icon: '📡',
         title: 'Fiber optic has a product-quality signal',
-        body: 'Fiber optic customers churn at 41.9% vs 19% on DSL — despite paying more. High charges combined with poor satisfaction is the likely driver.',
+        body: 'Fiber optic customers churn at 41.9% vs 19% on DSL, despite paying more. High charges combined with poor satisfaction is the likely driver.',
       },
     ],
     problem:
@@ -284,17 +284,17 @@ export const projects = [
       {
         icon: '🚚',
         title: 'Delivery time directly controls review score',
-        body: 'Orders delivered in under 7 days average 4.41/5. Orders taking 22+ days collapse to 3.03/5 — a 1.4-point drop. Just 8.1% of orders arrived late, yet they generate 30% of all 1-star reviews.',
+        body: 'Orders delivered in under 7 days average 4.41/5. Orders taking 22+ days collapse to 3.03/5, a 1.4-point drop. Just 8.1% of orders arrived late, yet they generate 30% of all 1-star reviews.',
       },
       {
         icon: '📦',
         title: 'Freight erodes unit economics on cheap orders',
-        body: 'For orders under R$50, freight averages 33.2% of total transaction value — making free-shipping promotions on small items structurally loss-making. Above R$200, freight drops to 9.1%, where the economics work.',
+        body: 'For orders under R$50, freight averages 33.2% of total transaction value, making free-shipping promotions on small items structurally loss-making. Above R$200, freight drops to 9.1%, where the economics work.',
       },
       {
         icon: '🏪',
         title: 'Top 10% of sellers drive 67.5% of revenue',
-        body: 'Of 3,095 sellers, the top 310 account for two-thirds of all GMV. The median seller generates only R$821 in lifetime revenue — a long-tail base that needs better discovery and merchandising to scale.',
+        body: 'Of 3,095 sellers, the top 310 account for two-thirds of all GMV. The median seller generates only R$821 in lifetime revenue, a long-tail base that needs better discovery and merchandising to scale.',
       },
     ],
     problem:
@@ -302,13 +302,13 @@ export const projects = [
     approach:
       'Joined 9 tables across orders, items, payments, reviews, products, and sellers. Segmented review scores by delivery time bands, modelled freight economics by order value tier, and ran a Pareto breakdown of seller revenue concentration.',
     result:
-      'Three platform levers identified: (1) enforce tighter seller SLAs — the 8.1% of late orders generate 30% of 1-star reviews; (2) raise the free-shipping threshold above R$100 where freight economics become viable; (3) build a seller performance tier to surface high-quality long-tail sellers.',
+      'Three platform levers identified: (1) enforce tighter seller SLAs, since the 8.1% of late orders generate 30% of 1-star reviews; (2) raise the free-shipping threshold above R$100 where freight economics become viable; (3) build a seller performance tier to surface high-quality long-tail sellers.',
     featured: false,
   },
 
   {
     slug: 'superstore-profitability-audit',
-    title: '$156K in Preventable Losses — A Retail Profitability Audit',
+    title: '$156K in Preventable Losses: A Retail Profitability Audit',
     tagline: 'Audited 9,994 orders across a US retail chain to find where discounting strategy, product mix, and regional execution are quietly destroying a 12.5% margin.',
     disciplines: ['data'],
     status: 'shipped',
@@ -365,12 +365,12 @@ export const projects = [
       {
         icon: '🪑',
         title: 'Furniture is subsidised by Technology and Office Supplies',
-        body: 'Tables lose -$17.7K on $207K in sales (-8.6% margin). Bookcases add another -$3.5K. The whole Furniture category runs at just 2.5% margin — Tech (17.4%) and Office Supplies (17.0%) are quietly covering the shortfall.',
+        body: 'Tables lose $17.7K on $207K in sales (-8.6% margin). Bookcases add another $3.5K in losses. The whole Furniture category runs at just 2.5% margin while Tech (17.4%) and Office Supplies (17.0%) quietly cover the shortfall.',
       },
       {
         icon: '🗺️',
         title: 'Central region underperforms at every category level',
-        body: 'Central margin is 7.9% vs 14.9% in the West. Furniture is cash-negative in Central (-$2,871). Texas, Ohio, and Illinois — all Central-heavy states — are the three biggest loss-making states in the business.',
+        body: 'Central margin is 7.9% vs 14.9% in the West. Furniture is cash-negative in Central (-$2,871). Texas, Ohio, and Illinois are all Central-heavy states and the three biggest loss-making states in the business.',
       },
     ],
     problem:
@@ -378,7 +378,7 @@ export const projects = [
     approach:
       'Segmented 9,994 order rows by discount band, sub-category, region, and state. Used pandas groupby aggregations to isolate margin at each intersection, then ranked loss-makers by total profit impact rather than margin percentage alone.',
     result:
-      'Three levers identified: (1) cap discounts at 20% — high-discount orders cause $124K of the $156K in losses; (2) reprice or discontinue Tables and Bookcases which are loss-making at any discount level; (3) audit Central region execution, particularly in Texas, Ohio, and Illinois.',
+      'Three levers identified: (1) cap discounts at 20%, since high-discount orders cause $124K of the $156K in losses; (2) reprice or discontinue Tables and Bookcases which are loss-making at any discount level; (3) audit Central region execution, particularly in Texas, Ohio, and Illinois.',
     featured: false,
   },
 ]
@@ -410,9 +410,9 @@ export const webProjects = [
     palette: ['#1a1a1a', '#2c2c2c', '#f4f1ec', '#9b8b70'],
     highlights: [
       'Single-scroll sticky nav with full-bleed project blocks',
-      'Editorial type pairing — condensed grotesque + classic serif',
+      'Editorial type pairing: condensed grotesque + classic serif',
       'Blueprint grid overlay throughout',
-      'Three colors, two typefaces — no animation gimmicks',
+      'Three colors, two typefaces. No animation gimmicks',
     ],
     file: '/sites/02-kessler-ito-static.html',
     color: 'cyan',
@@ -422,7 +422,7 @@ export const webProjects = [
     name: 'Portside',
     subtitle: 'B2B Logistics SaaS',
     format: 'SaaS Marketing Site',
-    tagline: 'Full B2B SaaS marketing site — hero, feature grid, pricing tiers, and live-product UI.',
+    tagline: 'Full B2B SaaS marketing site with hero, feature grid, pricing tiers, and live-product UI.',
     palette: ['#0f1f3d', '#1e3a6e', '#f59e0b', '#94a3b8'],
     highlights: [
       'Full SaaS site: hero, social proof, features, pricing, CTA',
@@ -441,7 +441,7 @@ export const webProjects = [
     tagline: 'Mood-driven restaurant site with itemized menu and reservation-focused CTAs.',
     palette: ['#1c1008', '#c2440c', '#d4a017', '#f7f0e6'],
     highlights: [
-      'Atmosphere via gradient firelight — no photography needed',
+      'Atmosphere via gradient firelight, no photography needed',
       'Menu section with dotted price leaders and italic descriptors',
       'Tight single-CTA strategy (reserve a table)',
       'Italic serif display for hospitality mood',
@@ -460,7 +460,7 @@ export const webProjects = [
       'Live countdown timer to event date',
       'Day-tabbed lineup grid for browsability',
       'Tiered ticketing with "most popular" highlight',
-      'Bold saturated palette — earned visual energy for a festival brand',
+      'Bold saturated palette. Earned visual energy for a festival brand',
     ],
     file: '/sites/05-driftwood-festival-event.html',
     color: 'cyan',
@@ -470,10 +470,10 @@ export const webProjects = [
 // ─── ABOUT ───────────────────────────────────────────────────────────────────
 export const about = {
   name: 'Mit Desai',
-  tagline: 'Product manager who moves across data, marketing, and web — because the best solutions rarely live inside one function.',
-  intro: "I've driven $2M/month in revenue growth, built AI-powered knowledge platforms, and shipped analytics infrastructure from zero to production — across three companies, four disciplines, and a lot of SQL.",
+  tagline: 'Product manager who moves across data, marketing, and web. The best solutions rarely live inside one function.',
+  intro: "I've driven $2M/month in revenue growth, built AI-powered knowledge platforms, and shipped analytics infrastructure from zero to production. Three companies, four disciplines, and a lot of SQL.",
   bio: [
-    "I'm a product manager who can't stop breaking out of the PM lane — and I've stopped apologizing for it. My work sits at the intersection of product, data, performance marketing, and web development because that's where the most interesting problems live.",
+    "I'm a product manager who can't stop breaking out of the PM lane, and I've stopped apologizing for it. My work sits at the intersection of product, data, performance marketing, and web development because that's where the most interesting problems live.",
     "At Ciberspring International I architect analytics platforms, automate business operations, and instrument GA4 for enterprise clients. Before that, at Kitchen365, I led performance marketing for 25+ clients managing $100K+/month in ad spend, built ETL pipelines in SQL and Python, and shipped the company's product demo platform. I hold a Master's in Marketing Analytics from Simon Business School, University of Rochester.",
     "I'm most useful to teams that need someone who can run discovery on Monday, write a SQL query on Tuesday, brief a media buy on Wednesday, and push code on Thursday. If that's the kind of operator you're looking for, let's talk.",
   ],
@@ -504,5 +504,5 @@ export const contact = {
   links: [
     { label: 'LinkedIn', url: 'https://linkedin.com/in/mitdesai10' },
   ],
-  availability: 'Open to senior IC, advisory, and leadership roles — currently based in Somerville, NJ',
+  availability: 'Open to senior IC, advisory, and leadership roles. Currently based in Somerville, NJ',
 }

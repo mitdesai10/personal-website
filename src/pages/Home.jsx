@@ -353,7 +353,7 @@ export default function Home() {
             One operator, <span className="gradient-text">four modes</span>
           </h2>
           <p className="text-body mt-4 max-w-xl mx-auto leading-relaxed">
-            The same analytical instinct that drives good product decisions drives good data questions — and good marketing ones.
+            The same analytical instinct that drives good product decisions drives good data questions, and good marketing ones.
           </p>
         </motion.div>
 

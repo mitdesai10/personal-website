@@ -19,7 +19,7 @@ export default function Work() {
           Case Studies
         </h1>
         <p className="text-body mt-3 max-w-xl leading-relaxed">
-          Product decisions, data analysis, and growth work — each project documents the thinking behind the outcome.
+          Product decisions, data analysis, and growth work. Each project documents the thinking behind the outcome.
         </p>
       </div>
 

@@ -156,8 +156,8 @@ export default function Websites() {
             </motion.h1>
 
             <motion.p variants={fadeUp(0.1)} className="text-body text-lg leading-relaxed mt-4 max-w-xl">
-              Five concept sites across five industry verticals — each with its own palette, type pairing, and layout logic,
-              none sharing a template.
+              Five concept sites across five industry verticals, each with its own palette, type pairing, and layout logic.
+              None sharing a template.
             </motion.p>
           </motion.div>
         </div>
@@ -184,8 +184,8 @@ export default function Websites() {
           <div className="gradient-border-inner p-8 text-center">
             <p className="section-label mb-3">Why five together?</p>
             <p className="text-body max-w-2xl mx-auto leading-relaxed text-sm">
-              Ecommerce vs. static vs. corporate vs. hospitality vs. event — each pulling from real conventions in its industry
-              rather than a shared design system stretched five ways. These are a deliberate range test.
+              Ecommerce vs. static vs. corporate vs. hospitality vs. event. Each pulls from real conventions in its industry
+              rather than a shared design system stretched five ways. A deliberate range test.
             </p>
           </div>
         </motion.div>

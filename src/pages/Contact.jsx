@@ -25,7 +25,7 @@ export default function Contact() {
           {contact.email}
         </a>
         <p className="font-mono text-xs text-muted mt-2">
-          Best way to reach me — I typically reply within 24–48 hours.
+          Best way to reach me. I typically reply within 24-48 hours.
         </p>
       </div>
 

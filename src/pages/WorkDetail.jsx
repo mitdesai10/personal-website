@@ -368,7 +368,7 @@ function OlistDetail({ project }) {
 
         <div className="bg-canvas-2 border border-border rounded-xl p-6">
           <p className="font-mono text-xs text-muted mb-1">Monthly Order Volume</p>
-          <p className="font-display text-sm text-heading font-semibold mb-5">Nov 2017 Black Friday spike — then steady ~6.5K/mo</p>
+          <p className="font-display text-sm text-heading font-semibold mb-5">Nov 2017 Black Friday spike, then steady ~6.5K/mo</p>
           <ResponsiveContainer width="100%" height={200}>
             <AreaChart data={chartData.monthlyOrders} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
               <defs>
