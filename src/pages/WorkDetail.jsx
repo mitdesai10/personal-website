@@ -2,7 +2,7 @@ import { useParams, Link, Navigate } from 'react-router-dom'
 import { projects, disciplines } from '../data/projects'
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell,
-  AreaChart, Area, CartesianGrid, ReferenceLine,
+  AreaChart, Area, CartesianGrid, ReferenceLine, LabelList,
 } from 'recharts'
 
 const PURPLE = '#804dee'
@@ -20,8 +20,43 @@ const ChartTooltip = ({ active, payload }) => {
   )
 }
 
+function Roadmap({ phases }) {
+  const cfg = {
+    done:    { bg: 'rgba(0,206,168,0.12)',   border: '#00cea8', color: '#00cea8',                   badge: 'Done' },
+    current: { bg: 'rgba(128,77,238,0.12)',  border: '#804dee', color: '#804dee',                   badge: 'Active' },
+    planned: { bg: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.18)', color: 'rgba(255,255,255,0.35)', badge: 'Planned' },
+  }
+  return (
+    <div className="bg-canvas-2 border border-border rounded-xl p-6 mb-6">
+      <p className="section-label mb-6">Product Roadmap</p>
+      <div className="flex items-start" style={{ overflowX: 'auto' }}>
+        {phases.map((ph, i) => {
+          const c = cfg[ph.status]
+          return (
+            <div key={ph.phase} className="flex-1" style={{ minWidth: 130 }}>
+              <div className="flex items-center">
+                <div style={{ width: 34, height: 34, borderRadius: '50%', background: c.bg, border: `2px solid ${c.border}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <span style={{ color: c.color, fontSize: 10, fontFamily: 'IBM Plex Mono', fontWeight: 700 }}>{ph.phase}</span>
+                </div>
+                {i < phases.length - 1 && (
+                  <div style={{ flex: 1, height: 1, background: ph.status === 'done' ? 'rgba(0,206,168,0.35)' : 'rgba(255,255,255,0.1)' }} />
+                )}
+              </div>
+              <div className="mt-3 pr-4">
+                <p className="font-display font-semibold text-sm text-heading mb-1">{ph.label}</p>
+                <p className="font-mono text-xs text-muted leading-relaxed">{ph.detail}</p>
+                <span className="inline-block mt-2 font-mono text-xs" style={{ color: c.color }}>{c.badge}</span>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 function AnalyticsDetail({ project }) {
-  const { title, tagline, stack, stats, kpis, chartData, findings, dataset, datasetUrl, disciplines: discIds, status, year } = project
+  const { title, tagline, stack, kpis, chartData, findings, dataset, datasetUrl, disciplines: discIds, status, year } = project
   const DISC_MAP = Object.fromEntries(disciplines.map(d => [d.id, d]))
 
   return (
@@ -30,7 +65,6 @@ function AnalyticsDetail({ project }) {
         ← All work
       </Link>
 
-      {/* Title */}
       <div className="mb-10">
         <div className="flex flex-wrap gap-2 mb-4">
           <span className="tag-cyan">{status}</span>
@@ -47,7 +81,6 @@ function AnalyticsDetail({ project }) {
         </div>
       </div>
 
-      {/* KPI cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {kpis.map((k) => (
           <div key={k.label} className="bg-canvas-2 border border-border rounded-xl p-5">
@@ -58,7 +91,6 @@ function AnalyticsDetail({ project }) {
         ))}
       </div>
 
-      {/* Charts */}
       <div className="grid md:grid-cols-2 gap-6 mb-8">
         <div className="bg-canvas-2 border border-border rounded-xl p-6">
           <p className="font-mono text-xs text-muted mb-1">Churn Rate by Contract Type</p>
@@ -113,7 +145,6 @@ function AnalyticsDetail({ project }) {
         </div>
       </div>
 
-      {/* Findings */}
       <div className="mb-10">
         <p className="section-label mb-5">Key Findings</p>
         <div className="grid md:grid-cols-3 gap-5">
@@ -127,14 +158,12 @@ function AnalyticsDetail({ project }) {
         </div>
       </div>
 
-      {/* Dataset credit */}
       <p className="font-mono text-xs text-muted border-t border-border pt-6 mb-16">
         Dataset:{' '}
         <a href={datasetUrl} target="_blank" rel="noopener noreferrer" className="text-cyan hover:underline">{dataset}</a>
         {' '}· Analysis by Mit Desai
       </p>
 
-      {/* Prev / Next */}
       <div className="pt-8 border-t border-border flex justify-between gap-4">
         {(() => {
           const idx = projects.findIndex(p => p.slug === project.slug)
@@ -152,11 +181,11 @@ function AnalyticsDetail({ project }) {
 }
 
 function PaymentsDetail({ project }) {
-  const { title, tagline, stack, stats, kpis, chartData, findings, dataset, datasetUrl, disciplines: discIds, status, year } = project
+  const { title, tagline, stack, kpis, chartData, findings, roadmap, dataset, datasetUrl, disciplines: discIds, status, year } = project
   const DISC_MAP_LOCAL = Object.fromEntries(disciplines.map(d => [d.id, d]))
   const typeColor = (rate) => rate > 0.5 ? PURPLE : rate > 0 ? '#a78bfa' : TEAL
   const bandColor = (pct) => pct > 30 ? PURPLE : pct > 20 ? '#a78bfa' : TEAL
-  const recallColor = (r) => r > 50 ? TEAL : r > 10 ? '#a78bfa' : PURPLE
+  const coverageColor = (r) => r > 50 ? TEAL : r > 10 ? '#a78bfa' : PURPLE
 
   return (
     <main className="max-w-5xl mx-auto px-6 pt-32 pb-24">
@@ -192,8 +221,8 @@ function PaymentsDetail({ project }) {
 
       <div className="grid md:grid-cols-2 gap-6 mb-8">
         <div className="bg-canvas-2 border border-border rounded-xl p-6">
-          <p className="font-mono text-xs text-muted mb-1">Fraud Rate by Transaction Type</p>
-          <p className="font-display text-sm text-heading font-semibold mb-5">Only TRANSFER and CASH_OUT carry any fraud</p>
+          <p className="font-mono text-xs text-muted mb-1">Risk Rate by Transaction Type</p>
+          <p className="font-display text-sm text-heading font-semibold mb-5">Risk is confined to TRANSFER and CASH_OUT</p>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={chartData.byType} barSize={36} margin={{ top: 4, right: 4, left: -16, bottom: 0 }}>
               <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.04)" />
@@ -204,7 +233,7 @@ function PaymentsDetail({ project }) {
                 return (
                   <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
                     <p className="text-muted mb-1">{payload[0]?.payload?.name}</p>
-                    <p className="text-heading">{payload[0]?.value}% fraud rate</p>
+                    <p className="text-heading">{payload[0]?.value}% risk rate</p>
                   </div>
                 )
               }} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
@@ -216,8 +245,8 @@ function PaymentsDetail({ project }) {
         </div>
 
         <div className="bg-canvas-2 border border-border rounded-xl p-6">
-          <p className="font-mono text-xs text-muted mb-1">Fraud Cases by Transaction Amount</p>
-          <p className="font-display text-sm text-heading font-semibold mb-5">79% of fraud exceeds $100K — fraudsters target large transfers</p>
+          <p className="font-mono text-xs text-muted mb-1">High-Risk Events by Transaction Amount</p>
+          <p className="font-display text-sm text-heading font-semibold mb-5">79% of high-risk events exceed $100K — large transfers are the target</p>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={chartData.byAmountBand} barSize={36} margin={{ top: 4, right: 4, left: -16, bottom: 0 }}>
               <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.04)" />
@@ -228,7 +257,7 @@ function PaymentsDetail({ project }) {
                 return (
                   <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
                     <p className="text-muted mb-1">{payload[0]?.payload?.band}</p>
-                    <p className="text-heading">{payload[0]?.value}% of fraud cases</p>
+                    <p className="text-heading">{payload[0]?.value}% of high-risk events</p>
                   </div>
                 )
               }} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
@@ -240,8 +269,8 @@ function PaymentsDetail({ project }) {
         </div>
 
         <div className="bg-canvas-2 border border-border rounded-xl p-6 md:col-span-2">
-          <p className="font-mono text-xs text-muted mb-1">Fraud Detection Recall: Existing System vs Rule-Based Baseline</p>
-          <p className="font-display text-sm text-heading font-semibold mb-5">Existing flag system catches 0.19% of fraud — a simple rule catches 66.6%</p>
+          <p className="font-mono text-xs text-muted mb-1">Detection Coverage: Existing System vs Rule-Based Baseline</p>
+          <p className="font-display text-sm text-heading font-semibold mb-5">Existing system covers 0.19% of high-risk events — a targeted rule reaches 66.6%</p>
           <ResponsiveContainer width="100%" height={160}>
             <BarChart data={chartData.byDetection} layout="vertical" barSize={32} margin={{ top: 0, right: 60, left: 20, bottom: 0 }}>
               <CartesianGrid horizontal={false} stroke="rgba(255,255,255,0.04)" />
@@ -252,19 +281,19 @@ function PaymentsDetail({ project }) {
                 return (
                   <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
                     <p className="text-muted mb-1">{payload[0]?.payload?.method}</p>
-                    <p className="text-heading">{payload[0]?.value}% recall</p>
+                    <p className="text-heading">{payload[0]?.value}% detection coverage</p>
                   </div>
                 )
               }} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
               <Bar dataKey="recall" radius={[0, 4, 4, 0]}>
-                {chartData.byDetection.map((d) => <Cell key={d.method} fill={recallColor(d.recall)} />)}
+                {chartData.byDetection.map((d) => <Cell key={d.method} fill={coverageColor(d.recall)} />)}
               </Bar>
             </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
 
-      <div className="mb-10">
+      <div className="mb-8">
         <p className="section-label mb-5">Key Findings</p>
         <div className="grid md:grid-cols-3 gap-5">
           {findings.map((f) => (
@@ -277,11 +306,153 @@ function PaymentsDetail({ project }) {
         </div>
       </div>
 
+      {roadmap && <Roadmap phases={roadmap} />}
+
       <p className="font-mono text-xs text-muted border-t border-border pt-6 mb-16">
         Dataset:{' '}
         <a href={datasetUrl} target="_blank" rel="noopener noreferrer" className="text-cyan hover:underline">{dataset}</a>
         {' '}· Analysis by Mit Desai
       </p>
+
+      <div className="pt-8 border-t border-border flex justify-between gap-4">
+        {(() => {
+          const idx = projects.findIndex(p => p.slug === project.slug)
+          const prev = projects[idx - 1], next = projects[idx + 1]
+          return (
+            <>
+              <div>{prev && <Link to={`/work/${prev.slug}`} className="group flex flex-col gap-0.5"><span className="font-mono text-xs text-muted group-hover:text-body transition-colors">← Previous</span><span className="font-display text-sm text-heading group-hover:text-cyan transition-colors">{prev.title}</span></Link>}</div>
+              <div className="text-right">{next && <Link to={`/work/${next.slug}`} className="group flex flex-col gap-0.5 items-end"><span className="font-mono text-xs text-muted group-hover:text-body transition-colors">Next →</span><span className="font-display text-sm text-heading group-hover:text-cyan transition-colors">{next.title}</span></Link>}</div>
+            </>
+          )
+        })()}
+      </div>
+    </main>
+  )
+}
+
+function PMCaseStudyDetail({ project }) {
+  const { title, tagline, stack, kpis, roadmap, chartData, chartType, chartTitle, chartSub, decisions, disciplines: discIds, status, year, problem, approach, result } = project
+  const DISC_MAP_LOCAL = Object.fromEntries(disciplines.map(d => [d.id, d]))
+  const riceColor = (s) => s >= 900 ? TEAL : s >= 600 ? '#a78bfa' : PURPLE
+
+  return (
+    <main className="max-w-5xl mx-auto px-6 pt-32 pb-24">
+      <Link to="/work" className="inline-flex items-center gap-1.5 font-mono text-xs text-muted hover:text-body transition-colors mb-10">
+        ← All work
+      </Link>
+
+      <div className="mb-10">
+        <div className="flex flex-wrap gap-2 mb-4">
+          <span className="tag-cyan">{status}</span>
+          {discIds.map(id => {
+            const d = DISC_MAP_LOCAL[id]
+            return d ? <span key={id} className="tag-cyan">{d.label}</span> : null
+          })}
+          <span className="tag">{year}</span>
+        </div>
+        <h1 className="font-display font-bold text-3xl md:text-4xl text-heading tracking-tight leading-tight mb-3">{title}</h1>
+        <p className="text-body text-lg leading-relaxed max-w-2xl">{tagline}</p>
+        <div className="flex flex-wrap gap-2 mt-5">
+          {stack.map(s => <span key={s} className="tag">{s}</span>)}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        {kpis.map((k) => (
+          <div key={k.label} className="bg-canvas-2 border border-border rounded-xl p-5">
+            <p className="font-mono text-xs text-muted mb-2">{k.label}</p>
+            <p className="font-display font-bold text-3xl text-heading mb-1">{k.value}</p>
+            <p className="font-mono text-xs text-muted leading-snug">{k.sub}</p>
+          </div>
+        ))}
+      </div>
+
+      {roadmap && <Roadmap phases={roadmap} />}
+
+      <div className="grid md:grid-cols-2 gap-6 mb-8">
+        <div className="bg-canvas-2 border border-border rounded-xl p-6">
+          <p className="font-mono text-xs text-muted mb-1">{chartTitle}</p>
+          <p className="font-display text-sm text-heading font-semibold mb-5">{chartSub}</p>
+
+          {chartType === 'rice' && (
+            <ResponsiveContainer width="100%" height={220}>
+              <BarChart data={chartData.rice} layout="vertical" barSize={20} margin={{ top: 0, right: 50, left: 10, bottom: 0 }}>
+                <CartesianGrid horizontal={false} stroke="rgba(255,255,255,0.04)" />
+                <XAxis type="number" tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 9, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} domain={[0, 1400]} />
+                <YAxis type="category" dataKey="feature" tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 8, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} width={175} />
+                <Tooltip content={({ active, payload }) => {
+                  if (!active || !payload?.length) return null
+                  return (
+                    <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+                      <p className="text-muted mb-1">{payload[0]?.payload?.feature}</p>
+                      <p className="text-heading">RICE: {payload[0]?.value}</p>
+                    </div>
+                  )
+                }} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
+                <Bar dataKey="score" radius={[0, 4, 4, 0]}>
+                  {chartData.rice.map((d) => <Cell key={d.feature} fill={riceColor(d.score)} />)}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          )}
+
+          {chartType === 'settlement' && (
+            <ResponsiveContainer width="100%" height={200}>
+              <BarChart data={chartData.settlement} layout="vertical" barSize={24} margin={{ top: 0, right: 72, left: 20, bottom: 0 }}>
+                <CartesianGrid horizontal={false} stroke="rgba(255,255,255,0.04)" />
+                <XAxis type="number" tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 9, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} tickFormatter={v => `${v}h`} domain={[0, 54]} />
+                <YAxis type="category" dataKey="method" tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 8, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} width={145} />
+                <Tooltip content={({ active, payload }) => {
+                  if (!active || !payload?.length) return null
+                  const v = payload[0]?.value
+                  return (
+                    <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+                      <p className="text-muted mb-1">{payload[0]?.payload?.method}</p>
+                      <p className="text-heading">{v < 1 ? '< 1 minute' : `${v} hours`}</p>
+                    </div>
+                  )
+                }} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
+                <Bar dataKey="hours" radius={[0, 4, 4, 0]}>
+                  <LabelList dataKey="hours" position="right" formatter={v => v < 1 ? '< 1 min' : `${v}h`} style={{ fill: 'rgba(255,255,255,0.55)', fontSize: 9, fontFamily: 'IBM Plex Mono' }} />
+                  {chartData.settlement.map((d) => <Cell key={d.method} fill={d.hours < 1 ? TEAL : d.hours < 15 ? '#a78bfa' : PURPLE} />)}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          )}
+        </div>
+
+        <div>
+          <p className="section-label mb-4">Key Product Decisions</p>
+          <div className="flex flex-col gap-4">
+            {decisions.map((d) => (
+              <div key={d.title} className="bg-canvas-2 border border-border rounded-xl p-4">
+                <div className="flex items-start gap-3">
+                  <span className="text-xl flex-shrink-0 mt-0.5">{d.icon}</span>
+                  <div>
+                    <h3 className="font-display font-semibold text-sm text-heading mb-1">{d.title}</h3>
+                    <p className="font-mono text-xs text-muted leading-relaxed">{d.body}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="border-t border-border mb-10">
+        <div className="grid md:grid-cols-[10rem_1fr] gap-4 md:gap-8 py-8 border-b border-border">
+          <div><p className="section-label">Problem</p></div>
+          <div className="prose-dark"><p>{problem}</p></div>
+        </div>
+        <div className="grid md:grid-cols-[10rem_1fr] gap-4 md:gap-8 py-8 border-b border-border">
+          <div><p className="section-label">Approach</p></div>
+          <div className="prose-dark"><p>{approach}</p></div>
+        </div>
+        <div className="grid md:grid-cols-[10rem_1fr] gap-4 md:gap-8 py-8">
+          <div><p className="section-label">Result</p></div>
+          <div className="prose-dark"><p>{result}</p></div>
+        </div>
+      </div>
 
       <div className="pt-8 border-t border-border flex justify-between gap-4">
         {(() => {
@@ -338,7 +509,6 @@ function SuperstoreDetail({ project }) {
       </div>
 
       <div className="grid md:grid-cols-2 gap-6 mb-8">
-        {/* Chart 1: Margin by discount band — full width */}
         <div className="bg-canvas-2 border border-border rounded-xl p-6 md:col-span-2">
           <p className="font-mono text-xs text-muted mb-1">Profit Margin by Discount Band</p>
           <p className="font-display text-sm text-heading font-semibold mb-5">Cross 20% discount and margin turns negative</p>
@@ -364,7 +534,6 @@ function SuperstoreDetail({ project }) {
           </ResponsiveContainer>
         </div>
 
-        {/* Chart 2: Sub-category profit — horizontal diverging bar */}
         <div className="bg-canvas-2 border border-border rounded-xl p-6">
           <p className="font-mono text-xs text-muted mb-1">Profit by Sub-Category</p>
           <p className="font-display text-sm text-heading font-semibold mb-5">Tables and Bookcases are loss-making</p>
@@ -391,7 +560,6 @@ function SuperstoreDetail({ project }) {
           </ResponsiveContainer>
         </div>
 
-        {/* Chart 3: Region margin */}
         <div className="bg-canvas-2 border border-border rounded-xl p-6">
           <p className="font-mono text-xs text-muted mb-1">Profit Margin by Region</p>
           <p className="font-display text-sm text-heading font-semibold mb-5">Central region runs at half the margin of West</p>
@@ -630,6 +798,7 @@ export default function WorkDetail() {
   if (project.type === 'analytics-olist') return <OlistDetail project={project} />
   if (project.type === 'analytics-superstore') return <SuperstoreDetail project={project} />
   if (project.type === 'analytics-payments') return <PaymentsDetail project={project} />
+  if (project.type === 'pm-treasury' || project.type === 'pm-tokenized') return <PMCaseStudyDetail project={project} />
 
   const {
     title, tagline, disciplines: discIds, status,
@@ -641,7 +810,6 @@ export default function WorkDetail() {
 
   return (
     <main className="max-w-4xl mx-auto px-6 pt-32 pb-24">
-      {/* Back */}
       <Link
         to="/work"
         className="inline-flex items-center gap-1.5 font-mono text-xs text-muted hover:text-body transition-colors mb-10"
@@ -649,7 +817,6 @@ export default function WorkDetail() {
         ← All work
       </Link>
 
-      {/* Title block */}
       <div className="mb-12">
         <div className="flex flex-wrap gap-2 mb-4">
           <span className={statusStyle.cls}>{status}</span>
@@ -670,7 +837,6 @@ export default function WorkDetail() {
         <p className="text-body text-lg leading-relaxed max-w-2xl">{tagline}</p>
       </div>
 
-      {/* Meta strip */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border rounded overflow-hidden mb-12">
         {[
           { label: 'Role',     value: role },
@@ -685,7 +851,6 @@ export default function WorkDetail() {
         ))}
       </div>
 
-      {/* Stack */}
       {stack?.length > 0 && (
         <div className="mb-12">
           <p className="section-label mb-3">Stack / Tools</p>
@@ -695,7 +860,6 @@ export default function WorkDetail() {
         </div>
       )}
 
-      {/* Stats */}
       {stats?.length > 0 && (
         <div className="grid grid-cols-3 gap-4 mb-12">
           {stats.map((s, i) => (
@@ -707,7 +871,6 @@ export default function WorkDetail() {
         </div>
       )}
 
-      {/* Narrative */}
       <div className="border-t border-border">
         <Section label="Problem">
           <p>{problem}</p>
@@ -722,7 +885,6 @@ export default function WorkDetail() {
         </Section>
       </div>
 
-      {/* Nav between projects */}
       <div className="mt-16 pt-8 border-t border-border flex justify-between gap-4">
         {(() => {
           const idx = projects.findIndex(p => p.slug === slug)
@@ -732,10 +894,7 @@ export default function WorkDetail() {
             <>
               <div>
                 {prev && (
-                  <Link
-                    to={`/work/${prev.slug}`}
-                    className="group flex flex-col gap-0.5"
-                  >
+                  <Link to={`/work/${prev.slug}`} className="group flex flex-col gap-0.5">
                     <span className="font-mono text-xs text-muted group-hover:text-body transition-colors">← Previous</span>
                     <span className="font-display text-sm text-heading group-hover:text-cyan transition-colors">{prev.title}</span>
                   </Link>
@@ -743,10 +902,7 @@ export default function WorkDetail() {
               </div>
               <div className="text-right">
                 {next && (
-                  <Link
-                    to={`/work/${next.slug}`}
-                    className="group flex flex-col gap-0.5 items-end"
-                  >
+                  <Link to={`/work/${next.slug}`} className="group flex flex-col gap-0.5 items-end">
                     <span className="font-mono text-xs text-muted group-hover:text-body transition-colors">Next →</span>
                     <span className="font-display text-sm text-heading group-hover:text-cyan transition-colors">{next.title}</span>
                   </Link>

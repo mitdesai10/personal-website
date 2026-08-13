@@ -308,18 +308,18 @@ export const projects = [
 
   {
     slug: 'payment-fraud-detection',
-    title: '$12B at Risk: Detecting Payment Fraud Across 6.3M Transactions',
-    tagline: 'Analyzed a synthetic financial dataset of 6.3 million transactions to expose why the existing fraud flag system catches only 0.19% of fraud — and identify the transaction patterns and amount thresholds that actually predict it.',
-    disciplines: ['data'],
+    title: '$12B at Risk: Transaction Risk Intelligence Across 6.3M Payments',
+    tagline: 'Analyzed a synthetic financial dataset of 6.3 million transactions to expose why the existing risk flag system covers only 0.19% of anomalous events — and identify the transaction patterns and amount thresholds that actually predict them.',
+    disciplines: ['data', 'product'],
     status: 'shipped',
     year: '2025',
-    role: 'Data Analyst',
-    timeline: '2025 · Exploratory Analysis',
+    role: 'Data Analyst / PM',
+    timeline: '2025 · Analysis + Roadmap',
     stack: ['Python', 'pandas', 'scikit-learn', 'Matplotlib', 'Seaborn', 'Jupyter'],
     stats: [
       { value: '6.3M',  label: 'Transactions Analysed' },
-      { value: '$12B',  label: 'Fraud Amount at Risk' },
-      { value: '0.19%', label: 'Existing System Recall' },
+      { value: '$12B',  label: 'Amount at Risk' },
+      { value: '0.19%', label: 'Existing System Coverage' },
     ],
     type: 'analytics-payments',
     dataset: 'PaySim1 Synthetic Financial Dataset · 6,362,620 transactions',
@@ -327,8 +327,8 @@ export const projects = [
     kpis: [
       { label: 'Total Transactions', value: '6.3M',   sub: 'Across 743 hours of simulation' },
       { label: 'Total Volume',       value: '$1.1T',  sub: 'Total amount moved across all types' },
-      { label: 'Fraud Cases',        value: '8,213',  sub: '0.129% fraud rate overall' },
-      { label: 'Fraud Amount',       value: '$12.1B', sub: 'Avg $1.47M per fraud transaction' },
+      { label: 'High-Risk Events',   value: '8,213',  sub: '0.129% anomaly rate overall' },
+      { label: 'Amount at Risk',     value: '$12.1B', sub: 'Avg $1.47M per high-risk transaction' },
     ],
     chartData: {
       byType: [
@@ -346,33 +346,39 @@ export const projects = [
         { band: '$5M+',        pct: 9.1  },
       ],
       byDetection: [
-        { method: 'Existing Flag System',      recall: 0.19 },
+        { method: 'Existing Flag System',          recall: 0.19 },
         { method: 'Rule: TRANSFER/CASHOUT >$200K', recall: 66.6 },
       ],
     },
+    roadmap: [
+      { phase: '01', label: 'Data Scoping',   detail: 'Mapped 6.3M transactions across 5 types, defined analysis frame and output metrics', status: 'done' },
+      { phase: '02', label: 'Risk Profiling', detail: 'Identified risk-concentrated types, amount bands, and coverage gaps in existing system', status: 'done' },
+      { phase: '03', label: 'Rule Engine',    detail: 'Define type + threshold rule set covering 66.6% of high-risk events, no ML required', status: 'current' },
+      { phase: '04', label: 'ML Model',       detail: 'Supervised model on labeled dataset: XGBoost with SMOTE oversampling for class imbalance', status: 'planned' },
+    ],
     findings: [
       {
         icon: '🎯',
-        title: 'Fraud is confined to exactly two transaction types',
-        body: 'Of five transaction types, only TRANSFER (0.77% fraud rate) and CASH_OUT (0.18%) contain any fraud. PAYMENT, CASH_IN, and DEBIT have zero fraud cases across 3.6M transactions. Filtering to these two types alone eliminates 57% of false positive surface area before any model runs.',
+        title: 'Risk is confined to exactly two transaction types',
+        body: 'Of five transaction types, only TRANSFER (0.77% risk rate) and CASH_OUT (0.18%) contain any anomalous events. PAYMENT, CASH_IN, and DEBIT have zero cases across 3.6M transactions. Filtering to these two types eliminates 57% of false positive surface area before any model runs.',
       },
       {
         icon: '💰',
-        title: 'Fraudsters target high-value transactions',
-        body: 'The average fraudulent transaction is $1.47M — nearly 8x the average legitimate transaction. 33% of fraud cases exceed $1M. The median fraud amount of $441K combined with the $10M cap suggests a deliberate strategy of targeting large, one-time transfers that blend into normal treasury activity.',
+        title: 'High-risk events concentrate in large transactions',
+        body: 'The average high-risk transaction is $1.47M — nearly 8x the average legitimate transaction. 33% of cases exceed $1M. The median of $441K combined with the $10M cap suggests a deliberate pattern of targeting large, one-time transfers that blend into normal treasury activity.',
       },
       {
         icon: '🚨',
-        title: 'The existing flag system catches 16 of 8,213 fraud cases',
-        body: 'The built-in isFlaggedFraud system has a 0.19% recall rate — it catches 16 fraud cases and misses 8,197. A simple rule flagging all TRANSFER and CASH_OUT transactions above $200K catches 66.6% of fraud with no ML required. The current system is not a safety net; it is a false sense of security.',
+        title: 'The existing flag system catches 16 of 8,213 high-risk events',
+        body: 'The built-in detection system has a 0.19% coverage rate — it catches 16 events and misses 8,197. A targeted rule flagging all TRANSFER and CASH_OUT transactions above $200K catches 66.6% with no ML required. The current system is not a safety net; it is a false sense of security.',
       },
     ],
     problem:
-      'A financial platform processing over $1 trillion in transactions needed to understand why its existing fraud detection system was flagging almost nothing, and which transaction patterns actually predicted fraudulent activity.',
+      'A financial platform processing over $1 trillion in transactions needed to understand why its existing risk detection system was flagging almost nothing, and which transaction patterns actually predicted anomalous activity.',
     approach:
-      'Segmented 6.3M transactions across all five transaction types (TRANSFER, CASH_OUT, PAYMENT, CASH_IN, DEBIT) to identify where fraud actually occurs. Analyzed fraud rate by transaction type, amount band, and time step. Quantified the performance of the existing isFlaggedFraud system using recall analysis. Benchmarked it against a simple rule-based approach — flagging all TRANSFER and CASH_OUT transactions above $200K — to establish a baseline before any ML modeling.',
+      'Segmented 6.3M transactions across all five transaction types (TRANSFER, CASH_OUT, PAYMENT, CASH_IN, DEBIT) to identify where high-risk events actually occur. Analyzed risk rate by transaction type, amount band, and time step. Quantified the performance of the existing detection system using coverage analysis. Benchmarked it against a simple rule-based approach — flagging all TRANSFER and CASH_OUT transactions above $200K — to establish a baseline before any ML modeling.',
     result:
-      'Three findings drove the recommendations: (1) fraud is structurally confined to TRANSFER and CASH_OUT — building a two-class filter before any model eliminates 57% of false positives for free; (2) fraudsters consistently target high-value transactions, with an average of $1.47M per case — amount thresholds are a strong signal; (3) the existing flag system is nearly non-functional at 0.19% recall, meaning 8,197 of 8,213 fraud cases go unflagged. A simple rule-based baseline catches 66.6% of fraud before any ML investment is needed.',
+      'Three findings drove the recommendations: (1) high-risk activity is structurally confined to TRANSFER and CASH_OUT — a two-class filter eliminates 57% of false positives before any model runs; (2) large transactions are the strongest signal, with an average of $1.47M per high-risk case; (3) the existing detection system is near non-functional at 0.19% coverage, missing 8,197 of 8,213 cases. A targeted rule-based baseline reaches 66.6% coverage before any ML investment is needed.',
     featured: false,
   },
 
@@ -386,17 +392,48 @@ export const projects = [
     role: 'Product Manager',
     timeline: '2025 · Product Planning Exercise',
     stack: ['Bank APIs (REST)', 'FX Rate Feeds', 'SQL', 'JIRA', 'Figma'],
+    type: 'pm-treasury',
     stats: [
       { value: '12',  label: 'User Stories' },
       { value: '3',   label: 'Bank API Integrations' },
       { value: 'T+0', label: 'Target Settlement' },
+    ],
+    kpis: [
+      { label: 'User Stories',         value: '12',  sub: 'With full acceptance criteria' },
+      { label: 'Personas Mapped',      value: '5',   sub: 'Treasurer, Analyst, FX, Ops, CFO' },
+      { label: 'Bank API Integrations',value: '3',   sub: 'Multi-bank live position feed' },
+      { label: 'Target Latency',       value: 'T+0', sub: 'Hours of lag reduced to seconds' },
+    ],
+    roadmap: [
+      { phase: '01', label: 'Discovery',      detail: '5 persona interviews, decision-moment mapping, data availability audit across bank feeds', status: 'done' },
+      { phase: '02', label: 'V1 Spec',        detail: 'RICE prioritization, 12 user stories with acceptance criteria, 3-bank data dependency map', status: 'done' },
+      { phase: '03', label: 'V1 Build',       detail: 'Real-time balance aggregation, multi-currency FX, alert thresholds, async reconciliation fallback', status: 'current' },
+      { phase: '04', label: 'V2: Predictive', detail: 'ML-driven cash flow forecasting, automated sweep recommendations, scenario planning', status: 'planned' },
+    ],
+    chartData: {
+      rice: [
+        { feature: 'Real-time balance aggregation', score: 1260 },
+        { feature: 'Multi-currency FX conversion',  score: 980  },
+        { feature: 'Min balance alert thresholds',  score: 840  },
+        { feature: 'Multi-entity account mapping',  score: 620  },
+        { feature: 'Async reconciliation fallback', score: 560  },
+        { feature: 'Cash flow forecasting (V2)',    score: 420  },
+      ],
+    },
+    chartType: 'rice',
+    chartTitle: 'Feature Prioritization (RICE Score)',
+    chartSub: 'Real-time balance aggregation scores 3× higher than any other feature — V1 scope built around it',
+    decisions: [
+      { icon: '🔌', title: 'API-first over file-based integration', body: 'File uploads create 4–24h batch delays that make real-time position visibility structurally impossible. Higher V1 implementation cost, but the only path to the product thesis.' },
+      { icon: '🔄', title: 'Async reconciliation in V1, not V2', body: 'Partial bank API failures silently break the dashboard. Built the reconciliation fallback into V1 scope — a dashboard that shows wrong positions is worse than no dashboard at all.' },
+      { icon: '🏦', title: 'Three-bank ceiling for V1 scope', body: 'RICE scoring showed diminishing returns beyond the top 3 banks by client coverage. A 4th bank would delay launch by 6 weeks for 8% additional account coverage — deferred to V2.' },
     ],
     problem:
       'Corporate treasury teams managing liquidity across multiple accounts, currencies, and banks have no real-time visibility into cash positions. They reconcile via spreadsheets and bank portals, meaning decisions about short-term investments, FX hedging, and working capital allocation are made on data that is hours or days old. A $50M position sitting idle in one account while another entity draws on credit is not a treasury strategy failure — it is a visibility failure.',
     approach:
       'Conducted user research across five treasury personas (Group Treasurer, Cash Manager, FX Analyst, Operations Lead, CFO) to map the decision moments where stale data caused the most commercial damage. Two findings shaped the scope: (1) real-time balance aggregation across bank APIs was the single highest-value feature — everything else depended on it; (2) partial API failures from bank feeds were the hardest edge case to handle and needed an async reconciliation fallback built into V1, not V2. RICE-scored the full feature backlog: real-time balance aggregation, multi-currency conversion with configurable FX feeds, and minimum balance alert thresholds scored highest on Reach and Impact. Wrote 12 user stories with acceptance criteria covering the core position management, alert, and reporting flows. Defined the data dependency map across three bank API integrations and a testing plan covering eight edge case scenarios including partial API failure, FX rate staleness, and multi-entity account mapping conflicts.',
     result:
-      'Full product spec delivered: 12 user stories with acceptance criteria, data dependency map across three bank API integrations, testing plan with eight edge case scenarios, and success metrics anchored to time-to-visibility (hours to seconds) and alert response time (under five minutes). Key product decision: chose API-first integration over file-based reconciliation for V1 despite higher implementation complexity — the latency difference between batch file uploads and live API feeds made file-based reconciliation structurally incompatible with the real-time visibility goal. Key insight: the data reliability problem is harder than the UI problem. Solving it requires an async reconciliation layer as a mandatory fallback before any dashboard feature can be trusted.',
+      'Full product spec delivered: 12 user stories with acceptance criteria, data dependency map across three bank API integrations, testing plan with eight edge case scenarios, and success metrics anchored to time-to-visibility (hours to seconds) and alert response time (under five minutes). Chose API-first integration over file-based reconciliation for V1 despite higher implementation complexity — the latency difference made file-based reconciliation structurally incompatible with the real-time visibility goal. Key insight: the data reliability problem is harder than the UI problem. Solving it requires an async reconciliation layer as a mandatory fallback before any dashboard feature can be trusted.',
     featured: false,
   },
 
@@ -410,17 +447,45 @@ export const projects = [
     role: 'Product Manager',
     timeline: '2025 · Product Planning Exercise',
     stack: ['Permissioned Blockchain', 'REST API', 'Smart Contracts', 'JIRA', 'Figma'],
+    type: 'pm-tokenized',
     stats: [
       { value: '3',   label: 'Core Flows' },
       { value: 'T+0', label: 'Settlement Target' },
       { value: '4',   label: 'Compliance Gates' },
     ],
+    kpis: [
+      { label: 'Settlement Target', value: 'T+0', sub: 'Down from T+2 cross-border standard' },
+      { label: 'Compliance Gates',  value: '4',   sub: 'All must pass before GA rollout' },
+      { label: 'Core User Flows',   value: '3',   sub: 'Deposit, Transfer, Redeem' },
+      { label: 'Rollout Phases',    value: '3',   sub: 'Internal → Pilot → GA' },
+    ],
+    roadmap: [
+      { phase: '01', label: 'Internal Test',    detail: 'Internal team validation, compliance gates 1–2, edge case testing across all 3 core flows', status: 'done' },
+      { phase: '02', label: '3-Client Pilot',   detail: 'Selected corporate treasury clients, compliance gates 3–4, TMS reconciliation bridge validation', status: 'current' },
+      { phase: '03', label: 'General Availability', detail: 'Full client rollout, TMS integration support, 24/7 operational SLA monitoring', status: 'planned' },
+    ],
+    chartData: {
+      settlement: [
+        { method: 'Traditional Wire (T+2)', hours: 48 },
+        { method: 'SWIFT GPI',              hours: 12 },
+        { method: 'Internal Book Transfer', hours: 4  },
+        { method: 'Tokenized Deposit (T+0)',hours: 0.02 },
+      ],
+    },
+    chartType: 'settlement',
+    chartTitle: 'Settlement Time Comparison',
+    chartSub: 'Tokenized deposits settle in under a minute vs 48 hours for traditional cross-border wires',
+    decisions: [
+      { icon: '🔐', title: 'Permissioned over public chain', body: 'Regulatory clarity, on-chain AML/KYC enforcement, and institutional trust requirements ruled out public chain for this client segment. Permissioned infrastructure enables compliance without sovereign-risk exposure.' },
+      { icon: '⚖️', title: 'Compliance-first sequencing', body: 'Mapped all 4 compliance gates before any engineering was committed. A product that cannot get regulatory approval has zero value regardless of how well-built it is — compliance scoped before infrastructure, not after.' },
+      { icon: '🔗', title: 'TMS reconciliation bridge in V1', body: 'Tokenized positions must reconcile to traditional accounting and treasury management systems for institutional adoption. The reconciliation bridge was scoped into V1, not deferred — adoption requires trust in existing workflows, not replacement of them.' },
+    ],
     problem:
       'Corporate treasury clients hold idle cash in traditional bank accounts earning minimal returns, with cross-border transfers subject to T+2 settlement delays, cut-off times, and correspondent banking friction. Tokenized deposits offer 24/7 programmable settlement, yield optimization, and atomic cross-currency transfers — but institutional adoption requires solving three hard problems simultaneously: regulatory compliance in multiple jurisdictions, client trust in a new asset class, and operational integration into existing treasury management systems without disrupting existing workflows.',
     approach:
-      'Structured the scoping process in three layers to avoid the common mistake of leading with technology. First, regulatory and compliance: mapped the e-money licensing requirements, custodian obligations, and on-chain AML/KYC requirements across the target jurisdictions before any engineering investment was committed. Defined four compliance gates that must be satisfied before GA: e-money authorization, custodian agreement, on-chain KYC integration, and audit trail requirements. Second, client journey: mapped five treasury personas through the deposit, transfer, redeem, and yield accrual flows — identifying the "aha moment" (seeing a cross-border transfer settle in seconds vs waiting two days) as the single most powerful adoption driver. Third, technical architecture: defined the permissioned blockchain layer (chosen over public chain for regulatory clarity and institutional trust), the API specification for the three core endpoints (deposit, transfer, redeem), and the reconciliation bridge connecting tokenized positions back to traditional accounting and treasury management systems. RICE-scored all proposed features; core deposit and redeem flows scored highest on Impact and Confidence.',
+      'Structured the scoping process in three layers to avoid the common mistake of leading with technology. First, regulatory and compliance: mapped the e-money licensing requirements, custodian obligations, and on-chain AML/KYC requirements across the target jurisdictions before any engineering investment was committed. Defined four compliance gates that must be satisfied before GA: e-money authorization, custodian agreement, on-chain KYC integration, and audit trail requirements. Second, client journey: mapped five treasury personas through the deposit, transfer, redeem, and yield accrual flows — identifying the moment a cross-border transfer settles in seconds vs waiting two days as the single most powerful adoption driver. Third, technical architecture: defined the permissioned blockchain layer, the API specification for the three core endpoints (deposit, transfer, redeem), and the reconciliation bridge connecting tokenized positions back to traditional accounting and treasury management systems.',
     result:
-      'Full product spec delivered covering three core user flows (deposit, transfer, redeem) with acceptance criteria, a phased rollout plan (internal test, pilot with three corporate clients, general availability), four compliance gates, API spec for three core endpoints, and a reconciliation architecture bridging tokenized positions to existing TMS integrations. Key product decision: permissioned blockchain over public chain — regulatory clarity and institutional trust outweigh the decentralization benefits of public infrastructure for this client segment. Primary success metric: cross-border settlement time from T+2 to T+0. Secondary metric: yield on tokenized positions vs equivalent traditional deposit.',
+      'Full product spec delivered covering three core user flows (deposit, transfer, redeem) with acceptance criteria, a phased rollout plan (internal test, pilot with three corporate clients, general availability), four compliance gates, API spec for three core endpoints, and a reconciliation architecture bridging tokenized positions to existing TMS integrations. Primary success metric: cross-border settlement time from T+2 to T+0. Secondary metric: yield on tokenized positions vs equivalent traditional deposit.',
     featured: false,
   },
 
