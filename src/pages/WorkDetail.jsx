@@ -789,6 +789,199 @@ function Section({ label, children }) {
   )
 }
 
+function DSHealthcareDetail({ project }) {
+  const {
+    title, tagline, stack, kpis, featureImportance, segments, readmitByAge,
+    costByAge, findings, dataset, datasetUrl, disciplines: discIds, status, year,
+    problem, approach, result,
+  } = project
+  const DISC_MAP = Object.fromEntries(disciplines.map(d => [d.id, d]))
+
+  const fiColor = (pct) => pct > 30 ? TEAL : pct > 10 ? '#a78bfa' : 'rgba(255,255,255,0.3)'
+  const segColor = (label) => label === 'High Risk' ? PURPLE : label === 'Medium Risk' ? '#a78bfa' : TEAL
+
+  const FiTooltip = ({ active, payload }) => {
+    if (!active || !payload?.length) return null
+    return (
+      <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+        <p className="text-muted mb-1">{payload[0]?.payload?.feature}</p>
+        <p className="text-heading">{payload[0]?.value}%</p>
+      </div>
+    )
+  }
+
+  const SecondaryTooltip = ({ active, payload }) => {
+    if (!active || !payload?.length) return null
+    const d = payload[0]?.payload
+    return (
+      <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+        <p className="text-muted mb-1">{d?.label || d?.group}</p>
+        <p className="text-heading">{d?.avgCost ? `$${d.avgCost.toLocaleString()}` : `${d?.rate || d?.cost}${d?.rate ? '%' : ''}`}</p>
+      </div>
+    )
+  }
+
+  return (
+    <main className="max-w-5xl mx-auto px-6 pt-32 pb-24">
+      <Link to="/work" className="inline-flex items-center gap-1.5 font-mono text-xs text-muted hover:text-body transition-colors mb-10">
+        ← All work
+      </Link>
+
+      <div className="mb-10">
+        <div className="flex flex-wrap gap-2 mb-4">
+          <span className="tag-cyan">{status}</span>
+          {discIds.map(id => {
+            const d = DISC_MAP[id]
+            return d ? <span key={id} className="tag-cyan">{d.label}</span> : null
+          })}
+          <span className="tag">{year}</span>
+        </div>
+        <h1 className="font-display font-bold text-3xl md:text-4xl text-heading tracking-tight leading-tight mb-3">{title}</h1>
+        <p className="text-body text-lg leading-relaxed max-w-2xl">{tagline}</p>
+        <div className="flex flex-wrap gap-2 mt-5">
+          {stack.map(s => <span key={s} className="tag">{s}</span>)}
+        </div>
+      </div>
+
+      {/* KPI Cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {kpis.map((k) => (
+          <div key={k.label} className="bg-canvas-2 border border-border rounded-xl p-5">
+            <p className="font-mono text-xs text-muted mb-2">{k.label}</p>
+            <p className="font-display font-bold text-3xl text-heading mb-1">{k.value}</p>
+            <p className="font-mono text-xs text-muted leading-snug">{k.sub}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Charts */}
+      <div className="grid md:grid-cols-2 gap-6 mb-8">
+
+        {/* Feature Importance */}
+        <div className="bg-canvas-2 border border-border rounded-xl p-6">
+          <p className="font-mono text-xs text-muted mb-1">Model Feature Importance</p>
+          <p className="font-display text-sm text-heading font-semibold mb-5">What drives the prediction</p>
+          <ResponsiveContainer width="100%" height={220}>
+            <BarChart data={featureImportance} layout="vertical" barSize={18} margin={{ top: 0, right: 50, left: 10, bottom: 0 }}>
+              <CartesianGrid horizontal={false} stroke="rgba(255,255,255,0.04)" />
+              <XAxis type="number" tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 9, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} tickFormatter={v => `${v}%`} />
+              <YAxis type="category" dataKey="feature" tick={{ fill: 'rgba(255,255,255,0.55)', fontSize: 9, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} width={130} />
+              <Tooltip content={<FiTooltip />} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
+              <Bar dataKey="pct" radius={[0, 4, 4, 0]}>
+                <LabelList dataKey="pct" position="right" formatter={v => `${v}%`} style={{ fill: 'rgba(255,255,255,0.4)', fontSize: 9, fontFamily: 'IBM Plex Mono' }} />
+                {featureImportance.map((d) => <Cell key={d.feature} fill={fiColor(d.pct)} />)}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Secondary Chart: Risk Segments or Readmission by Age */}
+        {segments ? (
+          <div className="bg-canvas-2 border border-border rounded-xl p-6">
+            <p className="font-mono text-xs text-muted mb-1">Member Risk Segmentation</p>
+            <p className="font-display text-sm text-heading font-semibold mb-5">Average annual cost by risk tier</p>
+            <ResponsiveContainer width="100%" height={220}>
+              <BarChart data={segments} barSize={48} margin={{ top: 4, right: 10, left: -10, bottom: 0 }}>
+                <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.04)" />
+                <XAxis dataKey="label" tick={{ fill: 'rgba(255,255,255,0.45)', fontSize: 10, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 9, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} tickFormatter={v => `$${(v/1000).toFixed(0)}K`} />
+                <Tooltip content={<SecondaryTooltip />} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
+                <Bar dataKey="avgCost" radius={[4, 4, 0, 0]}>
+                  <LabelList dataKey="avgCost" position="top" formatter={v => `$${(v/1000).toFixed(0)}K`} style={{ fill: 'rgba(255,255,255,0.5)', fontSize: 9, fontFamily: 'IBM Plex Mono' }} />
+                  {segments.map((d) => <Cell key={d.label} fill={segColor(d.label)} />)}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        ) : readmitByAge ? (
+          <div className="bg-canvas-2 border border-border rounded-xl p-6">
+            <p className="font-mono text-xs text-muted mb-1">30-Day Readmission Rate by Age Group</p>
+            <p className="font-display text-sm text-heading font-semibold mb-5">Young adults and 80+ show highest risk</p>
+            <ResponsiveContainer width="100%" height={220}>
+              <AreaChart data={readmitByAge} margin={{ top: 4, right: 10, left: -20, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="readmitGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%"  stopColor={PURPLE} stopOpacity={0.35} />
+                    <stop offset="95%" stopColor={PURPLE} stopOpacity={0.02} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.04)" />
+                <XAxis dataKey="group" tick={{ fill: 'rgba(255,255,255,0.45)', fontSize: 9, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 9, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} tickFormatter={v => `${v}%`} domain={[8, 16]} />
+                <Tooltip content={<ChartTooltip />} />
+                <Area type="monotone" dataKey="rate" stroke={PURPLE} strokeWidth={2} fill="url(#readmitGrad)" dot={{ fill: PURPLE, r: 3, strokeWidth: 0 }} />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        ) : null}
+      </div>
+
+      {/* Cost by Age (insurance only) */}
+      {costByAge && (
+        <div className="bg-canvas-2 border border-border rounded-xl p-6 mb-8">
+          <p className="font-mono text-xs text-muted mb-1">Average Annual Cost by Age Group</p>
+          <p className="font-display text-sm text-heading font-semibold mb-5">60+ members cost 2.2× more than 18-30 members</p>
+          <ResponsiveContainer width="100%" height={160}>
+            <BarChart data={costByAge} barSize={56} margin={{ top: 4, right: 10, left: 10, bottom: 0 }}>
+              <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.04)" />
+              <XAxis dataKey="group" tick={{ fill: 'rgba(255,255,255,0.45)', fontSize: 10, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 9, fontFamily: 'IBM Plex Mono' }} axisLine={false} tickLine={false} tickFormatter={v => `$${(v/1000).toFixed(0)}K`} />
+              <Tooltip content={<SecondaryTooltip />} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
+              <Bar dataKey="cost" radius={[4, 4, 0, 0]}>
+                <LabelList dataKey="cost" position="top" formatter={v => `$${(v/1000).toFixed(1)}K`} style={{ fill: 'rgba(255,255,255,0.5)', fontSize: 9, fontFamily: 'IBM Plex Mono' }} />
+                {costByAge.map((d, i) => <Cell key={d.group} fill={i === 0 ? TEAL : i === 1 ? '#a78bfa' : i === 2 ? '#c084fc' : PURPLE} />)}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      )}
+
+      {/* Key Findings */}
+      <div className="mb-10">
+        <p className="section-label mb-5">Key Findings</p>
+        <div className="grid md:grid-cols-3 gap-5">
+          {findings.map((f) => (
+            <div key={f.title} className="bg-canvas-2 border border-border rounded-xl p-5">
+              <span className="text-2xl mb-3 block">{f.icon}</span>
+              <h3 className="font-display font-semibold text-sm text-heading mb-2">{f.title}</h3>
+              <p className="font-mono text-xs text-muted leading-relaxed">{f.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Problem / Approach / Result */}
+      <div className="space-y-8 mb-10">
+        {[['Problem', problem], ['Approach', approach], ['Result', result]].map(([label, text]) => (
+          <div key={label}>
+            <p className="section-label mb-3">{label}</p>
+            <p className="font-mono text-sm text-body leading-relaxed">{text}</p>
+          </div>
+        ))}
+      </div>
+
+      <p className="font-mono text-xs text-muted border-t border-border pt-6 mb-16">
+        Dataset:{' '}
+        <a href={datasetUrl} target="_blank" rel="noopener noreferrer" className="text-cyan hover:underline">{dataset}</a>
+        {' '}· Analysis by Mit Desai
+      </p>
+
+      <div className="pt-8 border-t border-border flex justify-between gap-4">
+        {(() => {
+          const idx = projects.findIndex(p => p.slug === project.slug)
+          const prev = projects[idx - 1], next = projects[idx + 1]
+          return (
+            <>
+              <div>{prev && <Link to={`/work/${prev.slug}`} className="group flex flex-col gap-0.5"><span className="font-mono text-xs text-muted group-hover:text-body transition-colors">← Previous</span><span className="font-display text-sm text-heading group-hover:text-cyan transition-colors">{prev.title}</span></Link>}</div>
+              <div className="text-right">{next && <Link to={`/work/${next.slug}`} className="group flex flex-col gap-0.5 items-end"><span className="font-mono text-xs text-muted group-hover:text-body transition-colors">Next →</span><span className="font-display text-sm text-heading group-hover:text-cyan transition-colors">{next.title}</span></Link>}</div>
+            </>
+          )
+        })()}
+      </div>
+    </main>
+  )
+}
+
 export default function WorkDetail() {
   const { slug } = useParams()
   const project = projects.find(p => p.slug === slug)
@@ -799,6 +992,7 @@ export default function WorkDetail() {
   if (project.type === 'analytics-superstore') return <SuperstoreDetail project={project} />
   if (project.type === 'analytics-payments') return <PaymentsDetail project={project} />
   if (project.type === 'pm-treasury' || project.type === 'pm-tokenized') return <PMCaseStudyDetail project={project} />
+  if (project.type === 'ds-healthcare') return <DSHealthcareDetail project={project} />
 
   const {
     title, tagline, disciplines: discIds, status,
