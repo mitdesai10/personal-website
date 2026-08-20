@@ -15,10 +15,10 @@ export default function ProjectCard({ project }) {
 
   return (
     <Tilt
-      options={{ max: 10, scale: 1.02, speed: 400 }}
+      options={{ max: 8, scale: 1.02, speed: 500, glare: true, 'max-glare': 0.06 }}
       className="gradient-border w-full h-full"
     >
-      <article className="gradient-border-inner p-6 flex flex-col gap-5 shadow-card group h-full">
+      <article className="gradient-border-inner p-6 flex flex-col gap-5 shadow-card group h-full rounded-2xl">
         {/* Header row */}
         <div className="flex items-start justify-between gap-4">
           <div className="flex flex-wrap gap-1.5">
@@ -36,18 +36,18 @@ export default function ProjectCard({ project }) {
 
         {/* Title */}
         <div>
-          <h3 className="font-display font-semibold text-heading text-lg leading-snug group-hover:text-cyan transition-colors">
+          <h3 className="font-display font-semibold text-heading text-lg leading-snug group-hover:text-cyan transition-colors duration-200">
             {title}
           </h3>
-          <p className="text-sm text-body mt-1 leading-relaxed">{tagline}</p>
+          <p className="text-sm text-body mt-1.5 leading-relaxed">{tagline}</p>
         </div>
 
         {/* Stats */}
         {stats?.length > 0 && (
           <div className="grid grid-cols-3 gap-2">
             {stats.map((s, i) => (
-              <div key={i} className="stat-block text-center px-2 py-3">
-                <div className="font-display font-semibold text-cyan text-base leading-tight">{s.value}</div>
+              <div key={i} className="stat-block text-center px-2 py-3 rounded-xl">
+                <div className="font-display font-bold text-cyan text-base leading-tight">{s.value}</div>
                 <div className="font-mono text-[10px] text-muted mt-1 leading-tight">{s.label}</div>
               </div>
             ))}
@@ -59,7 +59,7 @@ export default function ProjectCard({ project }) {
           <span className={STATUS_STYLES[status] ?? 'tag'}>{status}</span>
           <Link
             to={`/work/${slug}`}
-            className="font-mono text-xs text-cyan hover:underline focus-visible:underline"
+            className="font-mono text-xs text-cyan hover:underline focus-visible:underline opacity-70 group-hover:opacity-100 transition-opacity duration-200"
             aria-label={`View case study: ${title}`}
           >
             Case study →

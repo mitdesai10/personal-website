@@ -85,10 +85,10 @@ export default function About() {
             <p key={i} className="text-body leading-relaxed text-base">{para}</p>
           ))}
           <div className="flex gap-3 mt-4">
-            <Link to="/work" className="font-mono text-sm px-4 py-2 bg-cyan text-canvas rounded font-medium hover:bg-cyan-dim transition-colors">
+            <Link to="/work" className="btn-gradient font-mono text-sm px-5 py-2 rounded-full text-white font-medium">
               See my work
             </Link>
-            <Link to="/contact" className="font-mono text-sm px-4 py-2 border border-border rounded text-body hover:border-border-2 hover:text-heading transition-colors">
+            <Link to="/contact" className="btn-glass font-mono text-sm px-5 py-2 rounded-full text-body">
               Get in touch
             </Link>
           </div>
@@ -145,7 +145,8 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.08 }}
-              className="border border-border bg-canvas-2 rounded p-5"
+              className="rounded-2xl p-5"
+              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}
             >
               <h3 className="font-display font-semibold text-sm text-heading mb-3 flex items-center gap-2">
                 <span className={`font-mono text-base ${i < 2 ? 'text-cyan' : 'text-amber'}`} aria-hidden="true">

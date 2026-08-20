@@ -6,17 +6,27 @@ export default function DisciplineCard({ discipline }) {
 
   return (
     <Tilt
-      options={{ max: 12, scale: 1.02, speed: 400 }}
+      options={{ max: 10, scale: 1.02, speed: 500, glare: true, 'max-glare': 0.08 }}
       className="gradient-border w-full h-full"
     >
-      <article className="gradient-border-inner p-6 flex flex-col gap-4 shadow-card group h-full">
+      <article className="gradient-border-inner p-6 flex flex-col gap-4 shadow-card group h-full rounded-2xl">
         <div className="flex items-center gap-3">
-          <span
-            className={`font-mono text-xl ${isCyan ? 'text-cyan' : 'text-amber'}`}
-            aria-hidden="true"
+          <div
+            className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+            style={{
+              background: isCyan
+                ? 'rgba(139,92,246,0.12)'
+                : 'rgba(6,182,212,0.12)',
+              border: `1px solid ${isCyan ? 'rgba(139,92,246,0.25)' : 'rgba(6,182,212,0.25)'}`,
+            }}
           >
-            {icon}
-          </span>
+            <span
+              className={`font-mono text-base ${isCyan ? 'text-cyan' : 'text-amber'}`}
+              aria-hidden="true"
+            >
+              {icon}
+            </span>
+          </div>
           <h3 className="font-display font-semibold text-heading text-base">{label}</h3>
         </div>
 

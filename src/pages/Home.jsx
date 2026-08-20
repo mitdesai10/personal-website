@@ -17,10 +17,10 @@ const stagger = {
 }
 
 const ORBIT_NODES = [
-  { label: ['Product', 'Management'],    color: '#804dee', angle: -Math.PI * 3 / 4 },
-  { label: ['Data &', 'Analytics'],      color: '#804dee', angle: -Math.PI / 4 },
-  { label: ['Performance', 'Marketing'], color: '#00cea8', angle:  Math.PI * 3 / 4 },
-  { label: ['Web', 'Development'],       color: '#00cea8', angle:  Math.PI / 4 },
+  { label: ['Product', 'Management'],    color: '#8b5cf6', angle: -Math.PI * 3 / 4 },
+  { label: ['Data &', 'Analytics'],      color: '#8b5cf6', angle: -Math.PI / 4 },
+  { label: ['Performance', 'Marketing'], color: '#06b6d4', angle:  Math.PI * 3 / 4 },
+  { label: ['Web', 'Development'],       color: '#06b6d4', angle:  Math.PI / 4 },
 ]
 
 function DisciplineDiagram() {
@@ -76,7 +76,7 @@ function DisciplineDiagram() {
       ctx.beginPath()
       ctx.arc(0, 0, 116 * sc, 0, Math.PI * 2)
       ctx.setLineDash([4 * sc, 9 * sc])
-      ctx.strokeStyle = 'rgba(128,77,238,0.2)'
+      ctx.strokeStyle = 'rgba(139,92,246,0.2)'
       ctx.lineWidth = sc
       ctx.stroke()
       ctx.setLineDash([])
@@ -89,7 +89,7 @@ function DisciplineDiagram() {
       ctx.beginPath()
       ctx.arc(0, 0, 42 * sc, 0, Math.PI * 2)
       ctx.setLineDash([2 * sc, 5 * sc])
-      ctx.strokeStyle = 'rgba(0,206,168,0.25)'
+      ctx.strokeStyle = 'rgba(6,182,212,0.25)'
       ctx.lineWidth = sc
       ctx.stroke()
       ctx.setLineDash([])
@@ -98,7 +98,7 @@ function DisciplineDiagram() {
       // ── Orbit ghost ring ──────────────────────────────────
       ctx.beginPath()
       ctx.arc(cx, cy, R, 0, Math.PI * 2)
-      ctx.strokeStyle = 'rgba(128,77,238,0.07)'
+      ctx.strokeStyle = 'rgba(139,92,246,0.07)'
       ctx.lineWidth = sc
       ctx.stroke()
 
@@ -124,7 +124,7 @@ function DisciplineDiagram() {
         ctx.beginPath()
         ctx.moveTo(pa.x, pa.y)
         ctx.lineTo(pb.x, pb.y)
-        ctx.strokeStyle = 'rgba(128,77,238,0.05)'
+        ctx.strokeStyle = 'rgba(139,92,246,0.05)'
         ctx.lineWidth = 0.5 * sc
         ctx.stroke()
       }
@@ -153,8 +153,8 @@ function DisciplineDiagram() {
 
       // ── Center hub ────────────────────────────────────────
       const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, 24 * sc)
-      cg.addColorStop(0, 'rgba(128,77,238,0.4)')
-      cg.addColorStop(1, 'rgba(128,77,238,0)')
+      cg.addColorStop(0, 'rgba(139,92,246,0.4)')
+      cg.addColorStop(1, 'rgba(139,92,246,0)')
       ctx.beginPath()
       ctx.arc(cx, cy, 24 * sc, 0, Math.PI * 2)
       ctx.fillStyle = cg
@@ -163,20 +163,20 @@ function DisciplineDiagram() {
       const ph = (t * 0.55) % 1
       ctx.beginPath()
       ctx.arc(cx, cy, (5 + ph * 40) * sc, 0, Math.PI * 2)
-      ctx.strokeStyle = `rgba(128,77,238,${(0.45 * (1 - ph)).toFixed(2)})`
+      ctx.strokeStyle = `rgba(139,92,246,${(0.45 * (1 - ph)).toFixed(2)})`
       ctx.lineWidth = sc
       ctx.stroke()
 
       const dg = ctx.createRadialGradient(cx, cy, 0, cx, cy, 16 * sc)
-      dg.addColorStop(0, 'rgba(128,77,238,0.9)')
-      dg.addColorStop(1, 'rgba(128,77,238,0)')
+      dg.addColorStop(0, 'rgba(139,92,246,0.9)')
+      dg.addColorStop(1, 'rgba(139,92,246,0)')
       ctx.beginPath()
       ctx.arc(cx, cy, 16 * sc, 0, Math.PI * 2)
       ctx.fillStyle = dg
       ctx.fill()
       ctx.beginPath()
       ctx.arc(cx, cy, 5 * sc, 0, Math.PI * 2)
-      ctx.fillStyle = '#804dee'
+      ctx.fillStyle = '#8b5cf6'
       ctx.fill()
 
       // ── Nodes (no text — labels are HTML) ────────────────
@@ -253,11 +253,12 @@ function ScrollIndicator() {
   return (
     <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
       <a href="#disciplines" aria-label="Scroll down">
-        <div className="w-8 h-14 rounded-3xl border-2 border-border flex justify-center items-start p-2">
+        <div className="w-8 h-14 rounded-3xl border border-border-2/50 flex justify-center items-start p-2 bg-white/[0.03] backdrop-blur-sm">
           <motion.div
             animate={{ y: [0, 18, 0] }}
-            transition={{ duration: 1.6, repeat: Infinity, repeatType: 'loop' }}
-            className="w-2 h-2 rounded-full bg-cyan"
+            transition={{ duration: 1.8, repeat: Infinity, repeatType: 'loop', ease: 'easeInOut' }}
+            className="w-1.5 h-1.5 rounded-full bg-cyan"
+            style={{ boxShadow: '0 0 8px rgba(139,92,246,0.8)' }}
           />
         </div>
       </a>
@@ -272,9 +273,20 @@ export default function Home() {
     <main>
       {/* ── Hero ─────────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex items-center pt-16 overflow-hidden"
-        style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(128,77,238,0.25) 0%, transparent 65%), linear-gradient(180deg, #050816 0%, #080c1f 100%)' }}
+        style={{ background: 'radial-gradient(ellipse at 60% 0%, rgba(139,92,246,0.2) 0%, transparent 55%), radial-gradient(ellipse at 20% 80%, rgba(6,182,212,0.1) 0%, transparent 45%), linear-gradient(180deg, #030711 0%, #060d1f 100%)' }}
       >
-        <StarField count={200} />
+        <StarField count={220} />
+
+        {/* Floating ambient orbs */}
+        <div
+          className="hero-orb animate-float"
+          style={{ width: 700, height: 700, background: 'radial-gradient(circle, rgba(139,92,246,0.14) 0%, transparent 70%)', top: -160, right: -160 }}
+        />
+        <div
+          className="hero-orb animate-float-slow"
+          style={{ width: 500, height: 500, background: 'radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 70%)', bottom: 40, left: -100 }}
+        />
+
         <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-canvas pointer-events-none" />
 
         <div className="relative max-w-6xl mx-auto px-6 py-24 w-full">
@@ -309,12 +321,12 @@ export default function Home() {
 
               <motion.div variants={fadeUp(0.2)} className="flex flex-wrap gap-3 pt-2">
                 <Link to="/work"
-                  className="font-mono text-sm px-6 py-3 bg-cyan text-canvas font-semibold rounded-full hover:bg-cyan-dim transition-colors shadow-glow"
+                  className="btn-gradient font-mono text-sm px-7 py-3 rounded-full text-white font-semibold shadow-glow"
                 >
                   View Work
                 </Link>
                 <Link to="/about"
-                  className="font-mono text-sm px-6 py-3 border border-border rounded-full text-body hover:border-cyan hover:text-cyan transition-colors"
+                  className="btn-glass font-mono text-sm px-7 py-3 rounded-full text-body"
                 >
                   About Me
                 </Link>

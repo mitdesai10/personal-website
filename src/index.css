@@ -26,21 +26,23 @@
 @layer components {
   .grid-bg {
     background-image:
-      linear-gradient(rgba(128, 77, 238, 0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(128, 77, 238, 0.06) 1px, transparent 1px);
+      linear-gradient(rgba(139, 92, 246, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(139, 92, 246, 0.05) 1px, transparent 1px);
     background-size: 40px 40px;
   }
 
   .tag {
-    @apply font-mono text-xs px-2 py-0.5 rounded-full border border-border-2 text-muted uppercase tracking-wider;
+    @apply font-mono text-xs px-2.5 py-1 rounded-full border border-border-2/60 text-muted uppercase tracking-wider;
   }
 
   .tag-cyan {
-    @apply font-mono text-xs px-2 py-0.5 rounded-full border border-cyan/40 text-cyan bg-cyan/10 uppercase tracking-wider;
+    @apply font-mono text-xs px-2.5 py-1 rounded-full border border-cyan/30 text-cyan uppercase tracking-wider;
+    background-color: rgba(139, 92, 246, 0.08);
   }
 
   .tag-amber {
-    @apply font-mono text-xs px-2 py-0.5 rounded-full border border-amber/40 text-amber bg-amber/10 uppercase tracking-wider;
+    @apply font-mono text-xs px-2.5 py-1 rounded-full border border-amber/30 text-amber uppercase tracking-wider;
+    background-color: rgba(6, 182, 212, 0.08);
   }
 
   .section-label {
@@ -49,6 +51,8 @@
 
   .stat-block {
     @apply border border-border bg-canvas-2 p-4 rounded-xl;
+    background-color: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.08);
   }
 
   .divider {
@@ -63,54 +67,132 @@
     @apply font-display text-lg font-semibold text-heading mb-2 mt-6;
   }
 
-  /* Gradient border card wrapper */
+  /* Glass card — replaces gradient-border wrapper */
   .gradient-border {
-    background: linear-gradient(90.13deg, #00cea8 1.9%, #bf61ff 97.5%);
-    padding: 1px;
+    position: relative;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 17px;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.5) 0%, rgba(6, 182, 212, 0.35) 100%);
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    padding: 1px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .gradient-border:hover::before {
+    opacity: 1;
+  }
+
+  .gradient-border:hover {
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.12), 0 0 80px rgba(139, 92, 246, 0.05);
   }
 
   .gradient-border-inner {
-    @apply bg-canvas-2 rounded-2xl w-full h-full;
+    background: transparent;
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
   }
 
   /* Violet gradient line */
   .violet-line {
-    background: linear-gradient(180deg, #804dee 0%, rgba(60, 51, 80, 0) 100%);
+    background: linear-gradient(180deg, #8b5cf6 0%, rgba(60, 51, 80, 0) 100%);
   }
 
   /* Gradient text */
   .gradient-text {
-    background: linear-gradient(90deg, #804dee, #00cea8);
+    background: linear-gradient(135deg, #a78bfa, #22d3ee);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+
+  /* Gradient button */
+  .btn-gradient {
+    background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+    transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    box-shadow: 0 0 0 rgba(139, 92, 246, 0);
+  }
+
+  .btn-gradient:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+  }
+
+  .btn-gradient:active {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* Glass button */
+  .btn-glass {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  }
+
+  .btn-glass:hover {
+    background: rgba(139, 92, 246, 0.1);
+    border-color: rgba(139, 92, 246, 0.35);
+    transform: translateY(-1px);
+  }
+
+  /* Hero floating orb */
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(80px);
+  }
 }
 
 /* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #050816; }
-::-webkit-scrollbar-thumb { background: #1a1745; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #2d2b55; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #030711; }
+::-webkit-scrollbar-thumb { background: #1d2744; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #2a3558; }
 
 /* ── Vertical Timeline overrides ─────────────────────────────────────────── */
 .vertical-timeline::before {
-  background: #1a1745 !important;
+  background: linear-gradient(180deg, #8b5cf6 0%, #06b6d4 100%) !important;
   width: 2px !important;
+  opacity: 0.25;
 }
 .vertical-timeline-element-content {
-  background: #151030 !important;
-  border: 1px solid #1a1745 !important;
+  background: rgba(12, 17, 36, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
   border-radius: 16px !important;
-  box-shadow: 0px 35px 120px -15px #211e35 !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3) !important;
   padding: 1.5rem !important;
+  backdrop-filter: blur(12px);
+}
+.vertical-timeline-element-content:hover {
+  border-color: rgba(139, 92, 246, 0.3) !important;
+  box-shadow: 0 0 40px rgba(139, 92, 246, 0.08) !important;
 }
 .vertical-timeline-element-content-arrow {
-  border-right-color: #1a1745 !important;
+  border-right-color: rgba(255, 255, 255, 0.07) !important;
 }
 .vertical-timeline-element-date {
-  color: #7b7a9a !important;
+  color: #64748b !important;
   font-family: 'IBM Plex Mono', monospace !important;
   font-size: 0.75rem !important;
   letter-spacing: 0.05em !important;

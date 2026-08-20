@@ -5,15 +5,15 @@ import {
   AreaChart, Area, CartesianGrid, ReferenceLine, LabelList,
 } from 'recharts'
 
-const PURPLE = '#804dee'
-const TEAL   = '#00cea8'
+const PURPLE = '#8b5cf6'
+const TEAL   = '#06b6d4'
 const chartColor = (rate) => rate > 30 ? PURPLE : rate > 15 ? '#a78bfa' : TEAL
 
 const ChartTooltip = ({ active, payload }) => {
   if (!active || !payload?.length) return null
   const item = payload[0]?.payload
   return (
-    <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+    <div className="rounded-lg px-3 py-2 text-xs font-mono" style={{ background: 'rgba(12,17,36,0.95)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)' }}>
       <p className="text-muted mb-1">{item?.name || item?.band}</p>
       <p className="text-heading">{payload[0]?.value}%</p>
     </div>
@@ -22,12 +22,12 @@ const ChartTooltip = ({ active, payload }) => {
 
 function Roadmap({ phases }) {
   const cfg = {
-    done:    { bg: 'rgba(0,206,168,0.12)',   border: '#00cea8', color: '#00cea8',                   badge: 'Done' },
-    current: { bg: 'rgba(128,77,238,0.12)',  border: '#804dee', color: '#804dee',                   badge: 'Active' },
+    done:    { bg: 'rgba(6,182,212,0.12)',   border: '#06b6d4', color: '#06b6d4',                   badge: 'Done' },
+    current: { bg: 'rgba(139,92,246,0.12)', border: '#8b5cf6', color: '#8b5cf6',                   badge: 'Active' },
     planned: { bg: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.18)', color: 'rgba(255,255,255,0.35)', badge: 'Planned' },
   }
   return (
-    <div className="bg-canvas-2 border border-border rounded-xl p-6 mb-6">
+    <div className="rounded-2xl p-6 mb-6" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
       <p className="section-label mb-6">Product Roadmap</p>
       <div className="flex items-start" style={{ overflowX: 'auto' }}>
         {phases.map((ph, i) => {
@@ -231,7 +231,7 @@ function PaymentsDetail({ project }) {
               <Tooltip content={({ active, payload }) => {
                 if (!active || !payload?.length) return null
                 return (
-                  <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+                  <div className="rounded-lg px-3 py-2 text-xs font-mono" style={{ background: 'rgba(12,17,36,0.95)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)' }}>
                     <p className="text-muted mb-1">{payload[0]?.payload?.name}</p>
                     <p className="text-heading">{payload[0]?.value}% risk rate</p>
                   </div>
@@ -255,7 +255,7 @@ function PaymentsDetail({ project }) {
               <Tooltip content={({ active, payload }) => {
                 if (!active || !payload?.length) return null
                 return (
-                  <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+                  <div className="rounded-lg px-3 py-2 text-xs font-mono" style={{ background: 'rgba(12,17,36,0.95)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)' }}>
                     <p className="text-muted mb-1">{payload[0]?.payload?.band}</p>
                     <p className="text-heading">{payload[0]?.value}% of high-risk events</p>
                   </div>
@@ -279,7 +279,7 @@ function PaymentsDetail({ project }) {
               <Tooltip content={({ active, payload }) => {
                 if (!active || !payload?.length) return null
                 return (
-                  <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+                  <div className="rounded-lg px-3 py-2 text-xs font-mono" style={{ background: 'rgba(12,17,36,0.95)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)' }}>
                     <p className="text-muted mb-1">{payload[0]?.payload?.method}</p>
                     <p className="text-heading">{payload[0]?.value}% detection coverage</p>
                   </div>
@@ -383,7 +383,7 @@ function PMCaseStudyDetail({ project }) {
                 <Tooltip content={({ active, payload }) => {
                   if (!active || !payload?.length) return null
                   return (
-                    <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+                    <div className="rounded-lg px-3 py-2 text-xs font-mono" style={{ background: 'rgba(12,17,36,0.95)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)' }}>
                       <p className="text-muted mb-1">{payload[0]?.payload?.feature}</p>
                       <p className="text-heading">RICE: {payload[0]?.value}</p>
                     </div>
@@ -406,7 +406,7 @@ function PMCaseStudyDetail({ project }) {
                   if (!active || !payload?.length) return null
                   const v = payload[0]?.value
                   return (
-                    <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+                    <div className="rounded-lg px-3 py-2 text-xs font-mono" style={{ background: 'rgba(12,17,36,0.95)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)' }}>
                       <p className="text-muted mb-1">{payload[0]?.payload?.method}</p>
                       <p className="text-heading">{v < 1 ? '< 1 minute' : `${v} hours`}</p>
                     </div>
@@ -521,7 +521,7 @@ function SuperstoreDetail({ project }) {
               <Tooltip content={({ active, payload }) => {
                 if (!active || !payload?.length) return null
                 return (
-                  <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+                  <div className="rounded-lg px-3 py-2 text-xs font-mono" style={{ background: 'rgba(12,17,36,0.95)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)' }}>
                     <p className="text-muted mb-1">{payload[0]?.payload?.band}</p>
                     <p className="text-heading">{payload[0]?.value}% margin</p>
                   </div>
@@ -547,7 +547,7 @@ function SuperstoreDetail({ project }) {
                 if (!active || !payload?.length) return null
                 const v = payload[0]?.value
                 return (
-                  <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+                  <div className="rounded-lg px-3 py-2 text-xs font-mono" style={{ background: 'rgba(12,17,36,0.95)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)' }}>
                     <p className="text-muted mb-1">{payload[0]?.payload?.name}</p>
                     <p className="text-heading">${v?.toLocaleString()} profit</p>
                   </div>
@@ -571,7 +571,7 @@ function SuperstoreDetail({ project }) {
               <Tooltip content={({ active, payload }) => {
                 if (!active || !payload?.length) return null
                 return (
-                  <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+                  <div className="rounded-lg px-3 py-2 text-xs font-mono" style={{ background: 'rgba(12,17,36,0.95)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)' }}>
                     <p className="text-muted mb-1">{payload[0]?.payload?.region}</p>
                     <p className="text-heading">{payload[0]?.value}% margin</p>
                   </div>
@@ -669,7 +669,7 @@ function OlistDetail({ project }) {
               <Tooltip content={({ active, payload }) => {
                 if (!active || !payload?.length) return null
                 return (
-                  <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+                  <div className="rounded-lg px-3 py-2 text-xs font-mono" style={{ background: 'rgba(12,17,36,0.95)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)' }}>
                     <p className="text-muted mb-1">{payload[0]?.payload?.bucket}</p>
                     <p className="text-heading">{payload[0]?.value} / 5</p>
                   </div>
@@ -699,7 +699,7 @@ function OlistDetail({ project }) {
               <Tooltip content={({ active, payload }) => {
                 if (!active || !payload?.length) return null
                 return (
-                  <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+                  <div className="rounded-lg px-3 py-2 text-xs font-mono" style={{ background: 'rgba(12,17,36,0.95)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)' }}>
                     <p className="text-muted mb-1">{payload[0]?.payload?.month}</p>
                     <p className="text-heading">{payload[0]?.value?.toLocaleString()} orders</p>
                   </div>
@@ -721,7 +721,7 @@ function OlistDetail({ project }) {
               <Tooltip content={({ active, payload }) => {
                 if (!active || !payload?.length) return null
                 return (
-                  <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+                  <div className="rounded-lg px-3 py-2 text-xs font-mono" style={{ background: 'rgba(12,17,36,0.95)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)' }}>
                     <p className="text-muted mb-1">{payload[0]?.payload?.band}</p>
                     <p className="text-heading">{payload[0]?.value}% of order</p>
                   </div>
@@ -803,7 +803,7 @@ function DSHealthcareDetail({ project }) {
   const FiTooltip = ({ active, payload }) => {
     if (!active || !payload?.length) return null
     return (
-      <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+      <div className="rounded-lg px-3 py-2 text-xs font-mono" style={{ background: 'rgba(12,17,36,0.95)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)' }}>
         <p className="text-muted mb-1">{payload[0]?.payload?.feature}</p>
         <p className="text-heading">{payload[0]?.value}%</p>
       </div>
@@ -814,7 +814,7 @@ function DSHealthcareDetail({ project }) {
     if (!active || !payload?.length) return null
     const d = payload[0]?.payload
     return (
-      <div className="bg-canvas-2 border border-border rounded px-3 py-2 text-xs font-mono">
+      <div className="rounded-lg px-3 py-2 text-xs font-mono" style={{ background: 'rgba(12,17,36,0.95)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)' }}>
         <p className="text-muted mb-1">{d?.label || d?.group}</p>
         <p className="text-heading">{d?.avgCost ? `$${d.avgCost.toLocaleString()}` : `${d?.rate || d?.cost}${d?.rate ? '%' : ''}`}</p>
       </div>

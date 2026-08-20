@@ -16,7 +16,7 @@ export default function Contact() {
 
 
       {/* Email CTA */}
-      <div className="border border-border bg-canvas-2 rounded p-8 mb-8">
+      <div className="p-8 mb-8 rounded-2xl" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
         <p className="section-label mb-3">Email</p>
         <a
           href={`mailto:${contact.email}`}
@@ -30,7 +30,7 @@ export default function Contact() {
       </div>
 
       {/* Social links */}
-      <div className="border border-border bg-canvas-2 rounded p-8">
+      <div className="p-8 rounded-2xl" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
         <p className="section-label mb-5">Elsewhere</p>
         <ul className="flex flex-col gap-4" role="list">
           {contact.links.map(({ label, url }) => (

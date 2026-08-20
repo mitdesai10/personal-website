@@ -25,8 +25,10 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-colors duration-300 ${
-        scrolled ? 'bg-canvas/90 backdrop-blur-sm border-b border-border' : 'bg-transparent'
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'bg-canvas/80 backdrop-blur-xl border-b border-white/[0.07] shadow-[0_1px_0_rgba(255,255,255,0.04)]'
+          : 'bg-transparent'
       }`}
     >
       <nav
@@ -59,7 +61,10 @@ export default function Navbar() {
           <li>
             <a
               href={`mailto:${contact.email}`}
-              className="font-mono text-sm ml-4 px-3 py-1.5 border border-border rounded text-body hover:border-cyan hover:text-cyan transition-colors"
+              className="font-mono text-sm ml-4 px-4 py-1.5 rounded-full text-body transition-all duration-200"
+              style={{ border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(8px)' }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(139,92,246,0.5)'; e.currentTarget.style.color = '#a78bfa'; e.currentTarget.style.background = 'rgba(139,92,246,0.08)' }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; e.currentTarget.style.color = ''; e.currentTarget.style.background = 'rgba(255,255,255,0.04)' }}
             >
               Get in touch
             </a>
