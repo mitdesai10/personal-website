@@ -9,9 +9,9 @@ export default {
         'canvas-3': '#111930',
         border:    '#1d2744',
         'border-2': '#2a3558',
-        muted:     '#64748b',
-        body:      '#b8c5d6',
-        heading:   '#f0f4ff',
+        muted:     '#94a3b8',
+        body:      '#cbd5e1',
+        heading:   '#f1f5f9',
         cyan: {
           DEFAULT: '#8b5cf6',
           dim:     '#7c3aed',

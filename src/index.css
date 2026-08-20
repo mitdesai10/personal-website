@@ -32,21 +32,50 @@
   }
 
   .tag {
-    @apply font-mono text-xs px-2.5 py-1 rounded-full border border-border-2/60 text-muted uppercase tracking-wider;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
   }
 
   .tag-cyan {
-    @apply font-mono text-xs px-2.5 py-1 rounded-full border border-cyan/30 text-cyan uppercase tracking-wider;
-    background-color: rgba(139, 92, 246, 0.08);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(167, 139, 250, 0.35);
+    color: #c4b5fd;
+    background-color: rgba(139, 92, 246, 0.1);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
   }
 
   .tag-amber {
-    @apply font-mono text-xs px-2.5 py-1 rounded-full border border-amber/30 text-amber uppercase tracking-wider;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    padding: 3px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(103, 232, 249, 0.3);
+    color: #67e8f9;
     background-color: rgba(6, 182, 212, 0.08);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
   }
 
   .section-label {
-    @apply font-mono text-xs text-cyan uppercase tracking-widest;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: #a78bfa;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 500;
   }
 
   .stat-block {
