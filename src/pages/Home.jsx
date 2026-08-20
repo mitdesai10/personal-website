@@ -273,18 +273,22 @@ export default function Home() {
     <main>
       {/* ── Hero ─────────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex items-center pt-16 overflow-hidden"
-        style={{ background: 'radial-gradient(ellipse at 60% 0%, rgba(139,92,246,0.2) 0%, transparent 55%), radial-gradient(ellipse at 20% 80%, rgba(6,182,212,0.1) 0%, transparent 45%), linear-gradient(180deg, #030711 0%, #060d1f 100%)' }}
+        style={{ background: 'radial-gradient(ellipse at 70% -10%, rgba(139,92,246,0.45) 0%, transparent 52%), radial-gradient(ellipse at 10% 100%, rgba(6,182,212,0.25) 0%, transparent 48%), #030711' }}
       >
         <StarField count={220} />
 
-        {/* Floating ambient orbs */}
+        {/* Vivid floating orbs */}
         <div
           className="hero-orb animate-float"
-          style={{ width: 700, height: 700, background: 'radial-gradient(circle, rgba(139,92,246,0.14) 0%, transparent 70%)', top: -160, right: -160 }}
+          style={{ width: 750, height: 750, background: 'radial-gradient(circle, rgba(139,92,246,0.32) 0%, rgba(139,92,246,0.08) 50%, transparent 70%)', top: -200, right: -150, filter: 'blur(40px)' }}
         />
         <div
           className="hero-orb animate-float-slow"
-          style={{ width: 500, height: 500, background: 'radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 70%)', bottom: 40, left: -100 }}
+          style={{ width: 550, height: 550, background: 'radial-gradient(circle, rgba(6,182,212,0.22) 0%, rgba(6,182,212,0.06) 50%, transparent 70%)', bottom: 0, left: -80, filter: 'blur(40px)' }}
+        />
+        <div
+          className="hero-orb animate-float"
+          style={{ width: 300, height: 300, background: 'radial-gradient(circle, rgba(167,139,250,0.2) 0%, transparent 70%)', top: '40%', left: '35%', filter: 'blur(60px)', animationDelay: '3s' }}
         />
 
         <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-canvas pointer-events-none" />
@@ -303,14 +307,14 @@ export default function Home() {
               </motion.div>
 
               <motion.h1 variants={fadeUp(0.05)}
-                className="font-display font-bold text-5xl md:text-6xl lg:text-7xl text-heading leading-tight tracking-tight"
+                className="font-display font-extrabold text-6xl md:text-7xl lg:text-8xl text-heading leading-[1.05] tracking-tight"
               >
                 Hi, I'm{' '}
-                <span className="gradient-text">{about.name}</span>
+                <span className="gradient-text-glow">{about.name}</span>
               </motion.h1>
 
               <motion.p variants={fadeUp(0.1)}
-                className="font-display text-xl md:text-2xl text-body font-medium leading-snug max-w-lg"
+                className="font-display text-xl md:text-2xl text-body font-semibold leading-snug max-w-lg"
               >
                 {about.tagline}
               </motion.p>
@@ -361,7 +365,7 @@ export default function Home() {
           className="mb-12 text-center"
         >
           <p className="section-label mb-3">Disciplines</p>
-          <h2 className="font-display font-bold text-4xl md:text-5xl text-heading">
+          <h2 className="font-display font-extrabold text-5xl md:text-6xl text-heading">
             One operator, <span className="gradient-text">four modes</span>
           </h2>
           <p className="text-body mt-4 max-w-xl mx-auto leading-relaxed">
@@ -390,7 +394,7 @@ export default function Home() {
           className="divider pt-12 mb-12 text-center"
         >
           <p className="section-label mt-10 mb-3">Selected Work</p>
-          <h2 className="font-display font-bold text-4xl md:text-5xl text-heading">
+          <h2 className="font-display font-extrabold text-5xl md:text-6xl text-heading">
             Case <span className="gradient-text">studies</span>
           </h2>
           <Link to="/work" className="inline-block font-mono text-xs text-cyan hover:underline mt-4">
