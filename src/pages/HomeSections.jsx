@@ -16,8 +16,8 @@ const stagger = {
 }
 
 const ORBIT_NODES = [
-  { label: ['Product', 'Management'],    color: '#8b5cf6', angle: -Math.PI * 3 / 4 },
-  { label: ['Data &', 'Analytics'],      color: '#8b5cf6', angle: -Math.PI / 4 },
+  { label: ['Product', 'Management'],    color: '#f97316', angle: -Math.PI * 3 / 4 },
+  { label: ['Data &', 'Analytics'],      color: '#f97316', angle: -Math.PI / 4 },
   { label: ['Performance', 'Marketing'], color: '#06b6d4', angle:  Math.PI * 3 / 4 },
   { label: ['Web', 'Development'],       color: '#06b6d4', angle:  Math.PI / 4 },
 ]
@@ -75,7 +75,7 @@ function DisciplineDiagram() {
       ctx.beginPath()
       ctx.arc(0, 0, 116 * sc, 0, Math.PI * 2)
       ctx.setLineDash([4 * sc, 9 * sc])
-      ctx.strokeStyle = 'rgba(139,92,246,0.2)'
+      ctx.strokeStyle = 'rgba(249, 115, 22,0.2)'
       ctx.lineWidth = sc
       ctx.stroke()
       ctx.setLineDash([])
@@ -97,7 +97,7 @@ function DisciplineDiagram() {
       // ── Orbit ghost ring ──────────────────────────────────
       ctx.beginPath()
       ctx.arc(cx, cy, R, 0, Math.PI * 2)
-      ctx.strokeStyle = 'rgba(139,92,246,0.07)'
+      ctx.strokeStyle = 'rgba(249, 115, 22,0.07)'
       ctx.lineWidth = sc
       ctx.stroke()
 
@@ -123,7 +123,7 @@ function DisciplineDiagram() {
         ctx.beginPath()
         ctx.moveTo(pa.x, pa.y)
         ctx.lineTo(pb.x, pb.y)
-        ctx.strokeStyle = 'rgba(139,92,246,0.05)'
+        ctx.strokeStyle = 'rgba(249, 115, 22,0.05)'
         ctx.lineWidth = 0.5 * sc
         ctx.stroke()
       }
@@ -152,8 +152,8 @@ function DisciplineDiagram() {
 
       // ── Center hub ────────────────────────────────────────
       const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, 24 * sc)
-      cg.addColorStop(0, 'rgba(139,92,246,0.4)')
-      cg.addColorStop(1, 'rgba(139,92,246,0)')
+      cg.addColorStop(0, 'rgba(249, 115, 22,0.4)')
+      cg.addColorStop(1, 'rgba(249, 115, 22,0)')
       ctx.beginPath()
       ctx.arc(cx, cy, 24 * sc, 0, Math.PI * 2)
       ctx.fillStyle = cg
@@ -162,20 +162,20 @@ function DisciplineDiagram() {
       const ph = (t * 0.55) % 1
       ctx.beginPath()
       ctx.arc(cx, cy, (5 + ph * 40) * sc, 0, Math.PI * 2)
-      ctx.strokeStyle = `rgba(139,92,246,${(0.45 * (1 - ph)).toFixed(2)})`
+      ctx.strokeStyle = `rgba(249, 115, 22,${(0.45 * (1 - ph)).toFixed(2)})`
       ctx.lineWidth = sc
       ctx.stroke()
 
       const dg = ctx.createRadialGradient(cx, cy, 0, cx, cy, 16 * sc)
-      dg.addColorStop(0, 'rgba(139,92,246,0.9)')
-      dg.addColorStop(1, 'rgba(139,92,246,0)')
+      dg.addColorStop(0, 'rgba(249, 115, 22,0.9)')
+      dg.addColorStop(1, 'rgba(249, 115, 22,0)')
       ctx.beginPath()
       ctx.arc(cx, cy, 16 * sc, 0, Math.PI * 2)
       ctx.fillStyle = dg
       ctx.fill()
       ctx.beginPath()
       ctx.arc(cx, cy, 5 * sc, 0, Math.PI * 2)
-      ctx.fillStyle = '#8b5cf6'
+      ctx.fillStyle = '#f97316'
       ctx.fill()
 
       // ── Nodes (no text — labels are HTML) ────────────────
@@ -257,7 +257,7 @@ function ScrollIndicator() {
             animate={{ y: [0, 18, 0] }}
             transition={{ duration: 1.8, repeat: Infinity, repeatType: 'loop', ease: 'easeInOut' }}
             className="w-1.5 h-1.5 rounded-full bg-cyan"
-            style={{ boxShadow: '0 0 8px rgba(139,92,246,0.8)' }}
+            style={{ boxShadow: '0 0 8px rgba(249, 115, 22,0.8)' }}
           />
         </div>
       </a>

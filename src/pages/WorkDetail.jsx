@@ -5,9 +5,9 @@ import {
   AreaChart, Area, CartesianGrid, ReferenceLine, LabelList,
 } from 'recharts'
 
-const PURPLE = '#8b5cf6'
+const PURPLE = '#f97316'
 const TEAL   = '#06b6d4'
-const chartColor = (rate) => rate > 30 ? PURPLE : rate > 15 ? '#a78bfa' : TEAL
+const chartColor = (rate) => rate > 30 ? PURPLE : rate > 15 ? '#fb923c' : TEAL
 
 const ChartTooltip = ({ active, payload }) => {
   if (!active || !payload?.length) return null
@@ -23,7 +23,7 @@ const ChartTooltip = ({ active, payload }) => {
 function Roadmap({ phases }) {
   const cfg = {
     done:    { bg: 'rgba(6,182,212,0.12)',   border: '#06b6d4', color: '#06b6d4',                   badge: 'Done' },
-    current: { bg: 'rgba(139,92,246,0.12)', border: '#8b5cf6', color: '#8b5cf6',                   badge: 'Active' },
+    current: { bg: 'rgba(249, 115, 22,0.12)', border: '#f97316', color: '#f97316',                   badge: 'Active' },
     planned: { bg: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.18)', color: 'rgba(255,255,255,0.35)', badge: 'Planned' },
   }
   return (
@@ -183,9 +183,9 @@ function AnalyticsDetail({ project }) {
 function PaymentsDetail({ project }) {
   const { title, tagline, stack, kpis, chartData, findings, roadmap, dataset, datasetUrl, disciplines: discIds, status, year } = project
   const DISC_MAP_LOCAL = Object.fromEntries(disciplines.map(d => [d.id, d]))
-  const typeColor = (rate) => rate > 0.5 ? PURPLE : rate > 0 ? '#a78bfa' : TEAL
-  const bandColor = (pct) => pct > 30 ? PURPLE : pct > 20 ? '#a78bfa' : TEAL
-  const coverageColor = (r) => r > 50 ? TEAL : r > 10 ? '#a78bfa' : PURPLE
+  const typeColor = (rate) => rate > 0.5 ? PURPLE : rate > 0 ? '#fb923c' : TEAL
+  const bandColor = (pct) => pct > 30 ? PURPLE : pct > 20 ? '#fb923c' : TEAL
+  const coverageColor = (r) => r > 50 ? TEAL : r > 10 ? '#fb923c' : PURPLE
 
   return (
     <main className="max-w-5xl mx-auto px-6 pt-32 pb-24">
@@ -333,7 +333,7 @@ function PaymentsDetail({ project }) {
 function PMCaseStudyDetail({ project }) {
   const { title, tagline, stack, kpis, roadmap, chartData, chartType, chartTitle, chartSub, decisions, disciplines: discIds, status, year, problem, approach, result } = project
   const DISC_MAP_LOCAL = Object.fromEntries(disciplines.map(d => [d.id, d]))
-  const riceColor = (s) => s >= 900 ? TEAL : s >= 600 ? '#a78bfa' : PURPLE
+  const riceColor = (s) => s >= 900 ? TEAL : s >= 600 ? '#fb923c' : PURPLE
 
   return (
     <main className="max-w-5xl mx-auto px-6 pt-32 pb-24">
@@ -414,7 +414,7 @@ function PMCaseStudyDetail({ project }) {
                 }} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
                 <Bar dataKey="hours" radius={[0, 4, 4, 0]}>
                   <LabelList dataKey="hours" position="right" formatter={v => v < 1 ? '< 1 min' : `${v}h`} style={{ fill: 'rgba(255,255,255,0.55)', fontSize: 9, fontFamily: 'IBM Plex Mono' }} />
-                  {chartData.settlement.map((d) => <Cell key={d.method} fill={d.hours < 1 ? TEAL : d.hours < 15 ? '#a78bfa' : PURPLE} />)}
+                  {chartData.settlement.map((d) => <Cell key={d.method} fill={d.hours < 1 ? TEAL : d.hours < 15 ? '#fb923c' : PURPLE} />)}
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
@@ -473,7 +473,7 @@ function PMCaseStudyDetail({ project }) {
 function SuperstoreDetail({ project }) {
   const { title, tagline, stack, kpis, chartData, findings, dataset, datasetUrl, disciplines: discIds, status, year } = project
   const DISC_MAP_LOCAL = Object.fromEntries(disciplines.map(d => [d.id, d]))
-  const marginColor = (m) => m >= 10 ? TEAL : m >= 0 ? '#a78bfa' : PURPLE
+  const marginColor = (m) => m >= 10 ? TEAL : m >= 0 ? '#fb923c' : PURPLE
   const profitColor = (p) => p >= 0 ? TEAL : PURPLE
 
   return (
@@ -623,7 +623,7 @@ function SuperstoreDetail({ project }) {
 function OlistDetail({ project }) {
   const { title, tagline, stack, kpis, chartData, findings, dataset, datasetUrl, disciplines: discIds, status, year } = project
   const DISC_MAP_LOCAL = Object.fromEntries(disciplines.map(d => [d.id, d]))
-  const scoreColor = (s) => s >= 4.2 ? TEAL : s >= 3.8 ? '#a78bfa' : PURPLE
+  const scoreColor = (s) => s >= 4.2 ? TEAL : s >= 3.8 ? '#fb923c' : PURPLE
 
   return (
     <main className="max-w-5xl mx-auto px-6 pt-32 pb-24">
@@ -797,8 +797,8 @@ function DSHealthcareDetail({ project }) {
   } = project
   const DISC_MAP = Object.fromEntries(disciplines.map(d => [d.id, d]))
 
-  const fiColor = (pct) => pct > 30 ? TEAL : pct > 10 ? '#a78bfa' : 'rgba(255,255,255,0.3)'
-  const segColor = (label) => label === 'High Risk' ? PURPLE : label === 'Medium Risk' ? '#a78bfa' : TEAL
+  const fiColor = (pct) => pct > 30 ? TEAL : pct > 10 ? '#fb923c' : 'rgba(255,255,255,0.3)'
+  const segColor = (label) => label === 'High Risk' ? PURPLE : label === 'Medium Risk' ? '#fb923c' : TEAL
 
   const FiTooltip = ({ active, payload }) => {
     if (!active || !payload?.length) return null
@@ -929,7 +929,7 @@ function DSHealthcareDetail({ project }) {
               <Tooltip content={<SecondaryTooltip />} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
               <Bar dataKey="cost" radius={[4, 4, 0, 0]}>
                 <LabelList dataKey="cost" position="top" formatter={v => `$${(v/1000).toFixed(1)}K`} style={{ fill: 'rgba(255,255,255,0.5)', fontSize: 9, fontFamily: 'IBM Plex Mono' }} />
-                {costByAge.map((d, i) => <Cell key={d.group} fill={i === 0 ? TEAL : i === 1 ? '#a78bfa' : i === 2 ? '#c084fc' : PURPLE} />)}
+                {costByAge.map((d, i) => <Cell key={d.group} fill={i === 0 ? TEAL : i === 1 ? '#fb923c' : i === 2 ? '#c084fc' : PURPLE} />)}
               </Bar>
             </BarChart>
           </ResponsiveContainer>

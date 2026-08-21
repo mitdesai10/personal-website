@@ -63,7 +63,7 @@ export default function Navbar() {
               href={`mailto:${contact.email}`}
               className="font-mono text-sm ml-4 px-4 py-1.5 rounded-full text-body transition-all duration-200"
               style={{ border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(8px)' }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(139,92,246,0.5)'; e.currentTarget.style.color = '#a78bfa'; e.currentTarget.style.background = 'rgba(139,92,246,0.08)' }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(249, 115, 22,0.5)'; e.currentTarget.style.color = '#fb923c'; e.currentTarget.style.background = 'rgba(249, 115, 22,0.08)' }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; e.currentTarget.style.color = ''; e.currentTarget.style.background = 'rgba(255,255,255,0.04)' }}
             >
               Get in touch

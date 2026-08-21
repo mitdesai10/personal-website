@@ -15,9 +15,9 @@ export default function DisciplineCard({ discipline }) {
             className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
             style={{
               background: isCyan
-                ? 'rgba(139,92,246,0.12)'
+                ? 'rgba(249, 115, 22,0.12)'
                 : 'rgba(6,182,212,0.12)',
-              border: `1px solid ${isCyan ? 'rgba(139,92,246,0.25)' : 'rgba(6,182,212,0.25)'}`,
+              border: `1px solid ${isCyan ? 'rgba(249, 115, 22,0.25)' : 'rgba(6,182,212,0.25)'}`,
             }}
           >
             <span

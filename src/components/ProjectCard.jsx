@@ -44,11 +44,16 @@ export default function ProjectCard({ project }) {
 
         {/* Stats */}
         {stats?.length > 0 && (
-          <div className="grid grid-cols-3 gap-2">
+          <div className="flex border-t border-white/[0.07] pt-4">
             {stats.map((s, i) => (
-              <div key={i} className="stat-block text-center px-2 py-3 rounded-xl">
-                <div className="font-display font-bold text-cyan text-base leading-tight">{s.value}</div>
-                <div className="font-mono text-[10px] text-muted mt-1 leading-tight">{s.label}</div>
+              <div
+                key={i}
+                className={`flex-1 min-w-0 ${i > 0 ? 'pl-4 border-l border-white/[0.07]' : ''} ${i < stats.length - 1 ? 'pr-4' : ''}`}
+              >
+                <div className="font-display font-semibold text-heading text-xl leading-none tracking-tight">
+                  {s.value}
+                </div>
+                <div className="text-[11px] text-muted mt-1.5 leading-snug">{s.label}</div>
               </div>
             ))}
           </div>

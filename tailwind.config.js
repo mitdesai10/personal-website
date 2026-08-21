@@ -13,9 +13,9 @@ export default {
         body:      '#cbd5e1',
         heading:   '#f1f5f9',
         cyan: {
-          DEFAULT: '#8b5cf6',
-          dim:     '#7c3aed',
-          glow:    'rgba(139,92,246,0.22)',
+          DEFAULT: '#f97316',
+          dim:     '#ea580c',
+          glow:    'rgba(249,115,22,0.22)',
         },
         amber: {
           DEFAULT: '#06b6d4',
@@ -26,7 +26,7 @@ export default {
       fontFamily: {
         display: ['"Plus Jakarta Sans"', 'sans-serif'],
         sans:    ['"Plus Jakarta Sans"', 'sans-serif'],
-        mono:    ['"IBM Plex Mono"', 'monospace'],
+        mono:    ['"Space Grotesk"', 'sans-serif'], // UI label face (not code)
         kanit:   ['Kanit', 'sans-serif'],
       },
       boxShadow: {
